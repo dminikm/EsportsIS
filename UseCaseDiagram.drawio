@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-10-31T21:19:25.372Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36" etag="xW2XbsszrQQ5QEJ6XG_M" version="13.8.8" type="github">
+<mxfile host="app.diagrams.net" modified="2020-10-31T21:26:09.588Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36" etag="PwTwwBcVHvnxG5gWvZ8V" version="13.8.8" type="github">
   <diagram id="yAFYyU7FPyFNNZtp-V3i" name="Page-1">
     <mxGraphModel dx="1673" dy="829" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -143,8 +143,8 @@
             <mxPoint x="80" y="930" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="qXkaRfwfOWDN_yTIUpRR-1" value="UC&lt;br&gt;Zobrazení statistik&lt;br&gt;(Obecně)" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="220" y="460" width="120" height="80" as="geometry" />
+        <mxCell id="qXkaRfwfOWDN_yTIUpRR-1" value="UC&lt;br&gt;Zobrazení statistik&lt;br&gt;zápasů/tréninků" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="220" y="480" width="120" height="80" as="geometry" />
         </mxCell>
         <mxCell id="qXkaRfwfOWDN_yTIUpRR-2" value="" style="endArrow=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="qXkaRfwfOWDN_yTIUpRR-1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
