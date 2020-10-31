@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-10-31T21:50:40.971Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36" etag="HqdeRUEe2cJsmixhC4W-" version="13.8.8" type="github">
+<mxfile host="app.diagrams.net" modified="2020-10-31T21:52:10.402Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36" etag="Cax-6_kpYFPXd2h1sYWy" version="13.8.8" type="github">
   <diagram name="Page-1" id="0783ab3e-0a74-02c8-0abd-f7b4e66b4bec">
     <mxGraphModel dx="1422" dy="705" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="#ffffff" math="0" shadow="0">
       <root>
@@ -96,7 +96,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="C9J_RSHf58IaOL_2hDed-9" value="Chybová zpráva" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;arcSize=50;" parent="1c1d494c118603dd-4" vertex="1">
+        <mxCell id="C9J_RSHf58IaOL_2hDed-9" value="Chybová hláška" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;arcSize=50;" parent="1c1d494c118603dd-4" vertex="1">
           <mxGeometry x="40" y="250" width="100" height="30" as="geometry" />
         </mxCell>
         <mxCell id="C9J_RSHf58IaOL_2hDed-11" value="Plno" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1c1d494c118603dd-4" vertex="1">
@@ -181,6 +181,9 @@
         <mxCell id="7R3QSyD88sJ-GN9zssv7-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1c1d494c118603dd-4" source="7R3QSyD88sJ-GN9zssv7-2" target="C9J_RSHf58IaOL_2hDed-13">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
+        <mxCell id="7R3QSyD88sJ-GN9zssv7-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1c1d494c118603dd-4" source="7R3QSyD88sJ-GN9zssv7-2" target="7R3QSyD88sJ-GN9zssv7-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="7R3QSyD88sJ-GN9zssv7-2" value="" style="rhombus;" vertex="1" parent="1c1d494c118603dd-4">
           <mxGeometry x="174.99" y="400" width="30" height="30" as="geometry" />
         </mxCell>
@@ -196,6 +199,9 @@
         <mxCell id="7R3QSyD88sJ-GN9zssv7-7" value="Střet" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1c1d494c118603dd-4">
           <mxGeometry x="120" y="390" width="40" height="20" as="geometry" />
         </mxCell>
+        <mxCell id="7R3QSyD88sJ-GN9zssv7-9" value="Chybová hláška" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;arcSize=50;" vertex="1" parent="1c1d494c118603dd-4">
+          <mxGeometry x="6.659999999999968" y="400" width="100" height="30" as="geometry" />
+        </mxCell>
         <mxCell id="C9J_RSHf58IaOL_2hDed-28" value="" style="endArrow=classic;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;rounded=0;" parent="1c1d494c118603dd-1" source="C9J_RSHf58IaOL_2hDed-16" target="C9J_RSHf58IaOL_2hDed-27" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="230" y="730" as="sourcePoint" />
@@ -205,7 +211,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="7R3QSyD88sJ-GN9zssv7-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1c1d494c118603dd-1" source="7R3QSyD88sJ-GN9zssv7-2" target="60571a20871a0731-8">
+        <mxCell id="7R3QSyD88sJ-GN9zssv7-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1c1d494c118603dd-1" source="7R3QSyD88sJ-GN9zssv7-9" target="60571a20871a0731-8">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="80" y="435" />
