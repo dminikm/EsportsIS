@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-10-31T14:46:47.019Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36" etag="MOi5lUkOahD-1AsasAqr" version="13.8.8" type="github">
+<mxfile host="app.diagrams.net" modified="2020-10-31T14:56:42.358Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36" etag="u1Y3Jl82phxyhbGLQupa" version="13.8.8" type="github">
   <diagram name="Page-1" id="c9db0220-8083-56f3-ca83-edcdcd058819">
     <mxGraphModel dx="1422" dy="705" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1.5" pageWidth="826" pageHeight="1169" background="#ffffff" math="0" shadow="0">
       <root>
@@ -18,6 +18,41 @@
         </mxCell>
         <mxCell id="Cq8Omm-Z7LUM6qy5rBpM-5" value="&lt;font color=&quot;#ffffff&quot;&gt;Odhlásit se&lt;/font&gt;" style="text;html=1;strokeColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#333333;" vertex="1" parent="1">
           <mxGeometry x="1060" y="110" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Cq8Omm-Z7LUM6qy5rBpM-6" value="" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=#DFDFDF;html=1;whiteSpace=wrap;fillColor=#FFFFFF;fontColor=#000000;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="40" y="190" width="1160" height="610" as="geometry" />
+        </mxCell>
+        <mxCell id="Cq8Omm-Z7LUM6qy5rBpM-7" value="Oslava turnaje" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.topButton;strokeColor=inherit;fillColor=#F7F7F7;rSize=5;perimeter=none;whiteSpace=wrap;resizeWidth=1;align=left;spacing=20;fontSize=14;" vertex="1" parent="Cq8Omm-Z7LUM6qy5rBpM-6">
+          <mxGeometry width="1160" height="40" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Cq8Omm-Z7LUM6qy5rBpM-10" value="Datum konání" style="fillColor=none;strokeColor=none;align=left;fontSize=14;" vertex="1" parent="Cq8Omm-Z7LUM6qy5rBpM-6">
+          <mxGeometry x="20" y="60" width="260" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Cq8Omm-Z7LUM6qy5rBpM-11" value="1.1.2020 - 14:15" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;fillColor=none;strokeColor=#999999;align=left;spacing=15;fontSize=14;" vertex="1" parent="Cq8Omm-Z7LUM6qy5rBpM-6">
+          <mxGeometry x="20" y="100" width="210" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Cq8Omm-Z7LUM6qy5rBpM-13" value="1.1.2020 - 15:55" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;fillColor=none;strokeColor=#999999;align=left;spacing=15;fontSize=14;" vertex="1" parent="Cq8Omm-Z7LUM6qy5rBpM-6">
+          <mxGeometry x="260" y="100" width="210" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Cq8Omm-Z7LUM6qy5rBpM-14" value="-" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="Cq8Omm-Z7LUM6qy5rBpM-6">
+          <mxGeometry x="230" y="105" width="30" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="Cq8Omm-Z7LUM6qy5rBpM-16" value="Popisek" style="fillColor=none;strokeColor=none;align=left;fontSize=14;" vertex="1" parent="Cq8Omm-Z7LUM6qy5rBpM-6">
+          <mxGeometry x="20" y="150" width="260" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Cq8Omm-Z7LUM6qy5rBpM-17" value="&lt;span style=&quot;font-family: &amp;quot;open sans&amp;quot;, arial, sans-serif; background-color: rgb(255, 255, 255); line-height: 100%;&quot;&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque &lt;br&gt;consectetur nisi nec dui viverra, vel tincidunt nunc vulputate. Sed&lt;br&gt;volutpat, lorem maximus viverra ultricies, dui.&lt;/span&gt;" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;fillColor=none;strokeColor=#999999;align=left;spacing=15;fontSize=14;verticalAlign=top;" vertex="1" parent="Cq8Omm-Z7LUM6qy5rBpM-6">
+          <mxGeometry x="20" y="190" width="450" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="Cq8Omm-Z7LUM6qy5rBpM-18" value="Kapacita" style="fillColor=none;strokeColor=none;align=left;fontSize=14;" vertex="1" parent="Cq8Omm-Z7LUM6qy5rBpM-6">
+          <mxGeometry x="20" y="460" width="260" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Cq8Omm-Z7LUM6qy5rBpM-20" value="&lt;font color=&quot;#000000&quot;&gt;9/15&lt;/font&gt;" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=#CED4DA;html=1;whiteSpace=wrap;fillColor=#FFFFFF;fontColor=#7D868C;align=left;spacingLeft=0;spacing=15;fontSize=14;" vertex="1" parent="Cq8Omm-Z7LUM6qy5rBpM-6">
+          <mxGeometry x="20" y="500" width="450" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Cq8Omm-Z7LUM6qy5rBpM-21" value="Přihlásit se" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rightButton;strokeColor=inherit;gradientColor=inherit;fillColor=#E9ECEF;rSize=5;perimeter=none;whiteSpace=wrap;resizeHeight=1;fontSize=14;" vertex="1" parent="Cq8Omm-Z7LUM6qy5rBpM-20">
+          <mxGeometry x="1" width="101" height="30" relative="1" as="geometry">
+            <mxPoint x="-101" as="offset" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
