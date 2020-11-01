@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-11-01T14:05:56.798Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36" etag="QB27xuJGjhjRxFMZqZ6J" version="13.8.8" type="github">
+<mxfile host="app.diagrams.net" modified="2020-11-01T14:08:26.145Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36" etag="O55dUK1CBTeOIeD_3eUh" version="13.8.8" type="github">
   <diagram id="yAFYyU7FPyFNNZtp-V3i" name="Page-1">
     <mxGraphModel dx="1422" dy="705" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -55,7 +55,7 @@
         <mxCell id="sryyBpQJ4YWezn5xtmet-20" value="UC&lt;br&gt;Přehled týmů" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="220" y="620" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="yQHaQmbHt8D4Ng1YrdPS-1" value="&amp;lt;&amp;lt;CRUD&amp;gt;&amp;gt;&lt;br&gt;UC (+UC 3)&lt;br&gt;Správa týmů" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="yQHaQmbHt8D4Ng1YrdPS-1" value="&amp;lt;&amp;lt;CRUD&amp;gt;&amp;gt;&lt;br&gt;UC&lt;br&gt;Správa týmů" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="220" y="710" width="120" height="80" as="geometry" />
         </mxCell>
         <mxCell id="yQHaQmbHt8D4Ng1YrdPS-2" value="" style="endArrow=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.3333333333333333;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" target="yQHaQmbHt8D4Ng1YrdPS-1" edge="1" source="sryyBpQJ4YWezn5xtmet-6">
@@ -73,7 +73,7 @@
         <mxCell id="yQHaQmbHt8D4Ng1YrdPS-19" value="&amp;lt;&amp;lt;CRUD&amp;gt;&amp;gt;&lt;br&gt;UC&lt;br&gt;Správa&lt;br&gt;zaměstnanců" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="220" y="890" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="yQHaQmbHt8D4Ng1YrdPS-30" value="&amp;lt;&amp;lt;CRUD&amp;gt;&amp;gt;&lt;br&gt;UC (+UC 2)&lt;br&gt;Správa&lt;br&gt;události" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="yQHaQmbHt8D4Ng1YrdPS-30" value="&amp;lt;&amp;lt;CRUD&amp;gt;&amp;gt;&lt;br&gt;UC&lt;br&gt;Správa&lt;br&gt;události" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="220" y="520" width="120" height="80" as="geometry" />
         </mxCell>
         <mxCell id="yQHaQmbHt8D4Ng1YrdPS-31" value="" style="endArrow=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.3333333333333333;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="yQHaQmbHt8D4Ng1YrdPS-30" edge="1" target="sryyBpQJ4YWezn5xtmet-5">
@@ -164,6 +164,26 @@
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="290" y="400" as="sourcePoint" />
             <mxPoint x="340" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8t673x98faRn6QWf17Y3-6" value="" style="endArrow=block;endSize=16;endFill=0;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="8t673x98faRn6QWf17Y3-7" target="yQHaQmbHt8D4Ng1YrdPS-30">
+          <mxGeometry x="-0.0667" y="-40" width="160" relative="1" as="geometry">
+            <mxPoint x="560" y="640" as="sourcePoint" />
+            <mxPoint x="720" y="640" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8t673x98faRn6QWf17Y3-7" value="UC 2&lt;br&gt;Vytvoření nové události" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="520" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="8t673x98faRn6QWf17Y3-8" value="UC 3&lt;br&gt;Vytvoření nového týmu" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="710" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="8t673x98faRn6QWf17Y3-9" value="" style="endArrow=block;endSize=16;endFill=0;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1">
+          <mxGeometry x="-0.0667" y="-40" width="160" relative="1" as="geometry">
+            <mxPoint x="489" y="749.5" as="sourcePoint" />
+            <mxPoint x="339" y="749.5" as="targetPoint" />
+            <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
       </root>
