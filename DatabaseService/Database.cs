@@ -43,6 +43,12 @@ namespace DatabaseService {
         {
             Debug.WriteLine($"Executing Query: {command.CommandText}");
 
+            if (this.transactionCount > 0) {
+                command.Transaction = this.transaction;
+            } else {
+                command.Transaction = null;
+            }
+
             return command.ExecuteReader();
         }
 
@@ -62,12 +68,31 @@ namespace DatabaseService {
         {
             Debug.WriteLine($"Executing scalar: {command.CommandText}");
 
+            if (this.transactionCount > 0) {
+                command.Transaction = this.transaction;
+            } else {
+                command.Transaction = null;
+            }
+
             return Helpers.ConvertType(command.ExecuteScalar(), type);
         }
 
         public T ExecuteScalar<T>(SqlCommand command)
         {
             return (T)ExecuteScalar(typeof(T), command);
+        }
+
+        public int ExecuteCommand(SqlCommand command)
+        {
+            Debug.WriteLine($"Executing command: {command.CommandText}");
+
+            if (this.transactionCount > 0) {
+                command.Transaction = this.transaction;
+            } else {
+                command.Transaction = null;
+            }
+
+            return command.ExecuteNonQuery();
         }
 
         public int ExecuteCommand(string command)

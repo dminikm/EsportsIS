@@ -19,7 +19,9 @@ CREATE TABLE [User] (
     [last_name] VARCHAR(30) NOT NULL,
     [login] VARCHAR(7) NOT NULL,
     [password] VARCHAR(40) NOT NULL,
-    [role] VARCHAR(10) NOT NULL CHECK ([role] in ('player', 'coach', 'manager'))
+    [role] VARCHAR(10) NOT NULL CHECK ([role] in ('player', 'coach', 'manager')),
+
+    UNIQUE([login])
 );
 
 -- Create functions
