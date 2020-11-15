@@ -71,6 +71,16 @@ namespace DatabaseService {
             }
         }
 
+        public void EndTransaction() {
+            if (transactionCount > 0) {
+                transactionCount--;
+            }
+
+            if (transactionCount == 0) {
+                SaveCache();
+            }
+        }
+
         public static JSONDatabase Instance {
             get => db.Value; 
         }
