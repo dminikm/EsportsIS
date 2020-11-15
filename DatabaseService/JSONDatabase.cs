@@ -12,6 +12,45 @@ namespace DatabaseService {
             transactionCount = 0;
         }
 
+        private int GetBiggestIDInTable(string table) {
+            if (!dbCache.ContainsKey(table)) {
+                return 0;
+            }
+
+            var tbl = dbCache[table];
+
+            int largest = 0;
+            foreach (var row in tbl) {
+                if (!row.ContainsKey("id")) {
+                    continue;
+                }
+
+                //var idElem = Helpers.ConvertType<JsonValueKind>(row["id"]);
+                var strId = row["id"].ToString();
+                var id = Helpers.ConvertType<int>(strId);
+
+                if (id > largest) {
+                    largest = id;
+                }
+            }
+
+            return largest;
+        }
+
+        public int CreateInTable(string table, Dictionary<string, object> value) {
+            if (!dbCache.ContainsKey(table)) {
+                return -1;
+            }
+
+            var tbl = dbCache[table];
+            var newId = GetBiggestIDInTable(table) + 1;
+
+            value.Add("id", newId);
+            tbl.Add(value);
+
+            return newId;
+        }
+
         public Option<Dictionary<string, object>> GetInTable(string table, int id) {
             if (!dbCache.ContainsKey(table)) {
                 return Option<Dictionary<string, object>>.None;
