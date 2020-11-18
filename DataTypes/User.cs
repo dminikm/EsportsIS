@@ -35,5 +35,12 @@ namespace DataTypes
         public string Login { get; set; }
         public string Password { get; set; }
         public UserRole Role { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return obj is User user &&
+                   UserID == user.UserID &&
+                   UserID != null;
+        }
     }
 }

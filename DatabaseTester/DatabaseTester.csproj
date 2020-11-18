@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DatabaseService\DatabaseService.csproj" />
+    <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

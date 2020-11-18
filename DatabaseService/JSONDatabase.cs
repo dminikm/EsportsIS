@@ -120,6 +120,11 @@ namespace DatabaseService {
             }
         }
 
+        public void AbortTransaction() {
+            transactionCount = 0;
+            LoadCache();
+        }
+
         public static JSONDatabase Instance {
             get => db.Value; 
         }

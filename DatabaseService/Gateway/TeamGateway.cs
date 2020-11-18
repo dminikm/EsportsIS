@@ -11,7 +11,7 @@ namespace DatabaseService {
             public static Team Create(string name, string game, Option<User> coach) {                
                 var db = Database.Instance;
 
-                insertCommand.Parameters["@coach_id"].Value = coach.Map((x) => x.UserID).IfNone(() => null);
+                insertCommand.Parameters["@coach_id"].Value = coach.Map((x) => x.UserID as object).IfNone(() => DBNull.Value);
                 insertCommand.Parameters["@name"].Value = name;
                 insertCommand.Parameters["@game"].Value = game;
 
@@ -24,7 +24,7 @@ namespace DatabaseService {
                     TeamID = id,
                     Game = game,
                     Name = name,
-                    CoachID = coach.Map((x) => x.UserID).IfNone(() => null)
+                    CoachID = coach.Map((x) => x.UserID.Value)
                 };
             }
 
@@ -52,7 +52,7 @@ namespace DatabaseService {
                 updateCommand.Parameters["@game"].Value = team.Game;
 
                 db.BeginTransaction();
-                db.ExecuteCommand(insertCommand);
+                db.ExecuteCommand(updateCommand);
                 db.EndTransaction();
             }
 

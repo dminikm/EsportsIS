@@ -78,6 +78,17 @@ namespace DatabaseService {
                 db.EndTransaction();
             }
 
+            public static void Delete(int PlayerID, int TeamID) {
+                var db = Database.Instance;
+
+                deleteCommand.Parameters["@team_id"].Value = TeamID;
+                deleteCommand.Parameters["@player_id"].Value = PlayerID;
+
+                db.BeginTransaction();
+                db.ExecuteCommand(deleteCommand);
+                db.EndTransaction();
+            }
+
             public static void DeleteAllForPlayer(User user) {
                 var db = Database.Instance;
 

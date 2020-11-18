@@ -23,10 +23,8 @@ namespace DatabaseService {
                 return (prefix + (highest + 1).ToString().PadLeft(4, '0')).ToLower();
             }
 
-            public static User Create(string firstName, string lastName, string password, UserRole role) {                
+            public static User Create(string login, string firstName, string lastName, string password, UserRole role) {                
                 var db = Database.Instance;
-
-                var login = GetLoginFor(firstName, lastName);
 
                 insertCommand.Parameters["@first_name"].Value = firstName;
                 insertCommand.Parameters["@last_name"].Value = lastName;
