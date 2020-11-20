@@ -24,7 +24,7 @@ namespace DatabaseService {
                     TeamID = id,
                     Game = game,
                     Name = name,
-                    CoachID = coach.Map((x) => x.UserID.Value)
+                    CoachID = coach.Match((x) => x.UserID, () => Option<int>.None)
                 };
             }
 
@@ -46,7 +46,9 @@ namespace DatabaseService {
             public static void Update(Team team) {
                 var db = Database.Instance;
 
-                updateCommand.Parameters["@id"].Value = team.TeamID;
+                var teamID = team.TeamID.IfNone(() => throw new InvalidCastException("UserID must have a value!"));
+
+                updateCommand.Parameters["@id"].Value = teamID;
                 updateCommand.Parameters["@coach_id"].Value = team.CoachID;
                 updateCommand.Parameters["@name"].Value = team.Name;
                 updateCommand.Parameters["@game"].Value = team.Game;
@@ -66,7 +68,7 @@ namespace DatabaseService {
             }
 
             public static void Delete(Team team) {
-                Delete(team.TeamID.GetValueOrDefault(-1));
+                Delete(team.TeamID.IfNone(() => throw new InvalidCastException("TeamID must have a value!")));
             }
 
             private static Option<Team> ParseFromQuery(DataTable table, int rowNum) {

@@ -65,7 +65,9 @@ namespace DatabaseService {
             public static void Update(User user) {
                 var db = Database.Instance;
 
-                updateCommand.Parameters["@id"].Value = user.UserID;
+                var userID = user.UserID.IfNone(() => throw new InvalidCastException("UserID must have a value!"));
+
+                updateCommand.Parameters["@id"].Value = userID;
                 updateCommand.Parameters["@first_name"].Value = user.FirstName;
                 updateCommand.Parameters["@last_name"].Value = user.LastName;
                 updateCommand.Parameters["@login"].Value = user.Login;
@@ -87,7 +89,7 @@ namespace DatabaseService {
             }
 
             public static void Delete(User user) {
-                Delete(user.UserID.GetValueOrDefault(-1));
+                Delete(user.UserID.IfNone(() => throw new InvalidCastException("UserID must have a value!")));
             }
 
             private static Option<User> ParseFromQuery(DataTable table, int rowNum) {

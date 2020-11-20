@@ -11,8 +11,11 @@ namespace DatabaseService {
             public static TeamToPlayer Create(Team team, User user) {
                 var db = Database.Instance;
 
-                createCommand.Parameters["@team_id"].Value = team.TeamID.Value;
-                createCommand.Parameters["@player_id"].Value = user.UserID.Value;
+                var teamID = team.TeamID.IfNone(() => throw new InvalidCastException("TeamID must have a value!"));
+                var userID = user.UserID.IfNone(() => throw new InvalidCastException("UserID must have a value!"));
+
+                createCommand.Parameters["@team_id"].Value = teamID;
+                createCommand.Parameters["@player_id"].Value = userID;
 
                 // ID is (team_id + player_id), no id gets returned
                 db.BeginTransaction();
@@ -20,15 +23,17 @@ namespace DatabaseService {
                 db.EndTransaction();
 
                 return new TeamToPlayer() {
-                    TeamID = team.TeamID,
-                    PlayerID = user.UserID
+                    TeamID = teamID,
+                    PlayerID = userID
                 };
             }
 
             public static List<TeamToPlayer> FindByPlayer(User user) {
                 var db = Database.Instance;
 
-                findByPlayerCommand.Parameters["@id"].Value = user.UserID.Value;
+                var userID = user.UserID.IfNone(() => throw new InvalidCastException("UserID must have a value!"));
+
+                findByPlayerCommand.Parameters["@id"].Value = userID;
 
                 var result = db.ExecuteQuery(findByPlayerCommand);
 
@@ -49,7 +54,9 @@ namespace DatabaseService {
             public static List<TeamToPlayer> FindByTeam(Team team) {
                 var db = Database.Instance;
 
-                findByTeamCommand.Parameters["@id"].Value = team.TeamID.Value;
+                var teamID = team.TeamID.IfNone(() => throw new InvalidCastException("TeamID must have a value!"));
+
+                findByTeamCommand.Parameters["@id"].Value = teamID;
 
                 var result = db.ExecuteQuery(findByTeamCommand);
 
@@ -78,7 +85,7 @@ namespace DatabaseService {
                 db.EndTransaction();
             }
 
-            public static void Delete(int PlayerID, int TeamID) {
+            public static void Delete(int TeamID, int PlayerID) {
                 var db = Database.Instance;
 
                 deleteCommand.Parameters["@team_id"].Value = TeamID;
@@ -89,10 +96,19 @@ namespace DatabaseService {
                 db.EndTransaction();
             }
 
+            public static void Delete(Team team, User player) {
+                Delete(
+                    team.TeamID.IfNone(() => throw new InvalidCastException("TeamID must have a value!")),
+                    player.UserID.IfNone(() => throw new InvalidCastException("UserID must have a value!"))
+                );
+            }
+
             public static void DeleteAllForPlayer(User user) {
                 var db = Database.Instance;
 
-                deleteAllForPlayerCommand.Parameters["@player_id"].Value = user.UserID.Value;
+                var playerID = user.UserID.IfNone(() => throw new InvalidCastException("UserID must have a value!"));
+
+                deleteAllForPlayerCommand.Parameters["@player_id"].Value = playerID;
 
                 db.BeginTransaction();
                 db.ExecuteCommand(deleteAllForPlayerCommand);
@@ -102,7 +118,9 @@ namespace DatabaseService {
             public static void DeleteAllForTeam(Team team) {
                 var db = Database.Instance;
 
-                deleteAllForTeamCommand.Parameters["@team_id"].Value = team.TeamID.Value;
+                var teamID = team.TeamID.IfNone(() => throw new InvalidCastException("TeamID must have a value!"));
+
+                deleteAllForTeamCommand.Parameters["@team_id"].Value = teamID;
 
                 db.BeginTransaction();
                 db.ExecuteCommand(deleteAllForTeamCommand);

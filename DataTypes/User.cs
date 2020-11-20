@@ -1,4 +1,5 @@
 ﻿using System;
+using LanguageExt;
 using System.Collections.Generic;
 
 namespace DataTypes
@@ -29,7 +30,7 @@ namespace DataTypes
 
     public class User
     {
-        public int? UserID { get; set; }
+        public Option<int> UserID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Login { get; set; }

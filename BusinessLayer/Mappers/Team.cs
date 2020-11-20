@@ -1,9 +1,5 @@
-using System;
-using DataTypes;
 using LanguageExt;
 using DatabaseService.Gateway;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace BusinessLayer {
     public class Team : DataTypes.Team {
@@ -38,7 +34,7 @@ namespace BusinessLayer {
                 
                 TeamToPlayerGateway.Create(this, value);
             }, Command.Blank), (value) => new Command(() => {
-                TeamToPlayerGateway.Delete(value.UserID.Value, this.TeamID.Value);
+                TeamToPlayerGateway.Delete(this, value);
             }, Command.Blank));
         }
 
