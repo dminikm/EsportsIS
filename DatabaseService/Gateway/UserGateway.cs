@@ -4,10 +4,14 @@ using DataTypes;
 using LanguageExt;
 using System.Data;
 
-namespace DatabaseService {
-    namespace Gateway {
-        public class UserGateway {
-            public static string GetLoginFor(string firstName, string lastName) {
+namespace DatabaseService
+{
+    namespace Gateway
+    {
+        public class UserGateway
+        {
+            public static string GetLoginFor(string firstName, string lastName)
+            {
                 var db = Database.Instance;
 
                 var prefix = (lastName.Length >= 3) ?
@@ -23,7 +27,8 @@ namespace DatabaseService {
                 return (prefix + (highest + 1).ToString().PadLeft(4, '0')).ToLower();
             }
 
-            public static User Create(string login, string firstName, string lastName, string password, UserRole role) {                
+            public static User Create(string login, string firstName, string lastName, string password, UserRole role)
+            {
                 var db = Database.Instance;
 
                 insertCommand.Parameters["@first_name"].Value = firstName;
@@ -37,7 +42,8 @@ namespace DatabaseService {
                 db.EndTransaction();
 
                 // Created value should always exist?
-                return new User() {
+                return new User()
+                {
                     UserID = id,
                     FirstName = firstName,
                     LastName = lastName,
@@ -47,7 +53,8 @@ namespace DatabaseService {
                 };
             }
 
-            public static Option<User> Select(int id) {
+            public static Option<User> Select(int id)
+            {
                 var db = Database.Instance;
 
                 selectCommand.Parameters["@id"].Value = id;
@@ -62,7 +69,8 @@ namespace DatabaseService {
                 return ParseFromQuery(table, 0);
             }
 
-            public static void Update(User user) {
+            public static void Update(User user)
+            {
                 var db = Database.Instance;
 
                 var userID = user.UserID.IfNone(() => throw new InvalidCastException("UserID must have a value!"));
@@ -79,7 +87,8 @@ namespace DatabaseService {
                 db.EndTransaction();
             }
 
-            public static void Delete(int id) {
+            public static void Delete(int id)
+            {
                 var db = Database.Instance;
                 deleteCommand.Parameters["@id"].Value = id;
 
@@ -88,14 +97,17 @@ namespace DatabaseService {
                 db.EndTransaction();
             }
 
-            public static void Delete(User user) {
+            public static void Delete(User user)
+            {
                 Delete(user.UserID.IfNone(() => throw new InvalidCastException("UserID must have a value!")));
             }
 
-            private static Option<User> ParseFromQuery(DataTable table, int rowNum) {
+            private static Option<User> ParseFromQuery(DataTable table, int rowNum)
+            {
                 var row = table.Rows[rowNum];
 
-                if (table.Rows.Count == 0) {
+                if (table.Rows.Count == 0)
+                {
                     return Option<User>.None;
                 }
 
@@ -112,7 +124,8 @@ namespace DatabaseService {
             }
 
             /// Static constructor, prepare commands
-            static UserGateway() {
+            static UserGateway()
+            {
                 var db = Database.Instance;
 
                 getHighestLoginCommand = db.CreateCommand(getHighestLoginStatement);

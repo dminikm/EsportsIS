@@ -4,11 +4,14 @@ using DataTypes;
 using LanguageExt;
 using System.Data;
 
-namespace DatabaseService {
-    namespace Gateway {
-        public class TeamGateway {
-
-            public static Team Create(string name, string game, Option<User> coach) {                
+namespace DatabaseService
+{
+    namespace Gateway
+    {
+        public class TeamGateway
+        {
+            public static Team Create(string name, string game, Option<User> coach)
+            {
                 var db = Database.Instance;
 
                 insertCommand.Parameters["@coach_id"].Value = coach.Map((x) => x.UserID as object).IfNone(() => DBNull.Value);
@@ -20,7 +23,8 @@ namespace DatabaseService {
                 db.EndTransaction();
 
                 // Created value should always exist?
-                return new Team() {
+                return new Team()
+                {
                     TeamID = id,
                     Game = game,
                     Name = name,
@@ -28,7 +32,8 @@ namespace DatabaseService {
                 };
             }
 
-            public static Option<Team> Find(int id) {
+            public static Option<Team> Find(int id)
+            {
                 var db = Database.Instance;
 
                 findCommand.Parameters["@id"].Value = id;
@@ -43,7 +48,8 @@ namespace DatabaseService {
                 return ParseFromQuery(table, 0);
             }
 
-            public static void Update(Team team) {
+            public static void Update(Team team)
+            {
                 var db = Database.Instance;
 
                 var teamID = team.TeamID.IfNone(() => throw new InvalidCastException("UserID must have a value!"));
@@ -58,7 +64,8 @@ namespace DatabaseService {
                 db.EndTransaction();
             }
 
-            public static void Delete(int id) {
+            public static void Delete(int id)
+            {
                 var db = Database.Instance;
                 deleteCommand.Parameters["@id"].Value = id;
 
@@ -67,14 +74,17 @@ namespace DatabaseService {
                 db.EndTransaction();
             }
 
-            public static void Delete(Team team) {
+            public static void Delete(Team team)
+            {
                 Delete(team.TeamID.IfNone(() => throw new InvalidCastException("TeamID must have a value!")));
             }
 
-            private static Option<Team> ParseFromQuery(DataTable table, int rowNum) {
+            private static Option<Team> ParseFromQuery(DataTable table, int rowNum)
+            {
                 var row = table.Rows[rowNum];
 
-                if (table.Rows.Count == 0) {
+                if (table.Rows.Count == 0)
+                {
                     return Option<Team>.None;
                 }
 
@@ -89,7 +99,8 @@ namespace DatabaseService {
             }
 
             /// Static constructor, prepare commands
-            static TeamGateway() {
+            static TeamGateway()
+            {
                 var db = Database.Instance;
 
                 // Prepare the insert command!

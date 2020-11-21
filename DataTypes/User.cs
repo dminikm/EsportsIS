@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 namespace DataTypes
 {
-    public static class UserRoleStrings {
+    public static class UserRoleStrings
+    {
         public static string Player = "player";
         public static string Manager = "manager";
         public static string Coach = "coach";
@@ -22,7 +23,8 @@ namespace DataTypes
         };
     }
 
-    public enum UserRole {
+    public enum UserRole
+    {
         Player,
         Manager,
         Coach

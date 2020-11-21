@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Text.Json;
+using Newtonsoft.Json.Linq;
 using LanguageExt;
 
 namespace DatabaseService {
@@ -18,16 +18,17 @@ namespace DatabaseService {
             }
 
             var tbl = dbCache[table];
+            if (tbl.Type != JTokenType.Array) {
+                return 0;
+            }
 
             int largest = 0;
-            foreach (var row in tbl) {
-                if (!row.ContainsKey("id")) {
+            foreach (var row in (tbl as JArray)) {
+                if (!(row as JObject).ContainsKey("id")) {
                     continue;
                 }
 
-                //var idElem = Helpers.ConvertType<JsonValueKind>(row["id"]);
-                var strId = row["id"].ToString();
-                var id = Helpers.ConvertType<int>(strId);
+                var id = row["id"].Value<int>();
 
                 if (id > largest) {
                     largest = id;
@@ -42,11 +43,11 @@ namespace DatabaseService {
                 return -1;
             }
 
-            var tbl = dbCache[table];
+            var tbl = dbCache[table] as JArray;
             var newId = GetBiggestIDInTable(table) + 1;
 
             value.Add("id", newId);
-            tbl.Add(value);
+            tbl.Add(JObject.FromObject(value));
 
             return newId;
         }
@@ -56,15 +57,15 @@ namespace DatabaseService {
                 return Option<Dictionary<string, object>>.None;
             }
 
-            var tbl = dbCache[table];
+            var tbl = dbCache[table] as JArray;
 
             foreach (var row in tbl) {
-                if (!row.ContainsKey("id")) {
+                if (!(row as JObject).ContainsKey("id")) {
                     continue;
                 }
 
-                if (row["id"].Equals(id.ToString())) {
-                    return Option<Dictionary<string, object>>.Some(row);
+                if (row["id"].ToString().Equals(id.ToString())) {
+                    return (row as JObject).ToObject<Dictionary<string, object>>();
                 }
             }
 
@@ -76,17 +77,38 @@ namespace DatabaseService {
                 return;
             }
 
-            var tbl = dbCache[table];
+            var tbl = dbCache[table] as JArray;
 
             for (var i = 0; i < tbl.Count; i++) {
-                var row = tbl[i];
+                var row = tbl[i] as JObject;
 
                 if (!row.ContainsKey("id")) {
                     continue;
                 }
 
-                if (row["id"].Equals(id.ToString())) {
-                    tbl[i] = value;
+                if (row["id"].Value<int>() == id) {
+                    tbl[i] = JObject.FromObject(value);
+                    return;
+                }
+            }
+        }
+
+        public void RemoveFromTable(string table, int id) {
+            if (!dbCache.ContainsKey(table)) {
+                return;
+            }
+
+            var tbl = dbCache[table] as JArray;
+
+            for (var i = 0; i < tbl.Count; i++) {
+                var row = tbl[i] as JObject;
+
+                if (!row.ContainsKey("id")) {
+                    continue;
+                }
+
+                if (row["id"].Value<int>() == id) {
+                    row.Remove();
                     return;
                 }
             }
@@ -94,11 +116,11 @@ namespace DatabaseService {
 
         private void LoadCache() {
             var file = File.ReadAllText(dbPath);
-            dbCache = JsonSerializer.Deserialize<Dictionary<string, List<Dictionary<string, object>>>>(file);
+            dbCache = JObject.Parse(file);
         }
 
         private void SaveCache() {
-            var result = JsonSerializer.Serialize(dbCache);
+            var result = dbCache.ToString();
             File.WriteAllText(dbPath, result);
         }
 
@@ -130,7 +152,7 @@ namespace DatabaseService {
         }
 
         private string dbPath;
-        private Dictionary<string, List<Dictionary<string, object>>> dbCache;
+        private JObject dbCache;
         private int transactionCount;
         private static readonly Lazy<JSONDatabase> db = new Lazy<JSONDatabase>(() => new JSONDatabase());
     }

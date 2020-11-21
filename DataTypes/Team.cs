@@ -1,7 +1,9 @@
 using LanguageExt;
 
-namespace DataTypes {
-    public class Team {
+namespace DataTypes
+{
+    public class Team
+    {
         public Option<int> TeamID { get; set; }
         public Option<int> CoachID { get; set; }
         public string Name { get; set; }

@@ -1,15 +1,26 @@
-namespace BusinessLayer {
-    public class Command {
-        public Command(CommandDelegate run, CommandDelegate undo) {
+namespace BusinessLayer
+{
+    public class Command
+    {
+        public Command(CommandDelegate run, CommandDelegate undo)
+        {
             this.run = run;
             this.undo = undo;
         }
 
-        public void Do() {
+        public Command(CommandDelegate run)
+        {
+            this.run = run;
+            this.undo = Command.Blank;
+        }
+
+        public void Do()
+        {
             run();
         }
 
-        public void Undo() {
+        public void Undo()
+        {
             undo();
         }
 
@@ -20,6 +31,6 @@ namespace BusinessLayer {
 
 
         // Blank delegate
-        public static CommandDelegate Blank = () => {};
+        public static CommandDelegate Blank = () => { };
     }
 }

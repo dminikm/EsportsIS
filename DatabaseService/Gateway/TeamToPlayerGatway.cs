@@ -5,10 +5,14 @@ using LanguageExt;
 using System.Data;
 using System.Collections.Generic;
 
-namespace DatabaseService {
-    namespace Gateway {
-        public class TeamToPlayerGateway {
-            public static TeamToPlayer Create(Team team, User user) {
+namespace DatabaseService
+{
+    namespace Gateway
+    {
+        public class TeamToPlayerGateway
+        {
+            public static TeamToPlayer Create(Team team, User user)
+            {
                 var db = Database.Instance;
 
                 var teamID = team.TeamID.IfNone(() => throw new InvalidCastException("TeamID must have a value!"));
@@ -22,13 +26,15 @@ namespace DatabaseService {
                 db.ExecuteCommand(createCommand);
                 db.EndTransaction();
 
-                return new TeamToPlayer() {
+                return new TeamToPlayer()
+                {
                     TeamID = teamID,
                     PlayerID = userID
                 };
             }
 
-            public static List<TeamToPlayer> FindByPlayer(User user) {
+            public static List<TeamToPlayer> FindByPlayer(User user)
+            {
                 var db = Database.Instance;
 
                 var userID = user.UserID.IfNone(() => throw new InvalidCastException("UserID must have a value!"));
@@ -43,7 +49,8 @@ namespace DatabaseService {
 
                 var lst = new List<TeamToPlayer>();
 
-                for (var i = 0; i < table.Rows.Count; i++) {
+                for (var i = 0; i < table.Rows.Count; i++)
+                {
                     var parsed = ParseFromQuery(table, i);
                     parsed.IfSome((x) => lst.Add(x));
                 }
@@ -51,7 +58,8 @@ namespace DatabaseService {
                 return lst;
             }
 
-            public static List<TeamToPlayer> FindByTeam(Team team) {
+            public static List<TeamToPlayer> FindByTeam(Team team)
+            {
                 var db = Database.Instance;
 
                 var teamID = team.TeamID.IfNone(() => throw new InvalidCastException("TeamID must have a value!"));
@@ -66,7 +74,8 @@ namespace DatabaseService {
 
                 var lst = new List<TeamToPlayer>();
 
-                for (var i = 0; i < table.Rows.Count; i++) {
+                for (var i = 0; i < table.Rows.Count; i++)
+                {
                     var parsed = ParseFromQuery(table, i);
                     parsed.IfSome((x) => lst.Add(x));
                 }
@@ -74,7 +83,8 @@ namespace DatabaseService {
                 return lst;
             }
 
-            public static void Delete(TeamToPlayer ttp) {
+            public static void Delete(TeamToPlayer ttp)
+            {
                 var db = Database.Instance;
 
                 deleteCommand.Parameters["@team_id"].Value = ttp.TeamID.Value;
@@ -85,7 +95,8 @@ namespace DatabaseService {
                 db.EndTransaction();
             }
 
-            public static void Delete(int TeamID, int PlayerID) {
+            public static void Delete(int TeamID, int PlayerID)
+            {
                 var db = Database.Instance;
 
                 deleteCommand.Parameters["@team_id"].Value = TeamID;
@@ -96,14 +107,16 @@ namespace DatabaseService {
                 db.EndTransaction();
             }
 
-            public static void Delete(Team team, User player) {
+            public static void Delete(Team team, User player)
+            {
                 Delete(
                     team.TeamID.IfNone(() => throw new InvalidCastException("TeamID must have a value!")),
                     player.UserID.IfNone(() => throw new InvalidCastException("UserID must have a value!"))
                 );
             }
 
-            public static void DeleteAllForPlayer(User user) {
+            public static void DeleteAllForPlayer(User user)
+            {
                 var db = Database.Instance;
 
                 var playerID = user.UserID.IfNone(() => throw new InvalidCastException("UserID must have a value!"));
@@ -115,7 +128,8 @@ namespace DatabaseService {
                 db.EndTransaction();
             }
 
-            public static void DeleteAllForTeam(Team team) {
+            public static void DeleteAllForTeam(Team team)
+            {
                 var db = Database.Instance;
 
                 var teamID = team.TeamID.IfNone(() => throw new InvalidCastException("TeamID must have a value!"));
@@ -127,10 +141,12 @@ namespace DatabaseService {
                 db.EndTransaction();
             }
 
-            private static Option<TeamToPlayer> ParseFromQuery(DataTable table, int rowNum) {
+            private static Option<TeamToPlayer> ParseFromQuery(DataTable table, int rowNum)
+            {
                 var row = table.Rows[rowNum];
 
-                if (table.Rows.Count == 0) {
+                if (table.Rows.Count == 0)
+                {
                     return Option<TeamToPlayer>.None;
                 }
 
@@ -142,9 +158,10 @@ namespace DatabaseService {
                 return Option<TeamToPlayer>.Some(ttp);
             }
 
-            static TeamToPlayerGateway() {
+            static TeamToPlayerGateway()
+            {
                 var db = Database.Instance;
-                
+
                 // Setup create
                 createCommand = db.CreateCommand(createStatement);
                 createCommand.Parameters.Add("@team_id", SqlDbType.Int);

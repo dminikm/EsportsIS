@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using BusinessLayer;
+using DatabaseService.Gateway;
 
 namespace DatabaseTester
 {
@@ -7,12 +9,15 @@ namespace DatabaseTester
     {
         static void Main(string[] args)
         {
-            var user = User.Create("Adam", "Dobry", "123456", DataTypes.UserRole.Player);
-            var team = Team.Create("Bobri", "CS:GO");
+            var evt = EventGateway.CreateTrainingEvent("test", 0, 10, new List<int>());
+            var evt2 = EventGateway.CreateCustomEvent("test 2", 0, 0, 2, "#000000", new List<int>());
+            evt2.Description = "Test 2, but different!";
 
-            team.Players.Add(user);
+            EventGateway.Update(evt2);
 
-            team.Save();
+            var evt2_c = EventGateway.Find(evt2.EventID.IfNone(() => 1));
+
+            EventGateway.Delete(evt2);
         }
     }
 }
