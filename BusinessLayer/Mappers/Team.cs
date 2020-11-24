@@ -1,5 +1,6 @@
 using LanguageExt;
 using DatabaseService.Gateway;
+using System.Collections.Generic;
 
 namespace BusinessLayer
 {
@@ -55,10 +56,16 @@ namespace BusinessLayer
             return new Team(TeamGateway.Create(name, game, coach.Map<DataTypes.User>((x) => x)));
         }
 
-        public static Option<User> Find(int id)
+        public static Option<Team> Find(int id)
         {
-            var user = UserGateway.Select(id);
-            return user.Map((usr) => new User(usr));
+            var team = TeamGateway.Find(id);
+            return team.Map((tm) => new Team(tm));
+        }
+
+        public static List<Team> All()
+        {
+            var teams = TeamGateway.FindAll();
+            return teams.Map((tm) => new Team(tm)).ToArr().ToList();
         }
     }
 }

@@ -49,6 +49,9 @@ namespace DatabaseService
             if (t == typeof(bool) && obj.GetType() == typeof(string))
                 return ((string)obj) == "Y" ? true : false;
 
+            if (t != typeof(string) && obj.GetType() == typeof(string) && (string)obj == "")
+                return null;
+
             return Convert.ChangeType(obj, t);
         }
 

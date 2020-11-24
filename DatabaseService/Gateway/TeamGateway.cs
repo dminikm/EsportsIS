@@ -3,6 +3,7 @@ using Microsoft.Data.SqlClient;
 using DataTypes;
 using LanguageExt;
 using System.Data;
+using System.Collections.Generic;
 
 namespace DatabaseService
 {
@@ -48,6 +49,25 @@ namespace DatabaseService
                 return ParseFromQuery(table, 0);
             }
 
+            public static List<Team> FindAll()
+            {
+                var db = Database.Instance;
+
+                var result = db.ExecuteQuery(findAllCommand);
+
+                var table = new DataTable();
+                table.Load(result);
+                result.Close();
+
+                var teams = new List<Team>();
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    ParseFromQuery(table, i).IfSome((x) => teams.Add(x));
+                }
+
+                return teams;
+            }
+
             public static void Update(Team team)
             {
                 var db = Database.Instance;
@@ -91,9 +111,9 @@ namespace DatabaseService
                 var team = new Team();
 
                 team.TeamID = Helpers.ConvertType<int>(row[table.Columns[table.Columns.IndexOf("team_id")]].ToString());
-                team.CoachID = Helpers.ConvertType<int>(row[table.Columns[table.Columns.IndexOf("coach_id")]].ToString());
                 team.Name = Helpers.ConvertType<string>(row[table.Columns[table.Columns.IndexOf("name")]].ToString());
                 team.Game = Helpers.ConvertType<string>(row[table.Columns[table.Columns.IndexOf("game")]].ToString());
+                team.CoachID = Helpers.ConvertType<int?>(row[table.Columns[table.Columns.IndexOf("coach_id")]].ToString()).ToOption();
 
                 return Option<Team>.Some(team);
             }
@@ -109,6 +129,10 @@ namespace DatabaseService
                 insertCommand.Parameters.Add("@name", System.Data.SqlDbType.VarChar, 30);
                 insertCommand.Parameters.Add("@game", System.Data.SqlDbType.VarChar, 30);
                 insertCommand.Prepare();
+
+                // Prepare the find all command!
+                findAllCommand = db.CreateCommand(findAllStatement);
+                findAllCommand.Prepare();
 
                 // Prepare the find command
                 findCommand = db.CreateCommand(findStatement);
@@ -133,6 +157,9 @@ namespace DatabaseService
 
             private static string insertStatement = "INSERT INTO [Team] VALUES (@coach_id, @name, @game); SELECT SCOPE_IDENTITY() AS newID;";
             private static SqlCommand insertCommand;
+
+            private static string findAllStatement = "SELECT * FROM [Team];";
+            private static SqlCommand findAllCommand;
 
             private static string findStatement = "SELECT * FROM [Team] WHERE [Team].[team_id] = @id;";
             private static SqlCommand findCommand;
