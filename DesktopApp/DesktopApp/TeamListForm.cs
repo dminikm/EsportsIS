@@ -119,5 +119,16 @@ namespace DesktopApp
             this.PopulateList();
             this.SetupButtons();
         }
+
+        private void editTeamButton_Click(object sender, EventArgs e)
+        {
+            var team = (Team)teamListView.SelectedItems[0].Tag;
+            var dialog = new AddEditTeamForm(team);
+            dialog.ShowDialog();
+
+            this.LoadData();
+            this.PopulateList();
+            this.SetupButtons();
+        }
     }
 }

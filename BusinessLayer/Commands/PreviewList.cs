@@ -46,6 +46,11 @@ namespace BusinessLayer
             this.commands.Undo();
         }
 
+        public List<T> ToList()
+        {
+            return this.Data.Map((x) => x).ToArr().ToList();
+        }
+
         private CommandQueue commands;
 
         Func<T, Command> addCmd;

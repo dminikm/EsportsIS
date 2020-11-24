@@ -127,6 +127,7 @@ namespace DesktopApp
             this.editTeamButton.TabIndex = 1;
             this.editTeamButton.Text = "🔧";
             this.editTeamButton.UseVisualStyleBackColor = true;
+            this.editTeamButton.Click += new System.EventHandler(this.editTeamButton_Click);
             // 
             // addTeamButton
             // 

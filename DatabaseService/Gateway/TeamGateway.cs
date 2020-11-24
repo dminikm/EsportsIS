@@ -75,7 +75,7 @@ namespace DatabaseService
                 var teamID = team.TeamID.IfNone(() => throw new InvalidCastException("UserID must have a value!"));
 
                 updateCommand.Parameters["@id"].Value = teamID;
-                updateCommand.Parameters["@coach_id"].Value = team.CoachID;
+                updateCommand.Parameters["@coach_id"].Value = team.CoachID.Match((x) => x as object, () => DBNull.Value);
                 updateCommand.Parameters["@name"].Value = team.Name;
                 updateCommand.Parameters["@game"].Value = team.Game;
 

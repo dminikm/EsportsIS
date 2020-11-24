@@ -46,8 +46,20 @@ namespace BusinessLayer
 
         public static Option<User> Find(int id)
         {
-            var user = UserGateway.Select(id);
+            var user = UserGateway.Find(id);
             return user.Map((usr) => new User(usr));
+        }
+
+        public static List<User> FindByRole(UserRole role)
+        {
+            var users = UserGateway.FindByRole(role);
+            return users.Map((user) => new User(user)).ToArr().ToList();
+        }
+
+        public static List<User> All()
+        {
+            var users = UserGateway.FindAll();
+            return users.Map((user) => new User(user)).ToArr().ToList();
         }
     }
 }

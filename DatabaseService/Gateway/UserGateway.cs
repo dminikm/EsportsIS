@@ -3,6 +3,7 @@ using Microsoft.Data.SqlClient;
 using DataTypes;
 using LanguageExt;
 using System.Data;
+using System.Collections.Generic;
 
 namespace DatabaseService
 {
@@ -53,13 +54,13 @@ namespace DatabaseService
                 };
             }
 
-            public static Option<User> Select(int id)
+            public static Option<User> Find(int id)
             {
                 var db = Database.Instance;
 
-                selectCommand.Parameters["@id"].Value = id;
+                findCommand.Parameters["@id"].Value = id;
 
-                var result = db.ExecuteQuery(selectCommand);
+                var result = db.ExecuteQuery(findCommand);
 
                 var table = new DataTable();
                 table.Load(result);
@@ -67,6 +68,46 @@ namespace DatabaseService
                 result.Close();
 
                 return ParseFromQuery(table, 0);
+            }
+
+            public static List<User> FindByRole(UserRole role)
+            {
+                var db = Database.Instance;
+
+                findByRoleCommand.Parameters["@role"].Value = UserRoleStrings.roles[role];
+                var result = db.ExecuteQuery(findByRoleCommand);
+
+                var table = new DataTable();
+                table.Load(result);
+                result.Close();
+
+                var users = new List<User>();
+
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    ParseFromQuery(table, i).IfSome((user) => users.Add(user));
+                }
+
+                return users;
+            }
+
+            public static List<User> FindAll()
+            {
+                var db = Database.Instance;
+                var result = db.ExecuteQuery(findAllCommand);
+
+                var table = new DataTable();
+                table.Load(result);
+                result.Close();
+
+                var users = new List<User>();
+
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    ParseFromQuery(table, i).IfSome((user) => users.Add(user));
+                }
+
+                return users;
             }
 
             public static void Update(User user)
@@ -142,9 +183,16 @@ namespace DatabaseService
                 insertCommand.Prepare();
 
                 // Prepare the select command
-                selectCommand = db.CreateCommand(selectStatement);
-                selectCommand.Parameters.Add("@id", System.Data.SqlDbType.Int);
-                selectCommand.Prepare();
+                findCommand = db.CreateCommand(findStatement);
+                findCommand.Parameters.Add("@id", System.Data.SqlDbType.Int);
+                findCommand.Prepare();
+
+                findByRoleCommand = db.CreateCommand(findByRoleStatement);
+                findByRoleCommand.Parameters.Add("@role", System.Data.SqlDbType.VarChar, 10);
+                findByRoleCommand.Prepare();
+
+                findAllCommand = db.CreateCommand(findAllStatement);
+                findAllCommand.Prepare();
 
                 // Prepare the update command!
                 updateCommand = db.CreateCommand(updateStatement);
@@ -168,12 +216,17 @@ namespace DatabaseService
             private static SqlCommand getHighestLoginCommand;
 
             // Generic stuff
-
             private static string insertStatement = "INSERT INTO [User] VALUES (@first_name, @last_name, @login, @password, @role); SELECT SCOPE_IDENTITY() AS newID;";
             private static SqlCommand insertCommand;
 
-            private static string selectStatement = "SELECT * FROM [User] WHERE [User].[user_id] = @id;";
-            private static SqlCommand selectCommand;
+            private static string findStatement = "SELECT * FROM [User] WHERE [User].[user_id] = @id;";
+            private static SqlCommand findCommand;
+
+            private static string findAllStatement = "SELECT * FROM [User];";
+            private static SqlCommand findAllCommand;
+
+            private static string findByRoleStatement = "SELECT * FROM [User] WHERE [User].[role] = @role;";
+            private static SqlCommand findByRoleCommand;
 
             private static string updateStatement = "UPDATE [User] SET [User].[first_name] = @first_name, [User].[last_name] = @last_name, [User].[login] = @login, [User].[password] = @password, [User].[role] = @role WHERE [User].[user_id] = @id;";
             private static SqlCommand updateCommand;

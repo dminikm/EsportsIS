@@ -30,17 +30,17 @@ namespace DesktopApp
         private void InitializeComponent()
         {
             this.nameLabel = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.nameTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.gameTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.coachTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.linkCoachButton = new System.Windows.Forms.Button();
+            this.playerListView = new System.Windows.Forms.ListView();
             this.nameColumn = new System.Windows.Forms.ColumnHeader();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.okButton = new System.Windows.Forms.Button();
+            this.cancelButton = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.addPlayerButton = new System.Windows.Forms.Button();
             this.removePlayerButton = new System.Windows.Forms.Button();
@@ -56,12 +56,12 @@ namespace DesktopApp
             this.nameLabel.TabIndex = 0;
             this.nameLabel.Text = "👥 Add/Edit Team";
             // 
-            // textBox1
+            // nameTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(13, 97);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(236, 23);
-            this.textBox1.TabIndex = 4;
+            this.nameTextBox.Location = new System.Drawing.Point(13, 97);
+            this.nameTextBox.Name = "nameTextBox";
+            this.nameTextBox.Size = new System.Drawing.Size(236, 23);
+            this.nameTextBox.TabIndex = 4;
             // 
             // label1
             // 
@@ -72,12 +72,12 @@ namespace DesktopApp
             this.label1.TabIndex = 3;
             this.label1.Text = "Name";
             // 
-            // textBox2
+            // gameTextBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(13, 165);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(236, 23);
-            this.textBox2.TabIndex = 6;
+            this.gameTextBox.Location = new System.Drawing.Point(13, 165);
+            this.gameTextBox.Name = "gameTextBox";
+            this.gameTextBox.Size = new System.Drawing.Size(236, 23);
+            this.gameTextBox.TabIndex = 6;
             // 
             // label2
             // 
@@ -88,13 +88,13 @@ namespace DesktopApp
             this.label2.TabIndex = 5;
             this.label2.Text = "Game";
             // 
-            // textBox3
+            // coachTextBox
             // 
-            this.textBox3.Enabled = false;
-            this.textBox3.Location = new System.Drawing.Point(13, 233);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(180, 23);
-            this.textBox3.TabIndex = 8;
+            this.coachTextBox.Enabled = false;
+            this.coachTextBox.Location = new System.Drawing.Point(13, 233);
+            this.coachTextBox.Name = "coachTextBox";
+            this.coachTextBox.Size = new System.Drawing.Size(180, 23);
+            this.coachTextBox.TabIndex = 8;
             // 
             // label3
             // 
@@ -105,51 +105,54 @@ namespace DesktopApp
             this.label3.TabIndex = 7;
             this.label3.Text = "Coach";
             // 
-            // button1
+            // linkCoachButton
             // 
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button1.Location = new System.Drawing.Point(199, 232);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(50, 25);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "🔗👤";
-            this.button1.UseVisualStyleBackColor = true;
+            this.linkCoachButton.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.linkCoachButton.Location = new System.Drawing.Point(199, 232);
+            this.linkCoachButton.Name = "linkCoachButton";
+            this.linkCoachButton.Size = new System.Drawing.Size(50, 25);
+            this.linkCoachButton.TabIndex = 9;
+            this.linkCoachButton.Text = "🔗👤";
+            this.linkCoachButton.UseVisualStyleBackColor = true;
+            this.linkCoachButton.Click += new System.EventHandler(this.linkCoachButton_Click);
             // 
-            // listView1
+            // playerListView
             // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.playerListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.nameColumn});
-            this.listView1.GridLines = true;
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(369, 97);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(201, 315);
-            this.listView1.TabIndex = 10;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            this.playerListView.GridLines = true;
+            this.playerListView.HideSelection = false;
+            this.playerListView.Location = new System.Drawing.Point(369, 97);
+            this.playerListView.Name = "playerListView";
+            this.playerListView.Size = new System.Drawing.Size(201, 315);
+            this.playerListView.TabIndex = 10;
+            this.playerListView.UseCompatibleStateImageBehavior = false;
+            this.playerListView.View = System.Windows.Forms.View.Details;
             // 
             // nameColumn
             // 
             this.nameColumn.Text = "Name";
             this.nameColumn.Width = 197;
             // 
-            // button2
+            // okButton
             // 
-            this.button2.Location = new System.Drawing.Point(495, 423);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 11;
-            this.button2.Text = "OK";
-            this.button2.UseVisualStyleBackColor = true;
+            this.okButton.Location = new System.Drawing.Point(495, 423);
+            this.okButton.Name = "okButton";
+            this.okButton.Size = new System.Drawing.Size(75, 23);
+            this.okButton.TabIndex = 11;
+            this.okButton.Text = "OK";
+            this.okButton.UseVisualStyleBackColor = true;
+            this.okButton.Click += new System.EventHandler(this.okButton_Click);
             // 
-            // button3
+            // cancelButton
             // 
-            this.button3.Location = new System.Drawing.Point(576, 423);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 12;
-            this.button3.Text = "Cancel";
-            this.button3.UseVisualStyleBackColor = true;
+            this.cancelButton.Location = new System.Drawing.Point(576, 423);
+            this.cancelButton.Name = "cancelButton";
+            this.cancelButton.Size = new System.Drawing.Size(75, 23);
+            this.cancelButton.TabIndex = 12;
+            this.cancelButton.Text = "Cancel";
+            this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
             // label4
             // 
@@ -169,6 +172,7 @@ namespace DesktopApp
             this.addPlayerButton.TabIndex = 14;
             this.addPlayerButton.Text = "➕👤";
             this.addPlayerButton.UseVisualStyleBackColor = true;
+            this.addPlayerButton.Click += new System.EventHandler(this.addPlayerButton_Click);
             // 
             // removePlayerButton
             // 
@@ -179,6 +183,7 @@ namespace DesktopApp
             this.removePlayerButton.TabIndex = 15;
             this.removePlayerButton.Text = "🗑️";
             this.removePlayerButton.UseVisualStyleBackColor = true;
+            this.removePlayerButton.Click += new System.EventHandler(this.removePlayerButton_Click);
             // 
             // AddEditTeamForm
             // 
@@ -188,15 +193,15 @@ namespace DesktopApp
             this.Controls.Add(this.removePlayerButton);
             this.Controls.Add(this.addPlayerButton);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.listView1);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.cancelButton);
+            this.Controls.Add(this.okButton);
+            this.Controls.Add(this.playerListView);
+            this.Controls.Add(this.linkCoachButton);
+            this.Controls.Add(this.coachTextBox);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.gameTextBox);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.nameTextBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.nameLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -212,17 +217,17 @@ namespace DesktopApp
         #endregion
 
         private System.Windows.Forms.Label nameLabel;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox nameTextBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox gameTextBox;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox coachTextBox;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.Button linkCoachButton;
+        private System.Windows.Forms.ListView playerListView;
         private System.Windows.Forms.ColumnHeader nameColumn;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button okButton;
+        private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button addPlayerButton;
         private System.Windows.Forms.Button removePlayerButton;
