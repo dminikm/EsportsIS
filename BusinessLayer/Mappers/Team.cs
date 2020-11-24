@@ -67,5 +67,11 @@ namespace BusinessLayer
             var teams = TeamGateway.FindAll();
             return teams.Map((tm) => new Team(tm)).ToArr().ToList();
         }
+
+        public static Option<Team> FindByCoach(User user)
+        {
+            var team = TeamGateway.FindByCoach(user);
+            return team.Map((tm) => new Team(tm));
+        }
     }
 }

@@ -49,6 +49,30 @@ namespace DatabaseService
                 return ParseFromQuery(table, 0);
             }
 
+            public static Option<Team> FindByCoach(int id)
+            {
+                var db = Database.Instance;
+
+                findByCoachCommand.Parameters["@id"].Value = id;
+
+                var result = db.ExecuteQuery(findByCoachCommand);
+
+                var table = new DataTable();
+                table.Load(result);
+
+                result.Close();
+
+                if (table.Rows.Count == 0)
+                    return Option<Team>.None;
+
+                return ParseFromQuery(table, 0);
+            }
+
+            public static Option<Team> FindByCoach(User user)
+            {
+                return user.UserID.Match((id) => FindByCoach(id), () => Option<Team>.None);
+            }
+
             public static List<Team> FindAll()
             {
                 var db = Database.Instance;
@@ -139,6 +163,10 @@ namespace DatabaseService
                 findCommand.Parameters.Add("@id", System.Data.SqlDbType.Int);
                 findCommand.Prepare();
 
+                findByCoachCommand = db.CreateCommand(findByCoachStatement);
+                findByCoachCommand.Parameters.Add("@id", System.Data.SqlDbType.Int);
+                findByCoachCommand.Prepare();
+
                 // Prepare the update command!
                 updateCommand = db.CreateCommand(updateStatement);
                 updateCommand.Parameters.Add("@id", System.Data.SqlDbType.Int);
@@ -163,6 +191,9 @@ namespace DatabaseService
 
             private static string findStatement = "SELECT * FROM [Team] WHERE [Team].[team_id] = @id;";
             private static SqlCommand findCommand;
+
+            private static string findByCoachStatement = "SELECT * FROM [Team] where [Team].[coach_id] = @id";
+            private static SqlCommand findByCoachCommand;
 
             private static string updateStatement = "UPDATE [Team] SET [Team].[coach_id] = @coach_id, [Team].[name] = @name, [Team].[game] = @game WHERE [Team].[team_id] = @id;";
             private static SqlCommand updateCommand;

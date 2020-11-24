@@ -132,9 +132,100 @@ namespace DesktopApp
             this.SetupButtons();
         }
 
+        enum VerificationState
+        {
+            Ok,
+            NoCoach,
+            CoachAlreadyUsed,
+            PlayerAlreadyUsed,
+        }
+
+        struct VerificationResult
+        {
+            public VerificationState State { get; set; }
+            public object Value { get; set; }
+        }
+
+        private VerificationResult DoVerification()
+        {
+            if (coach.IsNone)
+            {
+                return new VerificationResult() {
+                    State = VerificationState.NoCoach,
+                    Value = null,
+                };
+            }
+
+            var conflictingTeamForCoach = Team.FindByCoach(coach.IfNone(() => throw new ApplicationException("This cannot happen!")));
+
+            if (conflictingTeamForCoach.IsSome)
+            {
+                var team = conflictingTeamForCoach.IfNone(() => throw new ApplicationException("This cannot happen!"));
+                if (team != this.team)
+                {
+                    return new VerificationResult()
+                    {
+                        State = VerificationState.CoachAlreadyUsed,
+                        Value = team
+                    };
+                }
+            }
+
+            var conflictingPlayers = new List<KeyValuePair<User, List<Team>>>();
+            foreach (var player in players)
+            {
+                var teams = player.GetTeams().Filter((team) => team.TeamID != this.team.Match((tm) => tm.TeamID, () => Option<int>.None));
+
+                if (teams.Length() != 0)
+                {
+                    conflictingPlayers.Add(new KeyValuePair<User, List<Team>>(player, teams.ToArr().ToList()));
+                }
+            }
+
+            if (conflictingPlayers.Count > 0)
+            {
+                return new VerificationResult()
+                {
+                    State = VerificationState.PlayerAlreadyUsed,
+                    Value = conflictingPlayers
+                };
+            }
+
+            return new VerificationResult()
+            {
+                State = VerificationState.Ok,
+                Value = null,
+            };
+        }
+
         private void okButton_Click(object sender, EventArgs e)
         {
             // TODO: Do verification, alternate usecase paths
+
+            var state = DoVerification();
+
+            if (state.State == VerificationState.NoCoach)
+            {
+                errorProvider.SetError(coachTextBox, "Team must have a coach!");
+                return;
+            }
+
+            if (state.State == VerificationState.CoachAlreadyUsed)
+            {
+                MessageBox.Show("Coach is already coaching another team!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (state.State == VerificationState.PlayerAlreadyUsed)
+            {
+                var dialog = new RemoveUserFromConfligtingTeamsForm((List<KeyValuePair<User, List<Team>>>)state.Value);
+                var result = dialog.ShowDialog();
+
+                if (result == DialogResult.Cancel)
+                    return;
+
+                dialog.Cmds.ForEach((cmd) => cmds.Add(cmd));
+            }
 
             cmds.Add(new Command(() =>
             {

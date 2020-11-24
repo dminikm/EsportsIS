@@ -29,6 +29,7 @@ namespace DesktopApp
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.nameLabel = new System.Windows.Forms.Label();
             this.nameTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -44,6 +45,8 @@ namespace DesktopApp
             this.label4 = new System.Windows.Forms.Label();
             this.addPlayerButton = new System.Windows.Forms.Button();
             this.removePlayerButton = new System.Windows.Forms.Button();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // nameLabel
@@ -185,6 +188,10 @@ namespace DesktopApp
             this.removePlayerButton.UseVisualStyleBackColor = true;
             this.removePlayerButton.Click += new System.EventHandler(this.removePlayerButton_Click);
             // 
+            // errorProvider
+            // 
+            this.errorProvider.ContainerControl = this;
+            // 
             // AddEditTeamForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -209,6 +216,7 @@ namespace DesktopApp
             this.ShowIcon = false;
             this.Text = "👥 AddEdit Team";
             this.Load += new System.EventHandler(this.AddEditTeam_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -231,5 +239,6 @@ namespace DesktopApp
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button addPlayerButton;
         private System.Windows.Forms.Button removePlayerButton;
+        private System.Windows.Forms.ErrorProvider errorProvider;
     }
 }
