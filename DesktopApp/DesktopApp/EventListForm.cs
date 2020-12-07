@@ -65,6 +65,9 @@ namespace DesktopApp
             }
         }
 
+        private User user;
+        private List<Event> events;
+
         private void EventListForm_Load(object sender, EventArgs e)
         {
             LoadData();
@@ -75,7 +78,13 @@ namespace DesktopApp
 
         private void addEventButton_Click(object sender, EventArgs e)
         {
+            // TODO: Use context menu
+            var form = new AddEditTrainingEvent(null, user);
+            form.ShowDialog();
 
+            this.LoadData();
+            this.PopulateList();
+            this.SetupButtons();
         }
 
         private void editEventButton_Click(object sender, EventArgs e)
@@ -93,7 +102,9 @@ namespace DesktopApp
             this.LoadData();
         }
 
-        private User user;
-        private List<Event> events;
+        private void eventListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SetupButtons();
+        }
     }
 }

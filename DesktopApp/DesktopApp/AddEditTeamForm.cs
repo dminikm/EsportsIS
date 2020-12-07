@@ -122,8 +122,8 @@ namespace DesktopApp
         private void removePlayerButton_Click(object sender, EventArgs e)
         {
             var player = (User)this.playerListView.SelectedItems[0].Tag;
-
             this.players.Remove(player);
+            
             this.cmds.Add(new Command(() =>
             {
                 this.team.IfSome((team) => team.Players.Remove(player));

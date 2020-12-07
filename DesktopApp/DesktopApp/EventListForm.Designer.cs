@@ -99,14 +99,17 @@ namespace DesktopApp
             this.fromColumnHeader,
             this.typeColumnHeader});
             this.eventListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.eventListView.FullRowSelect = true;
             this.eventListView.GridLines = true;
             this.eventListView.HideSelection = false;
             this.eventListView.Location = new System.Drawing.Point(0, 0);
+            this.eventListView.MultiSelect = false;
             this.eventListView.Name = "eventListView";
             this.eventListView.Size = new System.Drawing.Size(708, 388);
             this.eventListView.TabIndex = 0;
             this.eventListView.UseCompatibleStateImageBehavior = false;
             this.eventListView.View = System.Windows.Forms.View.Details;
+            this.eventListView.SelectedIndexChanged += new System.EventHandler(this.eventListView_SelectedIndexChanged);
             // 
             // nameColumnHeader
             // 

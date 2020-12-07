@@ -9,8 +9,8 @@ namespace DataTypes
         public string Name { get; set;}
         public string Type { get; set; }
         public string Description { get; set; }
-        public int From { get; set; }
-        public int To { get; set; }
+        public long From { get; set; }
+        public long To { get; set; }
         public string Color { get; set; }
         public List<int> ParticipantIDs { get; set; }
     }

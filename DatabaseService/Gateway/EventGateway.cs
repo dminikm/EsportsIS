@@ -12,7 +12,7 @@ namespace DatabaseService
     {
         public class EventGateway
         {
-            public static TrainingEvent CreateTrainingEvent(string name, string description, int from, int to, List<int> participants)
+            public static TrainingEvent CreateTrainingEvent(string name, string description, long from, long to, List<int> participants)
             {
                 var db = JSONDatabase.Instance;
 
@@ -41,7 +41,7 @@ namespace DatabaseService
                 };
             }
 
-            public static MatchEvent CreateMatchEvent(string name, string description, int from, int to, string server, List<int> participants)
+            public static MatchEvent CreateMatchEvent(string name, string description, long from, long to, string server, List<int> participants)
             {
                 var db = JSONDatabase.Instance;
 
@@ -72,7 +72,7 @@ namespace DatabaseService
                 };
             }
 
-            public static TournamentEvent CreateTournamentEvent(string name, string description, int from, int to, string location, List<int> participants)
+            public static TournamentEvent CreateTournamentEvent(string name, string description, long from, long to, string location, List<int> participants)
             {
                 var db = JSONDatabase.Instance;
 
@@ -103,7 +103,7 @@ namespace DatabaseService
                 };
             }
 
-            public static CustomEvent CreateCustomEvent(string name, string description, int from, int to, int maxParticipants, string color, List<int> participants)
+            public static CustomEvent CreateCustomEvent(string name, string description, long from, long to, int maxParticipants, string color, List<int> participants)
             {
                 var db = JSONDatabase.Instance;
 
@@ -231,14 +231,14 @@ namespace DatabaseService
                     return Option<Event>.None;
                 }
 
-                var from = Helpers.ConvertType<int>(row["from"]);
+                var from = Helpers.ConvertType<long>(row["from"]);
 
                 if (!row.ContainsKey("to"))
                 {
                     return Option<Event>.None;
                 }
 
-                var to = Helpers.ConvertType<int>(row["to"]);
+                var to = Helpers.ConvertType<long>(row["to"]);
 
                 if (!row.ContainsKey("color"))
                 {

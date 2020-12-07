@@ -123,9 +123,11 @@ namespace DesktopApp
             // 
             this.playerListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.nameColumn});
+            this.playerListView.FullRowSelect = true;
             this.playerListView.GridLines = true;
             this.playerListView.HideSelection = false;
             this.playerListView.Location = new System.Drawing.Point(369, 97);
+            this.playerListView.MultiSelect = false;
             this.playerListView.Name = "playerListView";
             this.playerListView.Size = new System.Drawing.Size(201, 315);
             this.playerListView.TabIndex = 10;
