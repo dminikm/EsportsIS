@@ -111,6 +111,7 @@ namespace DesktopApp
             this.Name = "LoginForm";
             this.ShowIcon = false;
             this.Text = "🔑 Login";
+            this.Load += new System.EventHandler(this.LoginForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

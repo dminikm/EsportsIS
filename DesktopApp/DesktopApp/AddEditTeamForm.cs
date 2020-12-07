@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using BusinessLayer;
@@ -178,7 +179,7 @@ namespace DesktopApp
 
                 if (teams.Length() != 0)
                 {
-                    conflictingPlayers.Add(new KeyValuePair<User, List<Team>>(player, teams.ToArr().ToList()));
+                    conflictingPlayers.Add(new KeyValuePair<User, List<Team>>(player, teams.ToList()));
                 }
             }
 

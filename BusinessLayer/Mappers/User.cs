@@ -3,6 +3,7 @@ using DataTypes;
 using LanguageExt;
 using DatabaseService.Gateway;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BusinessLayer
 {
@@ -25,7 +26,16 @@ namespace BusinessLayer
                 (ttp) => TeamGateway.Find(ttp.TeamID.Value)
             ).Somes().Map(
                 (x) => new Team(x)
-            ).ToArr().ToList();
+            ).ToList();
+        }
+
+        public List<Event> GetUpcomingEvents()
+        {
+            return EventGateway
+                .FindEventsForUser(this)
+                .Filter((x) => x.From > DateTimeOffset.Now.ToUnixTimeMilliseconds())
+                .Map((x) => new Event(x))
+                .ToList();
         }
 
         public User(DataTypes.User user)
@@ -59,13 +69,13 @@ namespace BusinessLayer
         public static List<User> FindByRole(UserRole role)
         {
             var users = UserGateway.FindByRole(role);
-            return users.Map((user) => new User(user)).ToArr().ToList();
+            return users.Map((user) => new User(user)).ToList();
         }
 
         public static List<User> All()
         {
             var users = UserGateway.FindAll();
-            return users.Map((user) => new User(user)).ToArr().ToList();
+            return users.Map((user) => new User(user)).ToList();
         }
     }
 }

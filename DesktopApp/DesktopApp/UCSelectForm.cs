@@ -33,7 +33,8 @@ namespace DesktopApp
                 return;
             }
 
-
+            var form = new EventListForm(loginForm.user);
+            form.Show();
         }
     }
 }

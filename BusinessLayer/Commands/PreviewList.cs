@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BusinessLayer
 {
@@ -48,7 +49,7 @@ namespace BusinessLayer
 
         public List<T> ToList()
         {
-            return this.Data.Map((x) => x).ToArr().ToList();
+            return this.Data.Map((x) => x).ToList();
         }
 
         private CommandQueue commands;

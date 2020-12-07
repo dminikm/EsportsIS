@@ -72,6 +72,21 @@ namespace DatabaseService {
             return Option<Dictionary<string, object>>.None;
         }
 
+        public List<Dictionary<string, object>> GetAllInTable(string table) {
+            if (!dbCache.ContainsKey(table)) {
+                return new List<Dictionary<string, object>>();
+            }
+
+            var tbl = dbCache[table] as JArray;
+
+            var lst = new List<Dictionary<string, object>>();
+            foreach (var row in tbl) {
+                lst.Add((row as JObject).ToObject<Dictionary<string, object>>());
+            }
+
+            return lst;
+        }
+
         public void SetInTable(string table, int id, Dictionary<string, object> value) {
             if (!dbCache.ContainsKey(table)) {
                 return;

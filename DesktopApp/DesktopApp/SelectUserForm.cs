@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -36,9 +37,9 @@ namespace DesktopApp
         private void LoadData()
         {
             role.Match((role) => {
-                this.users = User.FindByRole(role).Filter((user) => !this.filter.Contains(user)).ToArr().ToList();
+                this.users = User.FindByRole(role).Filter((user) => !this.filter.Contains(user)).ToList();
             }, () => {
-                this.users = User.All().Filter((user) => !this.filter.Contains(user)).ToArr().ToList();
+                this.users = User.All().Filter((user) => !this.filter.Contains(user)).ToList();
             });
         }
 

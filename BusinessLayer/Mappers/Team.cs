@@ -1,6 +1,7 @@
 using LanguageExt;
 using DatabaseService.Gateway;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BusinessLayer
 {
@@ -35,7 +36,6 @@ namespace BusinessLayer
                 return ttps
                     .Map((ttp) => User.Find(ttp.PlayerID.Value))
                     .Somes()
-                    .ToArr()
                     .ToList();
             }, (value) => new Command(() =>
             {
@@ -65,7 +65,7 @@ namespace BusinessLayer
         public static List<Team> All()
         {
             var teams = TeamGateway.FindAll();
-            return teams.Map((tm) => new Team(tm)).ToArr().ToList();
+            return teams.Map((tm) => new Team(tm)).ToList();
         }
 
         public static Option<Team> FindByCoach(User user)

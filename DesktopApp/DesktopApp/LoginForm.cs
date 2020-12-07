@@ -47,5 +47,14 @@ namespace DesktopApp
         }
 
         public User user { get; set; }
+
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+            // DEBUG:
+            usernameTextBox.Text = "tes0001";
+            passwordTextBox.Text = "abc123";
+
+            loginButton.PerformClick();
+        }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BusinessLayer
 {
@@ -19,7 +20,7 @@ namespace BusinessLayer
 
         public CommandQueue Remove(Command cmd)
         {
-            this.commands = this.commands.Filter((x) => x != cmd).ToArr().ToList();
+            this.commands = this.commands.Filter((x) => x != cmd).ToList();
             return this;
         }
 
