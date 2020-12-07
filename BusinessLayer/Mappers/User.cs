@@ -50,6 +50,12 @@ namespace BusinessLayer
             return user.Map((usr) => new User(usr));
         }
 
+        public static Option<User> FindByUsernamePassword(string login, string password)
+        {
+            var user = UserGateway.FindByUsernamePassword(login, password);
+            return user.Map((usr) => new User(usr));
+        }
+
         public static List<User> FindByRole(UserRole role)
         {
             var users = UserGateway.FindByRole(role);

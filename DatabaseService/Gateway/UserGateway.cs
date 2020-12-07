@@ -70,6 +70,22 @@ namespace DatabaseService
                 return ParseFromQuery(table, 0);
             }
 
+            public static Option<User> FindByUsernamePassword(string login, string password)
+            {
+                var db = Database.Instance;
+                findByUsernamePasswordCommand.Parameters["@login"].Value = login;
+                findByUsernamePasswordCommand.Parameters["@password"].Value = password;
+
+                var result = db.ExecuteQuery(findByUsernamePasswordCommand);
+
+                var table = new DataTable();
+                table.Load(result);
+
+                result.Close();
+
+                return ParseFromQuery(table, 0);
+            }
+
             public static List<User> FindByRole(UserRole role)
             {
                 var db = Database.Instance;
@@ -145,6 +161,11 @@ namespace DatabaseService
 
             private static Option<User> ParseFromQuery(DataTable table, int rowNum)
             {
+                if (table.Rows.Count <= rowNum)
+                {
+                    return Option<User>.None;
+                }
+
                 var row = table.Rows[rowNum];
 
                 if (table.Rows.Count == 0)
@@ -194,6 +215,11 @@ namespace DatabaseService
                 findAllCommand = db.CreateCommand(findAllStatement);
                 findAllCommand.Prepare();
 
+                findByUsernamePasswordCommand = db.CreateCommand(findByUsernamePasswordStatement);
+                findByUsernamePasswordCommand.Parameters.Add("@login", System.Data.SqlDbType.VarChar, 7);
+                findByUsernamePasswordCommand.Parameters.Add("@password", System.Data.SqlDbType.VarChar, 40);
+                findByUsernamePasswordCommand.Prepare();
+
                 // Prepare the update command!
                 updateCommand = db.CreateCommand(updateStatement);
                 updateCommand.Parameters.Add("@id", System.Data.SqlDbType.Int);
@@ -233,6 +259,9 @@ namespace DatabaseService
 
             private static string deleteStatement = "DELETE FROM [User] WHERE [User].[user_id] = @id;";
             private static SqlCommand deleteCommand;
+
+            private static string findByUsernamePasswordStatement = "SELECT * FROM [User] WHERE [User].[login] = @login AND [User].[password] = @password;";
+            private static SqlCommand findByUsernamePasswordCommand;
         }
     }
 }

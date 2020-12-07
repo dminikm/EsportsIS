@@ -22,5 +22,18 @@ namespace DesktopApp
             var teamForm = new TeamListForm();
             teamForm.Show();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var loginForm = new LoginForm();
+            var result = loginForm.ShowDialog();
+
+            if (result != DialogResult.OK)
+            {
+                return;
+            }
+
+
+        }
     }
 }

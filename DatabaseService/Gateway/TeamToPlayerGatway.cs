@@ -143,6 +143,11 @@ namespace DatabaseService
 
             private static Option<TeamToPlayer> ParseFromQuery(DataTable table, int rowNum)
             {
+                if (table.Rows.Count <= rowNum)
+                {
+                    return Option<TeamToPlayer>.None;
+                }
+
                 var row = table.Rows[rowNum];
 
                 if (table.Rows.Count == 0)
