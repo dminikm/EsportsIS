@@ -7,6 +7,11 @@ class LoginController : Controller
 
     public ControllerAction Index(int a)
     {
-        return View<LoginIndexView>();
+        return View<TestView, int>(a);
+    }
+
+    public ControllerAction Login(string name, string password)
+    {
+        return Redirect("/1");
     }
 }

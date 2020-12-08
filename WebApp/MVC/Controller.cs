@@ -70,7 +70,6 @@ class Controller
 
     }
 
-
     protected ControllerAction View<ViewType, ModelType>(ModelType model) where ViewType : View<ModelType>, new()
     {
         return new ControllerViewAction<ViewType, ModelType>(new ViewType(), model);

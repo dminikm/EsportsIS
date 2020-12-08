@@ -63,7 +63,14 @@ class Router
     {
         foreach (var handler in handlers)
         {
-            builder.MapGet(handler.FullPath, async (context) => { handler.Handler(context.Request.Path, context); });
+            if (handler.Method == HTTPMethod.GET)
+            {
+                builder.MapGet(handler.FullPath, async (context) => { handler.Handler(context.Request.Path, context); });
+            }
+            else
+            {
+                builder.MapPost(handler.FullPath, async (context) => { handler.Handler(context.Request.Path, context); });
+            }
         }
 
         return this;

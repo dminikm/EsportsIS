@@ -24,8 +24,9 @@ namespace WebApp
             var LoginController = new LoginController();
             var router = new Router();
 
-            router.AddRoute<Func<int, ControllerAction>>(HTTPMethod.GET, "/test/asd/{a}", LoginController.Index);
-
+            router
+                .AddRoute<Func<int, ControllerAction>>(HTTPMethod.GET, "/{a}", LoginController.Index)
+                .AddRoute<Func<string, string, ControllerAction>>(HTTPMethod.GET, "/login/{username}/{password}", LoginController.Login);
 
             if (env.IsDevelopment())
             {
@@ -36,11 +37,6 @@ namespace WebApp
 
             app.UseEndpoints(endpoints =>
             {
-                /*endpoints.MapGet("/", async context =>
-                {
-                    var res = LoginController.Index(1);
-                    res.Do(context);
-                });*/
                 router.BindRoutes(endpoints);
             });
         }
