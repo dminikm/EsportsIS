@@ -274,7 +274,6 @@ namespace DesktopApp
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DateTimePicker toDateTimePicker;
-        private System.Windows.Forms.ErrorProvider ror;
         private System.Windows.Forms.ErrorProvider errorProvider;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox serverTextBox;
