@@ -18,7 +18,9 @@ namespace DesktopApp
             this.user = user;
 
             addTrainingEventMenu.Click += new EventHandler(this.NewTrainingEvent);
-
+            addMatchEventMenu.Click += new EventHandler(this.NewMatchEvent);
+            addTournamentEventMenu.Click += new EventHandler(this.NewTournamentEvent);
+            addCustomEventMenu.Click += new EventHandler(this.NewCustomEvent);
         }
 
         private void LoadData()
@@ -48,22 +50,22 @@ namespace DesktopApp
 
         private void NewTournamentEvent(object sender, EventArgs e)
         {
-            /*var form = new AddEditTournamentEventForm(null, user);
+            var form = new AddEditTournamentEventForm(null, user);
             form.ShowDialog();
 
             this.LoadData();
             this.PopulateList();
-            this.SetupButtons();*/
+            this.SetupButtons();
         }
 
         private void NewCustomEvent(object sender, EventArgs e)
         {
-            /*var form = new AddEditCustomEventForm(null, user);
+            var form = new AddEditCustomEventForm(null, user);
             form.ShowDialog();
 
             this.LoadData();
             this.PopulateList();
-            this.SetupButtons();*/
+            this.SetupButtons();
         }
 
         private void PopulateList()
@@ -137,6 +139,16 @@ namespace DesktopApp
             else if (evt.Type == "match")
             {
                 var form = new AddEditMatchEventForm((MatchEvent)evt, user);
+                res = form.ShowDialog();
+            }
+            else if (evt.Type == "tournament")
+            {
+                var form = new AddEditTournamentEventForm((TournamentEvent)evt, user);
+                res = form.ShowDialog();
+            }
+            else
+            {
+                var form = new AddEditCustomEventForm((CustomEvent)evt, user);
                 res = form.ShowDialog();
             }
 

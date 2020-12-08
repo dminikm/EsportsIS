@@ -24,7 +24,7 @@ namespace BusinessLayer {
 
         public PreviewList<User> Participants { get; set; }
 
-        public Event(DataTypes.Event evt)
+        protected Event(DataTypes.Event evt)
         {
             this.evt = evt;
 
@@ -35,6 +35,26 @@ namespace BusinessLayer {
             }), (User usr) => new Command(() => {
                 ParticipantIDs.Remove(usr.UserID.IfNone(() => throw new ArgumentException("User must have an ID!")));
             }), true);
+        }
+
+        public static Event FromType(DataTypes.Event evt)
+        {
+            if (evt.Type == "training")
+            {
+                return new TrainingEvent((DataTypes.TrainingEvent)evt);
+            }
+            else if (evt.Type == "match")
+            {
+                return new MatchEvent((DataTypes.MatchEvent)evt);
+            }
+            else if (evt.Type == "tournament")
+            {
+                return new TournamentEvent((DataTypes.TournamentEvent)evt);
+            }
+            else
+            {
+                return new CustomEvent((DataTypes.CustomEvent)evt);
+            }
         }
 
         protected DataTypes.Event evt;

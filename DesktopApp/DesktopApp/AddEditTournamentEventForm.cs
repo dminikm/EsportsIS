@@ -11,23 +11,24 @@ using System.Windows.Forms;
 
 namespace DesktopApp
 {
-    public partial class AddEditTrainingEventForm : Form
+    public partial class AddEditTournamentEventForm : Form
     {
-        public AddEditTrainingEventForm(Option<TrainingEvent> evt, User coach)
+        public AddEditTournamentEventForm(Option<TournamentEvent> evt, User coach)
         {
             InitializeComponent();
             this.Evt = evt;
 
             this.Text = this.nameLabel.Text = (evt.IsNone) ?
-                "🏋️ Add new training event!" :
-                "🏋️ Edit training event!";
+                "🏋️ Add new tournament event!" :
+                "🏋️ Edit tournament event!";
 
             this.cmds = new CommandQueue();
             this.cmds.Add(new Command(() =>
             {
-                this.Evt.IfNone(() => this.Evt = TrainingEvent.Create(
+                this.Evt.IfNone(() => this.Evt = TournamentEvent.Create(
                     this.nameTextBox.Text,
                     this.descriptionTextBox.Text,
+                    this.locationTextBox.Text,
                     this.fromDateTimePicker.Value,
                     this.toDateTimePicker.Value,
                     this.participants
@@ -36,6 +37,7 @@ namespace DesktopApp
 
             this.name = "";
             this.description = "";
+            this.location = "";
             this.from = DateTime.Now;
             this.to = DateTime.Now;
             this.participants = new List<User>();
@@ -47,6 +49,7 @@ namespace DesktopApp
 
                 this.name = x.Name;
                 this.description = x.Description;
+                this.location = x.Location;
                 this.from = unix.AddMilliseconds(x.From);
                 this.to = unix.AddMilliseconds(x.To);
                 this.participants = x.Participants.ToList();
@@ -57,6 +60,7 @@ namespace DesktopApp
         {
             nameTextBox.Text = name;
             descriptionTextBox.Text = description;
+            locationTextBox.Text = location;
             fromDateTimePicker.Value = from;
             toDateTimePicker.Value = to;
         }
@@ -93,19 +97,20 @@ namespace DesktopApp
             }
         }
 
-        private void AddEditTrainingEvent_Load(object sender, EventArgs e)
+        private void AddEditTournamentEvent_Load(object sender, EventArgs e)
         {
             PopulateFields();
             PopulateList();
             SetupButtons();
         }
 
-        public Option<TrainingEvent> Evt { get; set; }
+        public Option<TournamentEvent> Evt { get; set; }
         private CommandQueue cmds;
 
         private List<User> participants;
         private string name;
         private string description;
+        private string location;
         private DateTime from;
         private DateTime to;
 
@@ -298,6 +303,7 @@ namespace DesktopApp
 
             this.name = this.nameTextBox.Text;
             this.description = this.descriptionTextBox.Text;
+            this.location = this.locationTextBox.Text;
             this.from = this.fromDateTimePicker.Value;
             this.to = this.toDateTimePicker.Value;
 
@@ -309,6 +315,7 @@ namespace DesktopApp
                     {
                         evt.Name = this.name;
                         evt.Description = this.description;
+                        evt.Location = this.location;
                         evt.From = ((DateTimeOffset)this.from).ToUnixTimeMilliseconds();
                         evt.To = ((DateTimeOffset)this.to).ToUnixTimeMilliseconds();
                     });

@@ -284,13 +284,14 @@ namespace DesktopApp
                 var conflicts = (List<KeyValuePair<User, List<Event>>>)result.Value;
                 var res = MessageBox.Show(
                     $"The following users have a scheduling conflict with optional events:\n" + 
-                    $"{String.Join("\n", conflicts.Map((x) => $"{x.Key.FirstName} {x.Key.LastName} ({x.Key.Login})"))}",
+                    $"{String.Join("\n", conflicts.Map((x) => $"{x.Key.FirstName} {x.Key.LastName} ({x.Key.Login})"))}\n" +
+                    $"Do you want to clear their schedule?",
                     "Scheduling error!",
-                    MessageBoxButtons.OK,
+                    MessageBoxButtons.YesNo,
                     MessageBoxIcon.Error
                 );
 
-                if (res == DialogResult.OK)
+                if (res == DialogResult.Yes)
                 {
                     conflicts.ForEach((x) => x.Value.ForEach((y) => { y.RemoveParticipant(x.Key); y.Save(); }));
                 }

@@ -34,7 +34,7 @@ namespace BusinessLayer
             return EventGateway
                 .FindEventsForUser(this)
                 .Filter((x) => x.From >= DateTimeOffset.Now.ToUnixTimeMilliseconds())
-                .Map((x) => new Event(x))
+                .Map((x) => Event.FromType(x))
                 .ToList();
         }
 
@@ -45,7 +45,7 @@ namespace BusinessLayer
                 .Filter((x) =>
                     x.From <= ((DateTimeOffset)to).ToUnixTimeMilliseconds() &&
                     x.To >= ((DateTimeOffset)from).ToUnixTimeMilliseconds()
-                ).Map((x) => new Event(x))
+                ).Map((x) => Event.FromType(x))
                 .ToList();
         }
 

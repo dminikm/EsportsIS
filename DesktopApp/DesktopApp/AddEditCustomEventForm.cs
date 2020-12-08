@@ -11,23 +11,25 @@ using System.Windows.Forms;
 
 namespace DesktopApp
 {
-    public partial class AddEditTrainingEventForm : Form
+    public partial class AddEditCustomEventForm : Form
     {
-        public AddEditTrainingEventForm(Option<TrainingEvent> evt, User coach)
+        public AddEditCustomEventForm(Option<CustomEvent> evt, User coach)
         {
             InitializeComponent();
             this.Evt = evt;
 
             this.Text = this.nameLabel.Text = (evt.IsNone) ?
-                "🏋️ Add new training event!" :
-                "🏋️ Edit training event!";
+                "🏋️ Add new custom event!" :
+                "🏋️ Edit custom event!";
 
             this.cmds = new CommandQueue();
             this.cmds.Add(new Command(() =>
             {
-                this.Evt.IfNone(() => this.Evt = TrainingEvent.Create(
+                this.Evt.IfNone(() => this.Evt = CustomEvent.Create(
                     this.nameTextBox.Text,
                     this.descriptionTextBox.Text,
+                    -1,
+                    ColorTranslator.ToHtml(colorDialog1.Color),
                     this.fromDateTimePicker.Value,
                     this.toDateTimePicker.Value,
                     this.participants
@@ -36,6 +38,8 @@ namespace DesktopApp
 
             this.name = "";
             this.description = "";
+            this.maxParticipants = -1;
+            this.color = "#802040";
             this.from = DateTime.Now;
             this.to = DateTime.Now;
             this.participants = new List<User>();
@@ -93,19 +97,21 @@ namespace DesktopApp
             }
         }
 
-        private void AddEditTrainingEvent_Load(object sender, EventArgs e)
+        private void AddEditCustomEvent_Load(object sender, EventArgs e)
         {
             PopulateFields();
             PopulateList();
             SetupButtons();
         }
 
-        public Option<TrainingEvent> Evt { get; set; }
+        public Option<CustomEvent> Evt { get; set; }
         private CommandQueue cmds;
 
         private List<User> participants;
         private string name;
         private string description;
+        private string color;
+        private int maxParticipants;
         private DateTime from;
         private DateTime to;
 
@@ -322,6 +328,20 @@ namespace DesktopApp
         private void cancelButton_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
+        }
+
+        private void colorSelectButton_Click(object sender, EventArgs e)
+        {
+            colorDialog1.Color = ColorTranslator.FromHtml(this.color);
+            var result = colorDialog1.ShowDialog();
+            this.color = result == DialogResult.OK ? ColorTranslator.ToHtml(colorDialog1.Color) : this.color;
+            colorPanel.Invalidate();
+        }
+
+        private void colorPanel_Paint(object sender, PaintEventArgs e)
+        {
+            Color color = ColorTranslator.FromHtml(this.color);
+            colorPanel.BackColor = color;
         }
     }
 }
