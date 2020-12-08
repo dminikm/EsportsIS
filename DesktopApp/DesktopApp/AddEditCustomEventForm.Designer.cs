@@ -51,6 +51,8 @@ namespace DesktopApp
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.colorSelectButton = new System.Windows.Forms.Button();
             this.colorPanel = new System.Windows.Forms.Panel();
+            this.label7 = new System.Windows.Forms.Label();
+            this.maxParticipantsTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
@@ -237,11 +239,30 @@ namespace DesktopApp
             this.colorPanel.TabIndex = 37;
             this.colorPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.colorPanel_Paint);
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(555, 52);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(95, 15);
+            this.label7.TabIndex = 39;
+            this.label7.Text = "Max Participants";
+            // 
+            // maxParticipantsTextBox
+            // 
+            this.maxParticipantsTextBox.Location = new System.Drawing.Point(494, 70);
+            this.maxParticipantsTextBox.Name = "maxParticipantsTextBox";
+            this.maxParticipantsTextBox.Size = new System.Drawing.Size(156, 23);
+            this.maxParticipantsTextBox.TabIndex = 40;
+            this.maxParticipantsTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.maxParticipantsTextBox_KeyPress);
+            // 
             // AddEditCustomEventForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(663, 458);
+            this.Controls.Add(this.maxParticipantsTextBox);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.colorPanel);
             this.Controls.Add(this.colorSelectButton);
             this.Controls.Add(this.label6);
@@ -295,5 +316,7 @@ namespace DesktopApp
         private System.Windows.Forms.Panel colorPanel;
         private System.Windows.Forms.Button colorSelectButton;
         private System.Windows.Forms.ColorDialog colorDialog1;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox maxParticipantsTextBox;
     }
 }

@@ -67,6 +67,21 @@ namespace BusinessLayer {
         public long To { get => evt.To; set => evt.To = value; }
         public List<int> ParticipantIDs { get => evt.ParticipantIDs; set => evt.ParticipantIDs = value; }
         public string Color { get => evt.Color; set => evt.Color = value; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+            
+            return evt.Equals(((Event)obj).evt);
+        }
+        
+        public override int GetHashCode()
+        {
+            return evt.GetHashCode();
+        }
     }
 
     public class TrainingEvent : Event

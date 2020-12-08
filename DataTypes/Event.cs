@@ -13,6 +13,21 @@ namespace DataTypes
         public long To { get; set; }
         public string Color { get; set; }
         public List<int> ParticipantIDs { get; set; }
+
+        public override bool Equals(object obj)
+        {            
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+            
+            return this.EventID.Equals(((Event)obj).EventID);
+        }
+        
+        public override int GetHashCode()
+        {
+            return this.EventID.GetHashCode();
+        }
     }
 
     public class TrainingEvent : Event

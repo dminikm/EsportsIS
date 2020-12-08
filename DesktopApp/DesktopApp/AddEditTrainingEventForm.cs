@@ -153,6 +153,7 @@ namespace DesktopApp
                 {
                     var evts = x.GetEventsOverlappingWith(fromDateTimePicker.Value, toDateTimePicker.Value)
                         .Filter((y) => y.Type != "custom")
+                        .Filter((y) => !this.Evt.Map((z) => (Event)z).Equals(y))
                         .ToList();
 
                     return new KeyValuePair<User, List<Event>>(
@@ -171,7 +172,9 @@ namespace DesktopApp
                 Map((x) =>
                 {
                     var evts = x.GetEventsOverlappingWith(fromDateTimePicker.Value, toDateTimePicker.Value)
-                            .Filter((y) => y.Type == "custom").ToList();
+                            .Filter((y) => y.Type == "custom")
+                            .Filter((y) => !this.Evt.Map((z) => (Event)z).Equals(y))
+                            .ToList();
 
                     return new KeyValuePair<User, List<Event>>(
                         x, evts

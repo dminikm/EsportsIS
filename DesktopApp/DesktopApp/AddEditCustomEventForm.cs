@@ -28,7 +28,7 @@ namespace DesktopApp
                 this.Evt.IfNone(() => this.Evt = CustomEvent.Create(
                     this.nameTextBox.Text,
                     this.descriptionTextBox.Text,
-                    -1,
+                    maxParticipantsTextBox.Text == "" ? -1 : int.Parse(maxParticipantsTextBox.Text),
                     ColorTranslator.ToHtml(colorDialog1.Color),
                     this.fromDateTimePicker.Value,
                     this.toDateTimePicker.Value,
@@ -63,6 +63,8 @@ namespace DesktopApp
             descriptionTextBox.Text = description;
             fromDateTimePicker.Value = from;
             toDateTimePicker.Value = to;
+
+            maxParticipantsTextBox.Text = maxParticipants <= 0 ? "" : $"{maxParticipants}";
         }
 
         private void PopulateList()
@@ -110,8 +112,8 @@ namespace DesktopApp
         private List<User> participants;
         private string name;
         private string description;
-        private string color;
         private int maxParticipants;
+        private string color;
         private DateTime from;
         private DateTime to;
 
@@ -123,6 +125,7 @@ namespace DesktopApp
             InvalidToDate,
             ConflictWithRequired,
             ConflictWithOptional,
+            InvalidMaxParticipants
         }
 
         struct VerificationResult
@@ -154,11 +157,19 @@ namespace DesktopApp
                     Value = toDateTimePicker.Value,
                 };
 
+            if (maxParticipantsTextBox.Text == "0")
+                return new VerificationResult()
+                {
+                    State = VerificationState.InvalidMaxParticipants,
+                    Value = maxParticipantsTextBox.Text,
+                };
+
             var requiredConflicts = participants
                 .Map((x) =>
                 {
                     var evts = x.GetEventsOverlappingWith(fromDateTimePicker.Value, toDateTimePicker.Value)
                         .Filter((y) => y.Type != "custom")
+                        .Filter((y) => !this.Evt.Map((z) => (Event)z).Equals(y))
                         .ToList();
 
                     return new KeyValuePair<User, List<Event>>(
@@ -177,7 +188,9 @@ namespace DesktopApp
                 Map((x) =>
                 {
                     var evts = x.GetEventsOverlappingWith(fromDateTimePicker.Value, toDateTimePicker.Value)
-                            .Filter((y) => y.Type == "custom").ToList();
+                            .Filter((y) => y.Type == "custom")
+                            .Filter((y) => !this.Evt.Map((z) => (Event)z).Equals(y))
+                            .ToList();
 
                     return new KeyValuePair<User, List<Event>>(
                         x, evts
@@ -266,6 +279,12 @@ namespace DesktopApp
                 return;
             }
 
+            if (result.State == VerificationState.InvalidMaxParticipants)
+            {
+                errorProvider.SetError(maxParticipantsTextBox, "Max participants cannot be 0, if you dont want a limit, leave this field empty!");
+                return;
+            }
+
             if (result.State == VerificationState.ConflictWithRequired)
             {
                 var conflicts = (List<KeyValuePair<User, List<Event>>>)result.Value;
@@ -306,6 +325,7 @@ namespace DesktopApp
             this.description = this.descriptionTextBox.Text;
             this.from = this.fromDateTimePicker.Value;
             this.to = this.toDateTimePicker.Value;
+            this.maxParticipants = this.maxParticipantsTextBox.Text == "" ? -1 : int.Parse(this.maxParticipantsTextBox.Text);
 
             if (this.Evt.IsSome)
             {
@@ -342,6 +362,14 @@ namespace DesktopApp
         {
             Color color = ColorTranslator.FromHtml(this.color);
             colorPanel.BackColor = color;
+        }
+
+        private void maxParticipantsTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
         }
     }
 }
