@@ -16,11 +16,61 @@ namespace DesktopApp
         {
             InitializeComponent();
             this.user = user;
+
+            addTrainingEventMenu.Click += new EventHandler(this.NewTrainingEvent);
+
         }
 
         private void LoadData()
         {
             this.events = this.user.GetUpcomingEvents();
+
+            /*var form = new AddEditTrainingEventForm(null, user);
+            form.ShowDialog();
+
+            this.LoadData();
+            this.PopulateList();
+            this.SetupButtons();*/
+        }
+
+        private void NewTrainingEvent(object sender, EventArgs e)
+        {
+            var form = new AddEditTrainingEventForm(null, user);
+            form.ShowDialog();
+
+            this.LoadData();
+            this.PopulateList();
+            this.SetupButtons();
+        }
+
+        private void NewMatchEvent(object sender, EventArgs e)
+        {
+            /*var form = new AddEditMatchEventForm(null, user);
+            form.ShowDialog();
+
+            this.LoadData();
+            this.PopulateList();
+            this.SetupButtons();*/
+        }
+
+        private void NewTournamentEvent(object sender, EventArgs e)
+        {
+            /*var form = new AddEditTournamentEventForm(null, user);
+            form.ShowDialog();
+
+            this.LoadData();
+            this.PopulateList();
+            this.SetupButtons();*/
+        }
+
+        private void NewCustomEvent(object sender, EventArgs e)
+        {
+            /*var form = new AddEditCustomEventForm(null, user);
+            form.ShowDialog();
+
+            this.LoadData();
+            this.PopulateList();
+            this.SetupButtons();*/
         }
 
         private void PopulateList()
@@ -78,13 +128,7 @@ namespace DesktopApp
 
         private void addEventButton_Click(object sender, EventArgs e)
         {
-            // TODO: Use context menu
-            var form = new AddEditTrainingEventForm(null, user);
-            form.ShowDialog();
-
-            this.LoadData();
-            this.PopulateList();
-            this.SetupButtons();
+            contextMenuStrip.Show(addEventButton, addEventButton.PointToClient(Cursor.Position));
         }
 
         private void editEventButton_Click(object sender, EventArgs e)

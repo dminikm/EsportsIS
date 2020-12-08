@@ -42,14 +42,19 @@ namespace DesktopApp
             this.removeEventButton = new System.Windows.Forms.Button();
             this.editEventButton = new System.Windows.Forms.Button();
             this.addEventButton = new System.Windows.Forms.Button();
+            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addTrainingEventMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.addMatchEventMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.addTournamentEventMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.addCustomEventMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.contextMenuStrip.SuspendLayout();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -171,6 +176,7 @@ namespace DesktopApp
             // 
             // addEventButton
             // 
+            this.addEventButton.ContextMenuStrip = this.contextMenuStrip;
             this.addEventButton.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.addEventButton.Location = new System.Drawing.Point(8, 0);
             this.addEventButton.Name = "addEventButton";
@@ -179,6 +185,40 @@ namespace DesktopApp
             this.addEventButton.Text = "➕";
             this.addEventButton.UseVisualStyleBackColor = true;
             this.addEventButton.Click += new System.EventHandler(this.addEventButton_Click);
+            // 
+            // contextMenuStrip
+            // 
+            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addTrainingEventMenu,
+            this.addMatchEventMenu,
+            this.addTournamentEventMenu,
+            this.addCustomEventMenu});
+            this.contextMenuStrip.Name = "contextMenuStrip1";
+            this.contextMenuStrip.Size = new System.Drawing.Size(198, 92);
+            // 
+            // addTrainingEventMenu
+            // 
+            this.addTrainingEventMenu.Name = "addTrainingEventMenu";
+            this.addTrainingEventMenu.Size = new System.Drawing.Size(197, 22);
+            this.addTrainingEventMenu.Text = "New Training Event";
+            // 
+            // addMatchEventMenu
+            // 
+            this.addMatchEventMenu.Name = "addMatchEventMenu";
+            this.addMatchEventMenu.Size = new System.Drawing.Size(197, 22);
+            this.addMatchEventMenu.Text = "New Match Event";
+            // 
+            // addTournamentEventMenu
+            // 
+            this.addTournamentEventMenu.Name = "addTournamentEventMenu";
+            this.addTournamentEventMenu.Size = new System.Drawing.Size(197, 22);
+            this.addTournamentEventMenu.Text = "New Tournament Event";
+            // 
+            // addCustomEventMenu
+            // 
+            this.addCustomEventMenu.Name = "addCustomEventMenu";
+            this.addCustomEventMenu.Size = new System.Drawing.Size(197, 22);
+            this.addCustomEventMenu.Text = "New Custom Event";
             // 
             // button1
             // 
@@ -208,11 +248,6 @@ namespace DesktopApp
             this.label1.TabIndex = 0;
             this.label1.Text = "Events for: mec0037";
             // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-            // 
             // EventListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -227,6 +262,7 @@ namespace DesktopApp
             this.tableLayoutPanel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
+            this.contextMenuStrip.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.ResumeLayout(false);
@@ -241,7 +277,6 @@ namespace DesktopApp
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.Button refreshEventsButton;
         private System.Windows.Forms.Button removeEventButton;
         private System.Windows.Forms.Button editEventButton;
@@ -251,5 +286,10 @@ namespace DesktopApp
         private System.Windows.Forms.ColumnHeader nameColumnHeader;
         private System.Windows.Forms.ColumnHeader fromColumnHeader;
         private System.Windows.Forms.ColumnHeader typeColumnHeader;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem addTrainingEventMenu;
+        private System.Windows.Forms.ToolStripMenuItem addMatchEventMenu;
+        private System.Windows.Forms.ToolStripMenuItem addTournamentEventMenu;
+        private System.Windows.Forms.ToolStripMenuItem addCustomEventMenu;
     }
 }

@@ -240,8 +240,6 @@ namespace DesktopApp
 
         private void okButton_Click(object sender, EventArgs e)
         {
-            // TODO: Validate
-
             var result = DoVerification();
 
             if (result.State == VerificationState.InvalidName)
