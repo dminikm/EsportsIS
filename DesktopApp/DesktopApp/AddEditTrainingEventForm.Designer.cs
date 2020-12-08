@@ -1,7 +1,7 @@
 ﻿
 namespace DesktopApp
 {
-    partial class AddEditTrainingEvent
+    partial class AddEditTrainingEventForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,6 +29,7 @@ namespace DesktopApp
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.removeParticipantButton = new System.Windows.Forms.Button();
             this.addParticipantButton = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
@@ -45,6 +46,8 @@ namespace DesktopApp
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.toDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // removeParticipantButton
@@ -164,7 +167,7 @@ namespace DesktopApp
             // 
             // fromDateTimePicker
             // 
-            this.fromDateTimePicker.CustomFormat = "dd.MM.yyyy hh:mm:ss";
+            this.fromDateTimePicker.CustomFormat = "dd.MM.yyyy HH:mm:ss";
             this.fromDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.fromDateTimePicker.Location = new System.Drawing.Point(11, 285);
             this.fromDateTimePicker.Name = "fromDateTimePicker";
@@ -191,14 +194,18 @@ namespace DesktopApp
             // 
             // toDateTimePicker
             // 
-            this.toDateTimePicker.CustomFormat = "dd.MM.yyyy hh:mm:ss";
+            this.toDateTimePicker.CustomFormat = "dd.MM.yyyy HH:mm:ss";
             this.toDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.toDateTimePicker.Location = new System.Drawing.Point(12, 333);
             this.toDateTimePicker.Name = "toDateTimePicker";
             this.toDateTimePicker.Size = new System.Drawing.Size(235, 23);
             this.toDateTimePicker.TabIndex = 33;
             // 
-            // AddEditTrainingEvent
+            // errorProvider
+            // 
+            this.errorProvider.ContainerControl = this;
+            // 
+            // AddEditTrainingEventForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -219,10 +226,11 @@ namespace DesktopApp
             this.Controls.Add(this.label1);
             this.Controls.Add(this.nameLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Name = "AddEditTrainingEvent";
+            this.Name = "AddEditTrainingEventForm";
             this.ShowIcon = false;
             this.Text = "🏋️ Add/Edit Training";
             this.Load += new System.EventHandler(this.AddEditTrainingEvent_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -246,5 +254,7 @@ namespace DesktopApp
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DateTimePicker toDateTimePicker;
+        private System.Windows.Forms.ErrorProvider ror;
+        private System.Windows.Forms.ErrorProvider errorProvider;
     }
 }

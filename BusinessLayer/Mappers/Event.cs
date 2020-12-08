@@ -16,6 +16,11 @@ namespace BusinessLayer {
             EventGateway.Delete(this);
         }
 
+        public void RemoveParticipant(User usr)
+        {
+            this.Participants.Remove(usr);
+        }
+
         public PreviewList<User> Participants { get; set; }
 
         public Event(DataTypes.Event evt)

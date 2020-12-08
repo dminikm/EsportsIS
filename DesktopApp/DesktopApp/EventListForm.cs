@@ -79,7 +79,7 @@ namespace DesktopApp
         private void addEventButton_Click(object sender, EventArgs e)
         {
             // TODO: Use context menu
-            var form = new AddEditTrainingEvent(null, user);
+            var form = new AddEditTrainingEventForm(null, user);
             form.ShowDialog();
 
             this.LoadData();
@@ -89,17 +89,38 @@ namespace DesktopApp
 
         private void editEventButton_Click(object sender, EventArgs e)
         {
+            var evt = (Event)eventListView.SelectedItems[0].Tag;
+
+            DialogResult res = DialogResult.None;
+            if (evt.Type == "training")
+            {
+                var form = new AddEditTrainingEventForm((TrainingEvent)evt, user);
+                res = form.ShowDialog();
+            }
+
+            if (res == DialogResult.OK)
+            {
+                this.PopulateList();
+                this.SetupButtons();
+            }
 
         }
 
         private void removeEventButton_Click(object sender, EventArgs e)
         {
+            var evt = (Event)eventListView.SelectedItems[0].Tag;
+            events.Remove(evt);
+            evt.Delete();
 
+            PopulateList();
+            SetupButtons();
         }
 
         private void refreshEventsButton_Click(object sender, EventArgs e)
         {
             this.LoadData();
+            this.PopulateList();
+            this.SetupButtons();
         }
 
         private void eventListView_SelectedIndexChanged(object sender, EventArgs e)

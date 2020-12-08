@@ -38,6 +38,17 @@ namespace BusinessLayer
                 .ToList();
         }
 
+        public List<Event> GetEventsOverlappingWith(DateTime from, DateTime to)
+        {
+            return EventGateway
+                .FindEventsForUser(this)
+                .Filter((x) =>
+                    x.From <= ((DateTimeOffset)to).ToUnixTimeMilliseconds() &&
+                    x.To >= ((DateTimeOffset)from).ToUnixTimeMilliseconds()
+                ).Map((x) => new Event(x))
+                .ToList();
+        }
+
         public User(DataTypes.User user)
         {
             this.UserID = user.UserID;

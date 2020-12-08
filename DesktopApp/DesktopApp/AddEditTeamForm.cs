@@ -107,16 +107,20 @@ namespace DesktopApp
             var form = new SelectUserForm(DataTypes.UserRole.Player, players);
             var result = form.ShowDialog();
 
-            var newPlayer = form.SelectedUser;
-
-            this.players.Add(newPlayer);
-            this.cmds.Add(new Command(() =>
+            if (result == DialogResult.OK)
             {
-                this.team.IfSome((team) => team.Players.Add(newPlayer));
-            }));
+                var newPlayer = form.SelectedUser;
 
-            this.Populate();
-            this.SetupButtons();
+                this.players.Add(newPlayer);
+                this.cmds.Add(new Command(() =>
+                {
+                    this.team.IfSome((team) => team.Players.Add(newPlayer));
+                }));
+
+                this.Populate();
+                this.SetupButtons();
+            }
+
         }
 
         private void removePlayerButton_Click(object sender, EventArgs e)
