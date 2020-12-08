@@ -24,13 +24,6 @@ namespace DesktopApp
         private void LoadData()
         {
             this.events = this.user.GetUpcomingEvents();
-
-            /*var form = new AddEditTrainingEventForm(null, user);
-            form.ShowDialog();
-
-            this.LoadData();
-            this.PopulateList();
-            this.SetupButtons();*/
         }
 
         private void NewTrainingEvent(object sender, EventArgs e)
@@ -45,12 +38,12 @@ namespace DesktopApp
 
         private void NewMatchEvent(object sender, EventArgs e)
         {
-            /*var form = new AddEditMatchEventForm(null, user);
+            var form = new AddEditMatchEventForm(null, user);
             form.ShowDialog();
 
             this.LoadData();
             this.PopulateList();
-            this.SetupButtons();*/
+            this.SetupButtons();
         }
 
         private void NewTournamentEvent(object sender, EventArgs e)
@@ -141,13 +134,17 @@ namespace DesktopApp
                 var form = new AddEditTrainingEventForm((TrainingEvent)evt, user);
                 res = form.ShowDialog();
             }
+            else if (evt.Type == "match")
+            {
+                var form = new AddEditMatchEventForm((MatchEvent)evt, user);
+                res = form.ShowDialog();
+            }
 
             if (res == DialogResult.OK)
             {
                 this.PopulateList();
                 this.SetupButtons();
             }
-
         }
 
         private void removeEventButton_Click(object sender, EventArgs e)
