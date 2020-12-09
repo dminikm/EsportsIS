@@ -1,0 +1,50 @@
+@import "./login.css";
+
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body, html {
+    display: flex;
+    flex-direction: column;
+    
+    margin: 0px;
+    padding: 0px;
+
+    width: 100vw;
+    height: 100vh;
+
+    max-width: 100%;
+}
+
+.navbar {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+
+    width: 100%;
+    height: 45px;
+
+    background-color: #222222;
+}
+
+.navbar > *:first-child {
+    padding-left: 15px;
+}
+
+.navbar > .navbar-company-name {
+    color: white;
+    text-decoration: none;
+
+    font-size: large;
+    font-weight: bold;
+}
+
+.content-container {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: 100%;
+}

@@ -26,7 +26,8 @@ class Router
         this.handlers = new List<Route>();
     }
 
-    public Router AddRoute<HandlerType>(HTTPMethod method, string fullRoute, HandlerType handler)
+    public Router AddRoute<ControllerType, HandlerType>(HTTPMethod method, string fullRoute, HandlerType handler)
+        where ControllerType : Controller, new()
         where HandlerType : Delegate
     {
         var parts = fullRoute.Split('/').Filter((x) => x != "").ToList();
@@ -45,13 +46,28 @@ class Router
             Parts = parts,
             Handler = (string url, HttpContext context) =>
             {
-                var res = (ControllerAction)handler.DynamicInvoke(
+                var request = context.Request;
+                var routeValues = request.RouteValues;
+
+                // Create a new controller for this request
+                var controller = new ControllerType();
+                var newHandler = controller.GetType().GetMethod(handler.Method.Name);
+
+                var res = (ControllerAction)newHandler.Invoke(
+                    controller,
                     paramInfos.Map(
-                        (x) => Convert.ChangeType(context.Request.RouteValues[x.Name], x.ParameterType)
+                        (x) => Convert.ChangeType(
+                            routeValues.ContainsKey(x.Name) ?
+                                routeValues[x.Name] :
+                                request.Method == "POST" && request.Form.ContainsKey(x.Name) ?
+                                    request.Form[x.Name][0] :
+                                    throw new ArgumentException($"No argument named {x.Name} supplied to the url!"),
+                            x.ParameterType
+                        )
                     ).ToArray()
                 );
 
-                res.Do(context);
+                res.Run(context);
                 return true;
             }
         });

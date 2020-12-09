@@ -1,9 +1,31 @@
-interface View<ModelType>
+using System;
+
+class View<ModelType>
 {
-    string Render(ModelType model);
+    public View()
+    {
+
+    }
+
+    public virtual string Render(ModelType model)
+    {
+        throw new NotImplementedException("Base View has no Render");
+    }
+
+    public dynamic ViewBag { get; set; }
 }
 
-interface View
+class View
 {
-    string Render();
+    public View()
+    {
+
+    }
+
+    public virtual string Render()
+    {
+        throw new NotImplementedException("Base View has no Render");
+    }
+
+    public dynamic ViewBag { get; set; }
 }
