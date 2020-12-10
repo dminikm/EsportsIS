@@ -50,8 +50,9 @@ class Router
                 var routeValues = request.RouteValues;
 
                 // Create a new controller for this request
-                var controller = new ControllerType();
+                var controller = new ControllerType().BindContext(context);
                 var newHandler = controller.GetType().GetMethod(handler.Method.Name);
+                controller.OnBeforeReply(context);
 
                 var res = (ControllerAction)newHandler.Invoke(
                     controller,

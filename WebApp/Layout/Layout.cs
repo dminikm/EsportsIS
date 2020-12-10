@@ -7,6 +7,16 @@ class Layout : View<string>
         this.ViewBag = obj;
     }
 
+    private string RenderUser()
+    {
+        return $@"
+{(ViewBag.LoggedIn ?
+    @$"<a>{ViewBag.User.FirstName} {ViewBag.User.LastName}</a>" :
+    @$"<a href=""/login"">LogIn</a>"
+)}
+        ";
+    }
+
     public string Render(string inner)
     {
         return $@"
@@ -20,7 +30,7 @@ class Layout : View<string>
         <nav class=""navbar"">
             <a href=""/"" class=""navbar-company-name"">Esport IS</a>
             <div class=""navbar-user-container"">
-                {(ViewBag.LoggedIn ? "LogOut" : "LogIn")}
+                {RenderUser()}
             </div>
         </nav>
         <main class=""content-container"">

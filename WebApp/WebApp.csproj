@@ -2,6 +2,9 @@
   <ItemGroup>
     <PackageReference Include="LanguageExt.Core" Version="3.4.15" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj" />
+  </ItemGroup>
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>

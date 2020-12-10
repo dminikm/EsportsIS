@@ -11,14 +11,8 @@ using System.Dynamic;
 
 class ControllerAction
 {
-    protected ControllerAction(Action<HttpContext> onBeforeRun)
-    {
-        this.onBeforeRun = onBeforeRun;
-    }
-
     public async void Run(HttpContext context)
     {
-        this.onBeforeRun(context);
         this.Do(context);
     }
 
@@ -26,14 +20,11 @@ class ControllerAction
     {
         throw new InvalidOperationException("Attempted to call base ControllerAction Do!");
     }
-
-
-    private Action<HttpContext> onBeforeRun;
 }
 
 class ControllerViewAction<ViewType, ModelType> : ControllerAction where ViewType : View<ModelType> 
 {
-    public ControllerViewAction(Action<HttpContext> onBeforeRun, ViewType view, ModelType model) : base(onBeforeRun)
+    public ControllerViewAction(Action<HttpContext> onBeforeRun, ViewType view, ModelType model)
     {
         this.view = view;
         this.model = model;
@@ -50,7 +41,7 @@ class ControllerViewAction<ViewType, ModelType> : ControllerAction where ViewTyp
 
 class ControllerViewAction<ViewType> : ControllerAction where ViewType : View
 {
-    public ControllerViewAction(Action<HttpContext> onBeforeRun, ViewType view) : base(onBeforeRun)
+    public ControllerViewAction(ViewType view)
     {
         this.view = view;
     }
@@ -65,7 +56,7 @@ class ControllerViewAction<ViewType> : ControllerAction where ViewType : View
 
 class ControllerRedirectAction : ControllerAction
 {
-    public ControllerRedirectAction(Action<HttpContext> onBeforeRun, string url) : base(onBeforeRun)
+    public ControllerRedirectAction(string url)
     {
         this.redirectURL = url;
     }
@@ -85,9 +76,16 @@ class Controller
         this.ViewBag = new ExpandoObject();
     }
 
+    public Controller BindContext(HttpContext context)
+    {
+        this.context = context;
+        
+        return this;
+    }
+
     public virtual void OnBeforeReply(HttpContext context)
     {
-
+        
     }
 
     protected ControllerAction View<ViewType, ModelType>(ModelType model) where ViewType : View<ModelType>, new()
@@ -102,18 +100,17 @@ class Controller
     protected ControllerAction View<ViewType>() where ViewType : View, new()
     {
         return new ControllerViewAction<ViewType>(
-            (context) => this.OnBeforeReply(context),
-            new ViewType()
+            new ViewType() { ViewBag = ViewBag }
         );
     }
 
     protected ControllerAction Redirect(string url)
     {
         return new ControllerRedirectAction(
-            (context) => this.OnBeforeReply(context),
             url
         );
     }
 
     public dynamic ViewBag { get; set; }
+    public HttpContext context;
 }

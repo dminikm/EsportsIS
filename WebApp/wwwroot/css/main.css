@@ -41,6 +41,19 @@ body, html {
     font-weight: bold;
 }
 
+.navbar-user-container {
+    width: 150px;
+    height: auto;
+
+    margin-left: auto;
+    color: white;
+}
+
+.navbar-user-container * {
+    text-decoration: none;
+    color: white;
+}
+
 .content-container {
     display: flex;
     flex-direction: column;

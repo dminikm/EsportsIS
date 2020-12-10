@@ -10,21 +10,6 @@ class LoginIndexView : View
     public override string Render()
     {
         return new Layout(ViewBag).Render($@"
-Hello, world!
-        ");
-    }
-}
-
-class TestView : View<int>
-{
-    public TestView() : base()
-    {
-
-    }
-
-    public override string Render(int a)
-    {
-        return new Layout(ViewBag).Render($@"
 <div class=""login-container"">
     <form action=""/login/"" method=""POST"">
         <h1>LogIn</h1>
