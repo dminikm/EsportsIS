@@ -191,6 +191,70 @@ namespace DatabaseService
                 return rowOption.Map((x) => ParseEvent(x)).Somes().ToList();
             }
 
+            public static List<TrainingEvent> AllTraining()
+            {
+                var db = JSONDatabase.Instance;
+
+                db.BeginTransaction();
+                var rowOption = db.GetAllInTable("events");
+                db.EndTransaction();
+
+                return rowOption
+                    .Map((x) => ParseEvent(x))
+                    .Somes()
+                    .Filter((x) => x.Type == "training")
+                    .Map((x) => (TrainingEvent)x)
+                    .ToList();
+            }
+
+            public static List<MatchEvent> AllMatches()
+            {
+                var db = JSONDatabase.Instance;
+
+                db.BeginTransaction();
+                var rowOption = db.GetAllInTable("events");
+                db.EndTransaction();
+
+                return rowOption
+                    .Map((x) => ParseEvent(x))
+                    .Somes()
+                    .Filter((x) => x.Type == "match")
+                    .Map((x) => (MatchEvent)x)
+                    .ToList();
+            }
+
+            public static List<TournamentEvent> AllTournaments()
+            {
+                var db = JSONDatabase.Instance;
+
+                db.BeginTransaction();
+                var rowOption = db.GetAllInTable("events");
+                db.EndTransaction();
+
+                return rowOption
+                    .Map((x) => ParseEvent(x))
+                    .Somes()
+                    .Filter((x) => x.Type == "tournament")
+                    .Map((x) => (TournamentEvent)x)
+                    .ToList();
+            }
+
+            public static List<CustomEvent> AllCustom()
+            {
+                var db = JSONDatabase.Instance;
+
+                db.BeginTransaction();
+                var rowOption = db.GetAllInTable("events");
+                db.EndTransaction();
+
+                return rowOption
+                    .Map((x) => ParseEvent(x))
+                    .Somes()
+                    .Filter((x) => x.Type == "custom")
+                    .Map((x) => (CustomEvent)x)
+                    .ToList();
+            }
+
             public static List<Event> FindEventsForUser(User usr)
             {
                 return All().Filter((x) => x.ParticipantIDs.Contains(usr.UserID.IfNone(() => -1))).ToList();

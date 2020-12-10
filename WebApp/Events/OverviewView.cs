@@ -6,6 +6,12 @@ using static System.Linq.Enumerable;
 
 class OverviewView : View<EventOverviewModel>
 {
+    private DateTime StartOfWeek(DateTime dt, DayOfWeek startOfWeek)
+    {
+        int diff = (7 + (dt.DayOfWeek - startOfWeek)) % 7;
+        return dt.AddDays(-1 * diff).Date;
+    }
+
     private string RenderMiniEvent(Event evt)
     {
         var time = new DateTime(1970, 1, 1, 0, 0, 0, 0)
@@ -30,12 +36,70 @@ class OverviewView : View<EventOverviewModel>
         return string.Join("", events.Map((x) => RenderMiniEvent(x)));
     }
 
-    private string RenderDaySchedule(List<Event> events, int day)
+    private string RenderEvent(Event evt, DateTime weekStart, int day)
     {
+        return $@"
+            {evt.Name}
+        ";
+    }
+
+    private bool IsInDay(DateTime week, int day, long from, long to)
+    {
+        return
+            from <= ((DateTimeOffset)week.AddDays(day)).ToUnixTimeMilliseconds() &&
+            to >= ((DateTimeOffset)week.AddDays(day + 1).AddMilliseconds(-1)).ToUnixTimeMilliseconds();
+    }
+
+    private string RenderDaySchedule(List<Event> events, DateTime weekStart, int day)
+    {
+        var todayEvents = events
+            .Filter((x) => IsInDay(weekStart, day, x.From, x.To))
+            .ToList();
+
+        var eventColumns = new List<List<Event>>();
+        eventColumns.Add(new List<Event>());
+
+        todayEvents.ForEach((x) =>
+        {
+            foreach (var column in eventColumns) {
+                if (column.Count == 0) {
+                    column.Add(x);
+
+                    return;
+                }
+
+                if (column[column.Count -1].To >= x.From) {
+                    continue;
+                }
+
+                column.Add(x);
+                return;
+            }
+
+            eventColumns.Add(new List<Event>() { x });
+        });
+
         return $@"
         <div class=""overview-table-outer"">
             <div class=""overview-table-padder""></div>
-            <div class=""overview-table-inner""></div>
+            <div class=""overview-table-inner"">
+                {
+                    String.Join(
+                        "",
+                        eventColumns.Map(
+                            (x) => 
+                                "<div>" +
+                                String.Join(
+                                    "",
+                                    x.Map((y) =>
+                                        RenderEvent(y, weekStart, day)
+                                    )
+                                ) +
+                                "</div>"
+                        )
+                    )
+                }
+            </div>
             <div class=""overview-table-padder""></div>
         </div>
         ";
@@ -51,7 +115,7 @@ class OverviewView : View<EventOverviewModel>
         );
     }
 
-    private string RenderScheduleTable(List<Event> events)
+    private string RenderScheduleTable(List<Event> events, DateTime weekStart)
     {
         return $@"
 <div class=""overview-table-container"">
@@ -71,13 +135,13 @@ class OverviewView : View<EventOverviewModel>
         <tbody>
             <tr>
                 <th>{ RenderTimeColumn() }</th>
-                <th>{ RenderDaySchedule(events, 0) }</th>
-                <th>{ RenderDaySchedule(events, 0) }</th>
-                <th>{ RenderDaySchedule(events, 0) }</th>
-                <th>{ RenderDaySchedule(events, 0) }</th>
-                <th>{ RenderDaySchedule(events, 0) }</th>
-                <th>{ RenderDaySchedule(events, 0) }</th>
-                <th>{ RenderDaySchedule(events, 0) }</th>
+                <th>{ RenderDaySchedule(events, weekStart, 0) }</th>
+                <th>{ RenderDaySchedule(events, weekStart, 1) }</th>
+                <th>{ RenderDaySchedule(events, weekStart, 2) }</th>
+                <th>{ RenderDaySchedule(events, weekStart, 3) }</th>
+                <th>{ RenderDaySchedule(events, weekStart, 4) }</th>
+                <th>{ RenderDaySchedule(events, weekStart, 5) }</th>
+                <th>{ RenderDaySchedule(events, weekStart, 6) }</th>
             </tr>
         </tbody>
     </table>
@@ -93,7 +157,7 @@ class OverviewView : View<EventOverviewModel>
         <div class=""content-section-header"">
         </div>
         <div class=""content-section-body"">
-            { RenderScheduleTable(model.Events) }
+            { RenderScheduleTable(model.Events, model.WeekStart) }
         </div>
     </div>
     <div class=""overview-upcoming"">

@@ -321,6 +321,8 @@ namespace DesktopApp
                         evt.Server = this.server;
                         evt.From = ((DateTimeOffset)this.from).ToUnixTimeMilliseconds();
                         evt.To = ((DateTimeOffset)this.to).ToUnixTimeMilliseconds();
+
+                        evt.Save();
                     });
                 }));
             }

@@ -166,6 +166,15 @@ namespace BusinessLayer {
             ));
         }
 
+        public static List<CustomEvent> GetUpcoming(DateTime from)
+        {
+            return EventGateway
+                .AllCustom()
+                .Filter((x) => x.From >= ((DateTimeOffset)from).ToUnixTimeMilliseconds())
+                .Map((x) => new CustomEvent(x))
+                .ToList();
+        }
+
         public int MapParticipants { get => ((DataTypes.CustomEvent)evt).MaxParticipants; set => ((DataTypes.CustomEvent)evt).MaxParticipants = value; }
     }
 }
