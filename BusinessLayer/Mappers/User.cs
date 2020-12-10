@@ -33,7 +33,7 @@ namespace BusinessLayer
         {
             return EventGateway
                 .FindEventsForUser(this)
-                .Filter((x) => x.From >= DateTimeOffset.Now.ToUnixTimeMilliseconds())
+                .Filter((x) => x.From >= DateTimeOffset.UtcNow.ToUnixTimeMilliseconds())
                 .Map((x) => Event.FromType(x))
                 .ToList();
         }

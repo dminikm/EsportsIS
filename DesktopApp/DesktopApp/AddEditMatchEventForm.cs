@@ -29,8 +29,8 @@ namespace DesktopApp
                     this.nameTextBox.Text,
                     this.descriptionTextBox.Text,
                     this.serverTextBox.Text,
-                    this.fromDateTimePicker.Value,
-                    this.toDateTimePicker.Value,
+                    this.fromDateTimePicker.Value.ToUniversalTime(),
+                    this.toDateTimePicker.Value.ToUniversalTime(),
                     this.participants
                 ));
             }));
@@ -38,8 +38,8 @@ namespace DesktopApp
             this.name = "";
             this.description = "";
             this.server = "";
-            this.from = DateTime.Now;
-            this.to = DateTime.Now;
+            this.from = DateTime.UtcNow;
+            this.to = DateTime.UtcNow;
             this.participants = new List<User>();
             this.participants.Add(coach);
 
@@ -61,8 +61,8 @@ namespace DesktopApp
             nameTextBox.Text = name;
             descriptionTextBox.Text = description;
             serverTextBox.Text = server;
-            fromDateTimePicker.Value = from;
-            toDateTimePicker.Value = to;
+            fromDateTimePicker.Value = from.ToLocalTime();
+            toDateTimePicker.Value = to.ToLocalTime();
         }
 
         private void PopulateList()
@@ -307,8 +307,8 @@ namespace DesktopApp
             this.name = this.nameTextBox.Text;
             this.description = this.descriptionTextBox.Text;
             this.server = this.serverTextBox.Text;
-            this.from = this.fromDateTimePicker.Value;
-            this.to = this.toDateTimePicker.Value;
+            this.from = this.fromDateTimePicker.Value.ToUniversalTime();
+            this.to = this.toDateTimePicker.Value.ToUniversalTime();
 
             if (this.Evt.IsSome)
             {

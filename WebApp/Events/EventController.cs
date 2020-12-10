@@ -22,7 +22,7 @@ class EventController : BaseController
             .ToList();
 
         var upcomingNotJoined = CustomEvent
-            .GetUpcoming(DateTime.Now)
+            .GetUpcoming(DateTime.UtcNow)
             .Filter((x) => !x.ParticipantIDs.Contains(LoggedUser.UserID.IfNone(-1)))
             .ToList();
 

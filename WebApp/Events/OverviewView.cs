@@ -16,6 +16,7 @@ class OverviewView : View<EventOverviewModel>
     {
         var time = new DateTime(1970, 1, 1, 0, 0, 0, 0)
             .AddMilliseconds(evt.From)
+            .ToLocalTime()
             .ToShortTimeString();
 
         return $@"
@@ -38,16 +39,27 @@ class OverviewView : View<EventOverviewModel>
 
     private string RenderEvent(Event evt, DateTime weekStart, int day)
     {
+        var dayStart = (double)((DateTimeOffset)weekStart.AddDays(day)).ToUnixTimeMilliseconds();
+        var dayEnd = (double)((DateTimeOffset)weekStart.AddDays(day + 1).AddMilliseconds(-1)).ToUnixTimeMilliseconds();
+
+        var startPerc = Math.Min(1, Math.Max(0, ((double)evt.From - dayStart ) / (dayEnd - dayStart))) * 100;
+        var endPerc = 100 - (Math.Min(1, Math.Max(0, ((double)evt.To - dayStart ) / (dayEnd - dayStart))) * 100);
+
+        var startStr = startPerc.ToString("0.000", System.Globalization.CultureInfo.InvariantCulture);
+        var endStr = endPerc.ToString("0.000", System.Globalization.CultureInfo.InvariantCulture);
+
         return $@"
-            {evt.Name}
+            <div style=""width: 100%; position: absolute; top: {startStr}%; height: {endStr}%; background-color: {evt.Color};"">
+                {evt.Name}
+            </div>
         ";
     }
 
     private bool IsInDay(DateTime week, int day, long from, long to)
     {
         return
-            from <= ((DateTimeOffset)week.AddDays(day)).ToUnixTimeMilliseconds() &&
-            to >= ((DateTimeOffset)week.AddDays(day + 1).AddMilliseconds(-1)).ToUnixTimeMilliseconds();
+            from <= ((DateTimeOffset)week.AddDays(day + 1)).ToUnixTimeMilliseconds() &&
+            to >= ((DateTimeOffset)week.AddDays(day).AddMilliseconds(-1)).ToUnixTimeMilliseconds();
     }
 
     private string RenderDaySchedule(List<Event> events, DateTime weekStart, int day)
@@ -88,14 +100,12 @@ class OverviewView : View<EventOverviewModel>
                         "",
                         eventColumns.Map(
                             (x) => 
-                                "<div>" +
                                 String.Join(
                                     "",
                                     x.Map((y) =>
                                         RenderEvent(y, weekStart, day)
                                     )
-                                ) +
-                                "</div>"
+                                )
                         )
                     )
                 }

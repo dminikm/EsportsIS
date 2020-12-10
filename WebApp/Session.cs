@@ -26,7 +26,7 @@ class SessionManager
 
             sessions.Add(str, new Session() {
                 ID = str,
-                EndTime = ((DateTimeOffset)DateTime.Now).ToUnixTimeMilliseconds(),
+                EndTime = ((DateTimeOffset)DateTime.UtcNow).ToUnixTimeMilliseconds(),
                 Obj = obj,
             });
             return str;
