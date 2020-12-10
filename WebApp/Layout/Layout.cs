@@ -9,12 +9,15 @@ class Layout : View<string>
 
     private string RenderUser()
     {
-        return $@"
-{(ViewBag.LoggedIn ?
-    @$"<a>{ViewBag.User.FirstName} {ViewBag.User.LastName}</a>" :
-    @$"<a href=""/login"">LogIn</a>"
-)}
-        ";
+        if (ViewBag.LoggedIn)
+        {
+            return $@"
+                <div>{ViewBag.User.FirstName} {ViewBag.User.LastName}</div>
+                <a href=""/logout"">LogOut</a>
+            ";
+        }
+
+        return $@"<a href=""/login"">LogIn</a>";
     }
 
     public string Render(string inner)

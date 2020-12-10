@@ -43,13 +43,14 @@ namespace WebApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            var loginController = new LoginController();
             var router = new Router();
 
             router
-                .AddRoute<LoginController, Func<ControllerAction>>(HTTPMethod.GET, "/", loginController.Index)
-                .AddRoute<LoginController, Func<ControllerAction>>(HTTPMethod.GET, "/login", loginController.LoginGET)
-                .AddRoute<LoginController, Func<string, string, ControllerAction>>(HTTPMethod.POST, "/login", loginController.LoginPOST);
+                .AddRoute<LoginController>(HTTPMethod.GET, "/", "Index")
+                .AddRoute<LoginController>(HTTPMethod.GET, "/login", "LoginGET")
+                .AddRoute<LoginController>(HTTPMethod.POST, "/login", "LoginPOST")
+                .AddRoute<LoginController>(HTTPMethod.GET, "/logout", "Logout")
+                .AddRoute<EventController>(HTTPMethod.GET, "/overview", "Overview");
 
             if (env.IsDevelopment())
             {

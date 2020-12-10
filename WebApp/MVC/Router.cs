@@ -26,9 +26,8 @@ class Router
         this.handlers = new List<Route>();
     }
 
-    public Router AddRoute<ControllerType, HandlerType>(HTTPMethod method, string fullRoute, HandlerType handler)
+    public Router AddRoute<ControllerType>(HTTPMethod method, string fullRoute, string handlerName)
         where ControllerType : Controller, new()
-        where HandlerType : Delegate
     {
         var parts = fullRoute.Split('/').Filter((x) => x != "").ToList();
         var parameterParts = parts
@@ -36,8 +35,8 @@ class Router
             .Map((x) => x.Split('{', '}')[1])
             .ToList();
 
-        var type = handler.GetType();
-        var paramInfos = handler.Method.GetParameters().ToList();
+        var handler = typeof(ControllerType).GetMethod(handlerName);
+        var paramInfos = handler.GetParameters().ToList();
         paramInfos.Sort((x, y) => x.Position - y.Position);
 
         handlers.Add(new Route() {
@@ -51,10 +50,9 @@ class Router
 
                 // Create a new controller for this request
                 var controller = new ControllerType().BindContext(context);
-                var newHandler = controller.GetType().GetMethod(handler.Method.Name);
                 controller.OnBeforeReply(context);
 
-                var res = (ControllerAction)newHandler.Invoke(
+                var res = (ControllerAction)handler.Invoke(
                     controller,
                     paramInfos.Map(
                         (x) => Convert.ChangeType(

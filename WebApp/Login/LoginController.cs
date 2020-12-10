@@ -4,11 +4,6 @@ using BusinessLayer;
 
 class LoginController : BaseController
 {
-    public LoginController() : base()
-    {
-
-    }
-
     public ControllerAction Index()
     {
         return Redirect("/login");
@@ -16,20 +11,6 @@ class LoginController : BaseController
 
     public ControllerAction LoginGET()
     {
-        var session = context.Session;
-        var sessionID = session.GetString("SESSION_ID");
-
-        if (sessionID != null)
-        {
-            dynamic sess = SessionManager.GetSession(sessionID);
-
-            if (sess != null)
-            {
-                ViewBag.LoggedIn = true;
-                ViewBag.User = sess.User;
-            }
-        }
-
         return View<LoginIndexView>();
     }
 
@@ -50,9 +31,23 @@ class LoginController : BaseController
             var sess = SessionManager.AddSession(s);
             context.Session.SetString("SESSION_ID", sess);
 
-            return Redirect("/");
+            return Redirect("/overview");
         }, () => {
             return Redirect("/");
         });
+    }
+
+    public ControllerAction Logout()
+    {
+        var session = context.Session;
+        var sessionID = session.GetString("SESSION_ID");
+
+        if (sessionID != null)
+        {
+            SessionManager.RemoveSession(sessionID);
+            session.Remove("SESSION_ID");
+        }
+
+        return Redirect("/");
     }
 }

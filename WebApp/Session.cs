@@ -51,6 +51,7 @@ class SessionManager
 
     private void RemoveInvalidSessions()
     {
+        // TODO: This
         sessions = new Dictionary<string, Session>(sessions.Filter((x) => true));
     }
 

@@ -1,4 +1,6 @@
 @import "./login.css";
+@import "./content.css";
+@import "./overview.css";
 
 * {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
