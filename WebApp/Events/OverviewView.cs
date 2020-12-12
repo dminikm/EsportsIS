@@ -39,18 +39,21 @@ class OverviewView : View<EventOverviewModel>
 
     private string RenderEvent(Event evt, DateTime weekStart, int day)
     {
-        var dayStart = (double)((DateTimeOffset)weekStart.AddDays(day)).ToUnixTimeMilliseconds();
-        var dayEnd = (double)((DateTimeOffset)weekStart.AddDays(day + 1).AddMilliseconds(-1)).ToUnixTimeMilliseconds();
+        var dayStart = (double)((DateTimeOffset)weekStart.AddDays(day).ToUniversalTime()).ToUnixTimeMilliseconds();
+        var dayEnd = (double)((DateTimeOffset)weekStart.AddDays(day + 1).AddMilliseconds(-1).ToUniversalTime()).ToUnixTimeMilliseconds();
 
         var startPerc = Math.Min(1, Math.Max(0, ((double)evt.From - dayStart ) / (dayEnd - dayStart))) * 100;
         var endPerc = 100 - (Math.Min(1, Math.Max(0, ((double)evt.To - dayStart ) / (dayEnd - dayStart))) * 100);
 
-        var startStr = startPerc.ToString("0.000", System.Globalization.CultureInfo.InvariantCulture);
-        var endStr = endPerc.ToString("0.000", System.Globalization.CultureInfo.InvariantCulture);
+        var startStr = startPerc.ToString("0.0000", System.Globalization.CultureInfo.InvariantCulture);
+        var endStr = endPerc.ToString("0.0000", System.Globalization.CultureInfo.InvariantCulture);
 
         return $@"
-            <div style=""width: 100%; position: absolute; top: {startStr}%; height: {endStr}%; background-color: {evt.Color};"">
-                {evt.Name}
+            <div style=""width: 100%; top: {startStr}%; bottom: {endStr}%; background-color: {evt.Color};"" class=""overview-table-event-outer"">
+                <div class=""overview-table-event-inner"">
+                    <div class=""overview-table-event-name"">{evt.Name}</div>
+                    <div class=""overview-table-event-info"">i</div>
+                </div>
             </div>
         ";
     }
@@ -92,33 +95,37 @@ class OverviewView : View<EventOverviewModel>
         });
 
         return $@"
-        <div class=""overview-table-outer"">
-            <div class=""overview-table-padder""></div>
-            <div class=""overview-table-inner"">
-                {
-                    String.Join(
-                        "",
-                        eventColumns.Map(
-                            (x) => 
-                                String.Join(
-                                    "",
-                                    x.Map((y) =>
-                                        RenderEvent(y, weekStart, day)
-                                    )
+<td style=""min-width: {200 * eventColumns.Count}px; max-width: {200 * eventColumns.Count}px; width: {200 * eventColumns.Count}px;"">
+    <div class=""overview-table-outer"">
+        <div class=""overview-table-padder""></div>
+        <div class=""overview-table-inner"">
+            {
+                String.Join(
+                    "",
+                    eventColumns.Map(
+                        (x) => 
+                            "<div style=\"flex-grow: 1;\">" +
+                            String.Join(
+                                "",
+                                x.Map((y) =>
+                                    RenderEvent(y, weekStart, day)
                                 )
-                        )
+                            ) +
+                            "</div>"
                     )
-                }
-            </div>
-            <div class=""overview-table-padder""></div>
+                )
+            }
         </div>
+        <div class=""overview-table-padder""></div>
+    </div>
+</td>
         ";
     }
 
     private string RenderTimeColumn()
     {
         return String.Join("",
-            Range(0, 23).Map((x) => $@"
+            Range(0, 25).Map((x) => $@"
                 { (x != 0 ? "<div class=\"overview-table-time-padder\"></div>" : "") }
                 <div class=""overview-table-time-container"">{ x.ToString().PadLeft(2, '0') }:00</div>
             ")
@@ -132,7 +139,7 @@ class OverviewView : View<EventOverviewModel>
     <table class=""overview-table"">
         <thead>
             <tr>
-                <th>Time</th>
+                <th style=""position: sticky; left: 0;"">Time</th>
                 <th>Monday</th>
                 <th>Tuesday</th>
                 <th>Wednesday</th>
@@ -144,14 +151,14 @@ class OverviewView : View<EventOverviewModel>
         </thead>
         <tbody>
             <tr>
-                <th>{ RenderTimeColumn() }</th>
-                <th>{ RenderDaySchedule(events, weekStart, 0) }</th>
-                <th>{ RenderDaySchedule(events, weekStart, 1) }</th>
-                <th>{ RenderDaySchedule(events, weekStart, 2) }</th>
-                <th>{ RenderDaySchedule(events, weekStart, 3) }</th>
-                <th>{ RenderDaySchedule(events, weekStart, 4) }</th>
-                <th>{ RenderDaySchedule(events, weekStart, 5) }</th>
-                <th>{ RenderDaySchedule(events, weekStart, 6) }</th>
+                <th style=""position: sticky; left: 0; width: 200px;"">{ RenderTimeColumn() }</th>
+                { RenderDaySchedule(events, weekStart, 1) }
+                { RenderDaySchedule(events, weekStart, 2) }
+                { RenderDaySchedule(events, weekStart, 3) }
+                { RenderDaySchedule(events, weekStart, 4) }
+                { RenderDaySchedule(events, weekStart, 5) }
+                { RenderDaySchedule(events, weekStart, 6) }
+                { RenderDaySchedule(events, weekStart, 7) }
             </tr>
         </tbody>
     </table>
