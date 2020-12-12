@@ -1,6 +1,7 @@
 @import "./login.css";
 @import "./content.css";
 @import "./overview.css";
+@import "./form.css";
 
 * {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;

@@ -57,6 +57,11 @@ namespace BusinessLayer {
             }
         }
 
+        public static Option<Event> Find(int eventID)
+        {
+            return EventGateway.Find(eventID).Map((x) => Event.FromType(x));
+        }
+
         protected DataTypes.Event evt;
 
         public string Type { get => evt.Type; set => evt.Type = value; }
@@ -175,6 +180,6 @@ namespace BusinessLayer {
                 .ToList();
         }
 
-        public int MapParticipants { get => ((DataTypes.CustomEvent)evt).MaxParticipants; set => ((DataTypes.CustomEvent)evt).MaxParticipants = value; }
+        public int MaxParticipants { get => ((DataTypes.CustomEvent)evt).MaxParticipants; set => ((DataTypes.CustomEvent)evt).MaxParticipants = value; }
     }
 }

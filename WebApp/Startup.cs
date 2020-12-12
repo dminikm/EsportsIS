@@ -50,7 +50,9 @@ namespace WebApp
                 .AddRoute<LoginController>(HTTPMethod.GET, "/login", "LoginGET")
                 .AddRoute<LoginController>(HTTPMethod.POST, "/login", "LoginPOST")
                 .AddRoute<LoginController>(HTTPMethod.GET, "/logout", "Logout")
-                .AddRoute<EventController>(HTTPMethod.GET, "/overview", "Overview");
+                .AddRoute<EventController>(HTTPMethod.GET, "/overview", "Overview")
+                .AddRoute<EventController>(HTTPMethod.POST, "/event/{eventID}/join", "Join")
+                .AddRoute<EventController>(HTTPMethod.GET, "/event/{eventID}", "Detail");
 
             if (env.IsDevelopment())
             {

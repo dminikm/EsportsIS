@@ -37,4 +37,22 @@ class EventController : BaseController
             UpcomingNotJoinedEvents = upcomingNotJoined
         });
     }
+
+    public ControllerAction Detail(int eventID)
+    {
+        if (!LoggedIn)
+            return Redirect("/login");
+
+        return Event
+            .Find(eventID)
+            .Match(
+                (x) => View<DetailView, Event>(x),
+                () => Redirect("/")
+            );
+    }
+
+    public ControllerAction Join(int eventID)
+    {
+        return Redirect("/");
+    }
 }

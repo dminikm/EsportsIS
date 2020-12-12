@@ -1,0 +1,21 @@
+input[type="text"],
+textarea {
+    display: inline-block;
+    box-sizing: content-box;
+    border: 1px solid darkgray;
+    border-radius: 4px;
+
+    min-height: 35px;
+    min-width: 200px;
+    max-width: 600px;
+
+    outline: none;
+}
+
+input[type="submit"] {
+    display: inline-block;
+    box-sizing: content-box;
+    height: 32px;
+
+    outline: none;
+}

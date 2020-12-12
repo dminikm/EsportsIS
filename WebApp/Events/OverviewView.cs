@@ -25,7 +25,7 @@ class OverviewView : View<EventOverviewModel>
         <div>
             {evt.Name}
         </div>
-        <div class=""overview-event-mini-icon"">i</div>
+        <a href=""/event/{evt.EventID.IfNone(-1)}"" class=""overview-event-mini-icon"">i</a>
     </div>
     <div class=""overview-event-mini-time"">{time}</div>
 </div>
@@ -52,7 +52,7 @@ class OverviewView : View<EventOverviewModel>
             <div style=""width: 100%; top: {startStr}%; bottom: {endStr}%; background-color: {evt.Color};"" class=""overview-table-event-outer"">
                 <div class=""overview-table-event-inner"">
                     <div class=""overview-table-event-name"">{evt.Name}</div>
-                    <div class=""overview-table-event-info"">i</div>
+                    <a href=""/event/{evt.EventID.IfNone(-1)}"" class=""overview-table-event-info"">i</a>
                 </div>
             </div>
         ";

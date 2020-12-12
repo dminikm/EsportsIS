@@ -6,6 +6,9 @@ class LoginController : BaseController
 {
     public ControllerAction Index()
     {
+        if (LoggedIn)
+            return Redirect("/overview");
+
         return Redirect("/login");
     }
 
