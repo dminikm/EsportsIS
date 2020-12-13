@@ -62,6 +62,34 @@ namespace BusinessLayer
                 .ToList();
         }
 
+        public List<Event> GetEventsOverlappingWithOfType(Event evt, string type)
+        {
+            return EventGateway
+                .FindEventsForUser(this)
+                .Filter((x) =>
+                    x.From <= evt.To &&
+                    x.To >= evt.From
+                )
+                .Filter((x) => x.EventID != evt.EventID)
+                .Filter((x) => x.Type == type)
+                .Map((x) => Event.FromType(x))
+                .ToList();
+        }
+
+        public List<Event> GetEventsOverlappingWithNotOfType(Event evt, string type)
+        {
+            return EventGateway
+                .FindEventsForUser(this)
+                .Filter((x) =>
+                    x.From <= evt.To &&
+                    x.To >= evt.From
+                )
+                .Filter((x) => x.EventID != evt.EventID)
+                .Filter((x) => x.Type != type)
+                .Map((x) => Event.FromType(x))
+                .ToList();
+        }
+
         public User(DataTypes.User user)
         {
             this.UserID = user.UserID;

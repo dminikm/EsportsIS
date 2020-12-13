@@ -46,13 +46,29 @@ class EventController : BaseController
         return Event
             .Find(eventID)
             .Match(
-                (x) => View<DetailView, Event>(x),
+                (x) =>
+                {
+                    ViewBag.RequiredConflicts = LoggedUser.GetEventsOverlappingWithNotOfType(x, "custom");
+                    ViewBag.OptionalConflicts = LoggedUser.GetEventsOverlappingWithOfType(x, "custom");
+
+                    return View<DetailView, Event>(x);
+                },
                 () => Redirect("/")
             );
     }
 
     public ControllerAction Join(int eventID)
     {
-        return Redirect("/");
+        var evt = Event
+            .Find(eventID)
+            .IfSome(
+                (x) =>
+                {
+                    x.Participants.Add(LoggedUser);
+                    x.Save();
+                }
+            );
+
+        return Redirect($"/detail/{eventID}");
     }
 }

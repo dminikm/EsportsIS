@@ -8,6 +8,7 @@
     border-radius: 4px;
 
     margin: 15px;
+    padding: 0px;
 }
 
 .content-section-header {
@@ -29,4 +30,38 @@
 
     width: 100%;
     flex-grow: 1;
+}
+
+.dialog.content-section {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    z-index: 999999;
+
+    background-color: white;
+
+    width: 400px;
+    height: 300px;
+}
+
+.dialog-backdrop {
+    display: none;
+
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+
+    background: rgba(0,0,0,.75);
+
+    z-index: 99999;
+}
+
+.dialog-backdrop.open {
+    display: block;
 }

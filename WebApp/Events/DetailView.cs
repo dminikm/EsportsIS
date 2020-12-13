@@ -1,5 +1,6 @@
 using BusinessLayer;
 using System;
+using System.Collections.Generic;
 
 class DetailView : View<Event>
 {
@@ -13,13 +14,43 @@ class DetailView : View<Event>
         var participants = evt.ParticipantIDs.Count;
         var maxParticipants = evt.MaxParticipants <= 0 ? "∞" : $"{evt.MaxParticipants}";
 
+        var currentTime = ((DateTimeOffset)DateTime.Now).ToUnixTimeMilliseconds();
+
+        var joinable = !model.ParticipantIDs.Contains(((User)ViewBag.User).UserID.IfNone(() => -1)) && currentTime < model.From;
+
         return $@"
         <span>Capacity</span> <br>
-        <form action=""/event/{model.EventID.IfNone(-1)}/join"" method=""POST"">
+        <div>
             <input type=""text"" value="" {participants} / {maxParticipants} "" readonly>
-            <input type=""submit"" value=""Join"">
-        </form>
+
+            {(joinable ? "<button id=\"button-join\">Join</button>" : "<button disabled>Leave</button>")}
+        </duv>
         ";
+    }
+
+    private string RenderMiniEvent(Event evt)
+    {
+        var time = new DateTime(1970, 1, 1, 0, 0, 0, 0)
+            .AddMilliseconds(evt.From)
+            .ToLocalTime()
+            .ToShortTimeString();
+
+        return $@"
+<div  class=""overview-event-mini"">
+    <div style=""background-color: {evt.Color}"" class=""overview-event-mini-inner"">
+        <div>
+            {evt.Name}
+        </div>
+        <a href=""/event/{evt.EventID.IfNone(-1)}"" class=""overview-event-mini-icon"">i</a>
+    </div>
+    <div class=""overview-event-mini-time"">{time}</div>
+</div>
+        ";
+    }
+
+    private string RenderMiniEvents(List<Event> events)
+    {
+        return string.Join("", events.Map((x) => RenderMiniEvent(x)));
     }
 
     public override string Render(Event model)
@@ -51,6 +82,58 @@ class DetailView : View<Event>
                     </div>
                 </div>
             </div>
+
+            <!-- Required scheduling conflict -->
+            <div class=""dialog-backdrop"" id=""required-dialog"">
+                <div class=""content-section dialog""open>
+                    <div class=""content-section-header"">Scheduling conflict!</div>
+                    <div class=""content-section-body"">
+                        You have a scheduling conflict with these events: <br><br>
+
+                        { RenderMiniEvents(ViewBag.RequiredConflicts) }
+
+                        <button id=""button-required-ok"">Ok</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Optional scheduling conflict -->
+            <div class=""dialog-backdrop"" id=""optional-dialog"">
+                <div class=""content-section dialog""open>
+                    <div class=""content-section-header"">Scheduling conflict!</div>
+                    <div class=""content-section-body"">
+                        You have a scheduling conflict with these optional events: <br><br>
+
+                        { RenderMiniEvents(ViewBag.OptionalConflicts) }
+
+                        <form action=""/event/{model.EventID.IfNone(-1)}/join"" method=""POST"">
+                            <input type=""submit"" value=""Join anyway"">
+                            <button id=""button-optional-cancel"">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                window.addEventListener('load', () => {"{"}
+                    let requiredDialog = document.querySelector('#required-dialog');
+                    let optionalDialog = document.querySelector('#optional-dialog');
+
+                    let joinButton = document.querySelector('#button-join');
+                    let requiredOkButton = document.querySelector('#button-required-ok');
+                    let optionalCancelButton = document.querySelector('#button-optional-cancel');
+
+                    document.querySelectorAll('.dialog-backdrop').forEach((x) => x.addEventListener('click', () => x.classList.remove('open')));
+                    requiredOkButton.addEventListener('click', () => document.querySelectorAll('.dialog-backdrop').forEach((x) => x.click()));
+                    optionalCancelButton.addEventListener('click', () => document.querySelectorAll('.dialog-backdrop').forEach((x) => x.click()));
+
+                    if ({( ViewBag.RequiredConflicts.Count > 0 ? "true" : "false" )}) {"{"}
+                        joinButton.addEventListener('click', () => requiredDialog.classList.add('open'));
+                    {"}"} else if ({( ViewBag.OptionalConflicts.Count > 0 ? "true" : "false" )}) {"{"}
+                        joinButton.addEventListener('click', () => optionalDialog.classList.add('open'));
+                    {"}"}
+                {"}"});
+            </script>
         ");
     }
 }

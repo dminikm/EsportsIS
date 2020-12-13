@@ -12,6 +12,7 @@ textarea {
     outline: none;
 }
 
+button,
 input[type="submit"] {
     display: inline-block;
     box-sizing: content-box;
