@@ -14,7 +14,7 @@ class DetailView : View<Event>
         var participants = evt.ParticipantIDs.Count;
         var maxParticipants = evt.MaxParticipants <= 0 ? "∞" : $"{evt.MaxParticipants}";
 
-        var currentTime = ((DateTimeOffset)DateTime.Now).ToUnixTimeMilliseconds();
+        var currentTime = DateTime.UtcNow;
 
         var joinable = !model.ParticipantIDs.Contains(((User)ViewBag.User).UserID.IfNone(() => -1)) && currentTime < model.From;
 
@@ -30,8 +30,7 @@ class DetailView : View<Event>
 
     private string RenderMiniEvent(Event evt)
     {
-        var time = new DateTime(1970, 1, 1, 0, 0, 0, 0)
-            .AddMilliseconds(evt.From)
+        var time = evt.From
             .ToLocalTime()
             .ToShortTimeString();
 
@@ -55,8 +54,8 @@ class DetailView : View<Event>
 
     public override string Render(Event model)
     {
-        var from = new DateTime(1970, 1, 1, 0, 0, 0).AddMilliseconds(model.From).ToLocalTime().ToLongDateString();
-        var to = new DateTime(1970, 1, 1, 0, 0, 0).AddMilliseconds(model.To).ToLocalTime().ToLongDateString();
+        var from = model.From.ToLocalTime().ToShortDateString() + " " + model.From.ToLocalTime().ToLongTimeString();
+        var to = model.To.ToLocalTime().ToShortDateString() + " " + model.To.ToLocalTime().ToLongTimeString();
 
         return new Layout(ViewBag).Render($@"
             <div class=""content-section"">
@@ -106,21 +105,27 @@ class DetailView : View<Event>
 
                         { RenderMiniEvents(ViewBag.OptionalConflicts) }
 
-                        <form action=""/event/{model.EventID.IfNone(-1)}/join"" method=""POST"">
-                            <input type=""submit"" value=""Join anyway"">
+                        <div>
+                            <button id=""optional-join"">Join anyways</button>
                             <button id=""button-optional-cancel"">Cancel</button>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <form action=""/event/{model.EventID.IfNone(-1)}/join"" method=""POST"" style=""display: none;"" id=""join-form"">
+            </form>
 
             <script>
                 window.addEventListener('load', () => {"{"}
                     let requiredDialog = document.querySelector('#required-dialog');
                     let optionalDialog = document.querySelector('#optional-dialog');
 
+                    let form = document.querySelector('#join-form');
+
                     let joinButton = document.querySelector('#button-join');
                     let requiredOkButton = document.querySelector('#button-required-ok');
+                    let optionalJoinButton = document.querySelector('#optional-join');
                     let optionalCancelButton = document.querySelector('#button-optional-cancel');
 
                     document.querySelectorAll('.dialog-backdrop').forEach((x) => x.addEventListener('click', () => x.classList.remove('open')));
@@ -131,6 +136,9 @@ class DetailView : View<Event>
                         joinButton.addEventListener('click', () => requiredDialog.classList.add('open'));
                     {"}"} else if ({( ViewBag.OptionalConflicts.Count > 0 ? "true" : "false" )}) {"{"}
                         joinButton.addEventListener('click', () => optionalDialog.classList.add('open'));
+                        optionalJoinButton.addEventListener('click', () => form.submit());
+                    {"}"} else {"{"}
+                        joinButton.addEventListener('click', () => form.submit());
                     {"}"}
                 {"}"});
             </script>

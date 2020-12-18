@@ -19,8 +19,8 @@ namespace DesktopApp
             this.Evt = evt;
 
             this.Text = this.nameLabel.Text = (evt.IsNone) ?
-                "🏋️ Add new custom event!" :
-                "🏋️ Edit custom event!";
+                "❔ Add new custom event!" :
+                "❔ Edit custom event!";
 
             this.cmds = new CommandQueue();
             this.cmds.Add(new Command(() =>
@@ -47,13 +47,12 @@ namespace DesktopApp
 
             evt.IfSome((x) =>
             {
-                var unix = new DateTime(1970, 1, 1, 0, 0, 0);
-
                 this.name = x.Name;
                 this.description = x.Description;
-                this.from = unix.AddMilliseconds(x.From);
-                this.to = unix.AddMilliseconds(x.To);
+                this.from = x.From;
+                this.to = x.To;
                 this.participants = x.Participants.ToList();
+                this.color = x.Color;
             });
         }
 
@@ -63,6 +62,7 @@ namespace DesktopApp
             descriptionTextBox.Text = description;
             fromDateTimePicker.Value = from.ToLocalTime();
             toDateTimePicker.Value = to.ToLocalTime();
+            colorDialog1.Color = ColorTranslator.FromHtml(this.color);
 
             maxParticipantsTextBox.Text = maxParticipants <= 0 ? "" : $"{maxParticipants}";
         }
@@ -326,6 +326,7 @@ namespace DesktopApp
             this.from = this.fromDateTimePicker.Value.ToUniversalTime();
             this.to = this.toDateTimePicker.Value.ToUniversalTime();
             this.maxParticipants = this.maxParticipantsTextBox.Text == "" ? -1 : int.Parse(this.maxParticipantsTextBox.Text);
+            this.color = ColorTranslator.ToHtml(colorDialog1.Color);
 
             if (this.Evt.IsSome)
             {
@@ -335,8 +336,9 @@ namespace DesktopApp
                     {
                         evt.Name = this.name;
                         evt.Description = this.description;
-                        evt.From = ((DateTimeOffset)this.from).ToUnixTimeMilliseconds();
-                        evt.To = ((DateTimeOffset)this.to).ToUnixTimeMilliseconds();
+                        evt.From = this.from.ToUniversalTime();
+                        evt.To = this.to.ToUniversalTime();
+                        evt.Color = this.color;
 
                         evt.Save();
                     });

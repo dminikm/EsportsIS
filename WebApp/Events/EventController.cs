@@ -69,6 +69,6 @@ class EventController : BaseController
                 }
             );
 
-        return Redirect($"/detail/{eventID}");
+        return Redirect($"/event/{eventID}");
     }
 }

@@ -43,12 +43,10 @@ namespace DesktopApp
 
             evt.IfSome((x) =>
             {
-                var unix = new DateTime(1970, 1, 1, 0, 0, 0);
-
                 this.name = x.Name;
                 this.description = x.Description;
-                this.from = unix.AddMilliseconds(x.From);
-                this.to = unix.AddMilliseconds(x.To);
+                this.from = x.From;
+                this.to = x.To;
                 this.participants = x.Participants.ToList();
             });
         }
@@ -312,8 +310,8 @@ namespace DesktopApp
                     {
                         evt.Name = this.name;
                         evt.Description = this.description;
-                        evt.From = ((DateTimeOffset)this.from).ToUnixTimeMilliseconds();
-                        evt.To = ((DateTimeOffset)this.to).ToUnixTimeMilliseconds();
+                        evt.From = this.from.ToUniversalTime();
+                        evt.To = this.to.ToUniversalTime();
 
                         evt.Save();
                     });

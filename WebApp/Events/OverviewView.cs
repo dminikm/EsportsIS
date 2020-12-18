@@ -14,8 +14,7 @@ class OverviewView : View<EventOverviewModel>
 
     private string RenderMiniEvent(Event evt)
     {
-        var time = new DateTime(1970, 1, 1, 0, 0, 0, 0)
-            .AddMilliseconds(evt.From)
+        var time = evt.From
             .ToLocalTime()
             .ToShortTimeString();
 
@@ -34,16 +33,19 @@ class OverviewView : View<EventOverviewModel>
 
     private string RenderMiniEvents(List<Event> events)
     {
-        return string.Join("", events.Map((x) => RenderMiniEvent(x)));
+        return string.Join("", events.OrderBy((e) => e.From).Map((x) => RenderMiniEvent(x)));
     }
 
     private string RenderEvent(Event evt, DateTime weekStart, int day)
     {
-        var dayStart = (double)((DateTimeOffset)weekStart.AddDays(day).ToUniversalTime()).ToUnixTimeMilliseconds();
-        var dayEnd = (double)((DateTimeOffset)weekStart.AddDays(day + 1).AddMilliseconds(-1).ToUniversalTime()).ToUnixTimeMilliseconds();
+        var dayStart = (double)((DateTimeOffset)weekStart.AddDays(day).ToLocalTime()).ToUnixTimeMilliseconds();
+        var dayEnd = (double)((DateTimeOffset)weekStart.AddDays(day + 1).AddMilliseconds(-1).ToLocalTime()).ToUnixTimeMilliseconds();
 
-        var startPerc = Math.Min(1, Math.Max(0, ((double)evt.From - dayStart ) / (dayEnd - dayStart))) * 100;
-        var endPerc = 100 - (Math.Min(1, Math.Max(0, ((double)evt.To - dayStart ) / (dayEnd - dayStart))) * 100);
+        var fromMS = ((DateTimeOffset)evt.From.ToLocalTime()).ToUnixTimeMilliseconds();
+        var toMS = ((DateTimeOffset)evt.To.ToLocalTime()).ToUnixTimeMilliseconds();
+
+        var startPerc = Math.Min(1, Math.Max(0, ((double)fromMS - dayStart ) / (dayEnd - dayStart))) * 100;
+        var endPerc = 100 - (Math.Min(1, Math.Max(0, ((double)toMS - dayStart ) / (dayEnd - dayStart))) * 100);
 
         var startStr = startPerc.ToString("0.0000", System.Globalization.CultureInfo.InvariantCulture);
         var endStr = endPerc.ToString("0.0000", System.Globalization.CultureInfo.InvariantCulture);
@@ -58,11 +60,11 @@ class OverviewView : View<EventOverviewModel>
         ";
     }
 
-    private bool IsInDay(DateTime week, int day, long from, long to)
+    private bool IsInDay(DateTime week, int day, DateTime from, DateTime to)
     {
         return
-            from <= ((DateTimeOffset)week.AddDays(day + 1)).ToUnixTimeMilliseconds() &&
-            to >= ((DateTimeOffset)week.AddDays(day).AddMilliseconds(-1)).ToUnixTimeMilliseconds();
+            from <= ((DateTimeOffset)week.AddDays(day + 1)).ToUniversalTime() &&
+            to >= ((DateTimeOffset)week.AddDays(day).AddMilliseconds(-1)).ToUniversalTime();
     }
 
     private string RenderDaySchedule(List<Event> events, DateTime weekStart, int day)
@@ -152,13 +154,13 @@ class OverviewView : View<EventOverviewModel>
         <tbody>
             <tr>
                 <th style=""position: sticky; left: 0; width: 200px;"">{ RenderTimeColumn() }</th>
+                { RenderDaySchedule(events, weekStart, 0) }
                 { RenderDaySchedule(events, weekStart, 1) }
                 { RenderDaySchedule(events, weekStart, 2) }
                 { RenderDaySchedule(events, weekStart, 3) }
                 { RenderDaySchedule(events, weekStart, 4) }
                 { RenderDaySchedule(events, weekStart, 5) }
                 { RenderDaySchedule(events, weekStart, 6) }
-                { RenderDaySchedule(events, weekStart, 7) }
             </tr>
         </tbody>
     </table>

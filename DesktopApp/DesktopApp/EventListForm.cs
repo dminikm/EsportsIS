@@ -76,9 +76,8 @@ namespace DesktopApp
             eventListView.Items.Clear();
             foreach (var evt in this.events)
             {
-                var unix = new DateTime(1970, 1, 1, 0, 0, 0);
-                var from = unix.AddMilliseconds(evt.From).ToShortDateString();
-                var to = unix.AddMilliseconds(evt.To).ToShortDateString(); 
+                var from = evt.From.ToShortDateString();
+                var to = evt.To.ToShortDateString(); 
 
                 var item = new ListViewItem(new string[] { evt.Name, $"{from} - {to}", evt.Type });
                 item.Tag = evt;

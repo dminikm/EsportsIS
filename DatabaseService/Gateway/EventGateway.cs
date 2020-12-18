@@ -157,7 +157,7 @@ namespace DatabaseService
                 }
                 else if (evt.Type == "tournament")
                 {
-                    dict.Add("server", (evt as TournamentEvent).Location);
+                    dict.Add("location", (evt as TournamentEvent).Location);
                 }
                 else if (evt.Type == "custom")
                 {

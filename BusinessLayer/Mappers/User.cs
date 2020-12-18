@@ -7,21 +7,21 @@ using System.Linq;
 
 namespace BusinessLayer
 {
-    public class User : DataTypes.User
+    public class User
     {
         public void Save()
         {
-            UserGateway.Update(this);
+            UserGateway.Update(this.user);
         }
 
         public void Delete()
         {
-            UserGateway.Delete(this);
+            UserGateway.Delete(this.user);
         }
 
         public List<Team> GetTeams()
         {
-            var ttps = TeamToPlayerGateway.FindByPlayer(this);
+            var ttps = TeamToPlayerGateway.FindByPlayer(this.user);
             return ttps.Map(
                 (ttp) => TeamGateway.Find(ttp.TeamID.Value)
             ).Somes().Map(
@@ -32,7 +32,7 @@ namespace BusinessLayer
         public List<Event> GetUpcomingEvents()
         {
             return EventGateway
-                .FindEventsForUser(this)
+                .FindEventsForUser(this.user)
                 .Filter((x) => x.From >= DateTimeOffset.UtcNow.ToUnixTimeMilliseconds())
                 .Map((x) => Event.FromType(x))
                 .ToList();
@@ -54,7 +54,7 @@ namespace BusinessLayer
         public List<Event> GetEventsOverlappingWith(DateTime from, DateTime to)
         {
             return EventGateway
-                .FindEventsForUser(this)
+                .FindEventsForUser(this.user)
                 .Filter((x) =>
                     x.From <= ((DateTimeOffset)to).ToUnixTimeMilliseconds() &&
                     x.To >= ((DateTimeOffset)from).ToUnixTimeMilliseconds()
@@ -65,39 +65,39 @@ namespace BusinessLayer
         public List<Event> GetEventsOverlappingWithOfType(Event evt, string type)
         {
             return EventGateway
-                .FindEventsForUser(this)
+                .FindEventsForUser(this.user)
+                .Map((x) => Event.FromType(x))
                 .Filter((x) =>
                     x.From <= evt.To &&
                     x.To >= evt.From
                 )
                 .Filter((x) => x.EventID != evt.EventID)
                 .Filter((x) => x.Type == type)
-                .Map((x) => Event.FromType(x))
                 .ToList();
         }
 
         public List<Event> GetEventsOverlappingWithNotOfType(Event evt, string type)
         {
             return EventGateway
-                .FindEventsForUser(this)
+                .FindEventsForUser(this.user)
+                .Map((x) => Event.FromType(x))
                 .Filter((x) =>
                     x.From <= evt.To &&
                     x.To >= evt.From
                 )
                 .Filter((x) => x.EventID != evt.EventID)
                 .Filter((x) => x.Type != type)
-                .Map((x) => Event.FromType(x))
                 .ToList();
+        }
+
+        public DataTypes.User GetDTO()
+        {
+            return this.user;
         }
 
         public User(DataTypes.User user)
         {
-            this.UserID = user.UserID;
-            this.FirstName = user.FirstName;
-            this.LastName = user.LastName;
-            this.Login = user.Login;
-            this.Password = user.Password;
-            this.Role = user.Role;
+            this.user = user;
         }
 
         public static User Create(string firstName, string lastName, string password, UserRole role)
@@ -129,5 +129,14 @@ namespace BusinessLayer
             var users = UserGateway.FindAll();
             return users.Map((user) => new User(user)).ToList();
         }
+
+        public Option<int> UserID { get => this.user.UserID; set => this.user.UserID = value; }
+        public string FirstName { get => this.user.FirstName; set => this.user.FirstName = value; }
+        public string LastName { get => this.user.LastName; set => this.user.LastName = value; }
+        public string Login { get => this.user.Login; set => this.user.Login = value; }
+        public string Password { get => this.user.Password; set => this.user.Password = value; }
+        public UserRole Role { get => this.user.Role; set => this.user.Role = value; }
+
+        private DataTypes.User user;
     }
 }

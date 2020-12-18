@@ -68,8 +68,8 @@ namespace BusinessLayer {
         public Option<int> EventID { get => evt.EventID; set => evt.EventID = value; }
         public string Name { get => evt.Name; set => evt.Name = value; }
         public string Description { get => evt.Description; set => evt.Description = value; }
-        public long From { get => evt.From; set => evt.From = value; }
-        public long To { get => evt.To; set => evt.To = value; }
+        public DateTime From { get => new DateTime(1970, 1, 1, 0, 0, 0).AddMilliseconds(evt.From); set => evt.From = ((DateTimeOffset)value).ToUnixTimeMilliseconds(); }
+        public DateTime To { get => new DateTime(1970, 1, 1, 0, 0, 0).AddMilliseconds(evt.To); set => evt.To = ((DateTimeOffset)value).ToUnixTimeMilliseconds(); }
         public List<int> ParticipantIDs { get => evt.ParticipantIDs; set => evt.ParticipantIDs = value; }
         public string Color { get => evt.Color; set => evt.Color = value; }
 
