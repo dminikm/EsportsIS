@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2020-12-18T19:57:03.960Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="LLYpzew5QtI38kgfWV6e" version="14.1.1" type="github">
+<mxfile host="app.diagrams.net" modified="2020-12-18T20:05:22.017Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="hDgSlLXV1NaU58yBoyIG" version="14.1.1" type="github">
   <diagram name="Page-1" id="9f46799a-70d6-7492-0946-bef42562c5a5">
-    <mxGraphModel dx="2285" dy="1512" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="#ffffff" math="0" shadow="0">
+    <mxGraphModel dx="2522" dy="1644" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="#ffffff" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -236,6 +236,81 @@
         </mxCell>
         <mxCell id="ZMdeqj-k6j3ySzZ1tK9_-111" value="+ MaxParticipants: int" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ZMdeqj-k6j3ySzZ1tK9_-110">
           <mxGeometry y="26" width="140" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMdeqj-k6j3ySzZ1tK9_-112" value="&lt;&lt;static&gt;&gt;&#xa;TeamGateway" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fontSize=11;fontColor=none;align=center;labelBackgroundColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="-740" y="-140" width="180" height="208" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMdeqj-k6j3ySzZ1tK9_-113" value="+ Create(...): Team&#xa;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ZMdeqj-k6j3ySzZ1tK9_-112">
+          <mxGeometry y="26" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMdeqj-k6j3ySzZ1tK9_-116" value="+ Find(id): Team" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ZMdeqj-k6j3ySzZ1tK9_-112">
+          <mxGeometry y="52" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMdeqj-k6j3ySzZ1tK9_-117" value="+ FindByCoach(coach): Team" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ZMdeqj-k6j3ySzZ1tK9_-112">
+          <mxGeometry y="78" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMdeqj-k6j3ySzZ1tK9_-118" value="+ FindAll(): Teams&#xa;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ZMdeqj-k6j3ySzZ1tK9_-112">
+          <mxGeometry y="104" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMdeqj-k6j3ySzZ1tK9_-119" value="+ Update(team): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ZMdeqj-k6j3ySzZ1tK9_-112">
+          <mxGeometry y="130" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMdeqj-k6j3ySzZ1tK9_-120" value="+ Delete(team): void&#xa;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ZMdeqj-k6j3ySzZ1tK9_-112">
+          <mxGeometry y="156" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMdeqj-k6j3ySzZ1tK9_-121" value="- ParseFromQuery(query): Team" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ZMdeqj-k6j3ySzZ1tK9_-112">
+          <mxGeometry y="182" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMdeqj-k6j3ySzZ1tK9_-122" value="&lt;&lt;static&gt;&gt;&#xa;TeamToPlayerGateway" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fontSize=11;fontColor=none;align=center;labelBackgroundColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="-740" y="100" width="180" height="208" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMdeqj-k6j3ySzZ1tK9_-123" value="+ Create(...): TeamToPlayer&#xa;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ZMdeqj-k6j3ySzZ1tK9_-122">
+          <mxGeometry y="26" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMdeqj-k6j3ySzZ1tK9_-124" value="+ FindByPlayer(player): TTPs" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ZMdeqj-k6j3ySzZ1tK9_-122">
+          <mxGeometry y="52" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMdeqj-k6j3ySzZ1tK9_-125" value="+ FindByTeam(team): TTPs" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ZMdeqj-k6j3ySzZ1tK9_-122">
+          <mxGeometry y="78" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMdeqj-k6j3ySzZ1tK9_-128" value="+ Delete(team): void&#xa;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ZMdeqj-k6j3ySzZ1tK9_-122">
+          <mxGeometry y="104" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMdeqj-k6j3ySzZ1tK9_-130" value="+ DeleteAllForPlayer(p): void&#xa;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ZMdeqj-k6j3ySzZ1tK9_-122">
+          <mxGeometry y="130" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMdeqj-k6j3ySzZ1tK9_-131" value="+ DeleteAllForTeam(team): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ZMdeqj-k6j3ySzZ1tK9_-122">
+          <mxGeometry y="156" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMdeqj-k6j3ySzZ1tK9_-129" value="- ParseFromQuery(query): TTP" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ZMdeqj-k6j3ySzZ1tK9_-122">
+          <mxGeometry y="182" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMdeqj-k6j3ySzZ1tK9_-132" value="&lt;&lt;static&gt;&gt;&#xa;UserGateway" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fontSize=11;fontColor=none;align=center;labelBackgroundColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="-740" y="340" width="180" height="234" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMdeqj-k6j3ySzZ1tK9_-133" value="+ Create(...): TeamToPlayer&#xa;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ZMdeqj-k6j3ySzZ1tK9_-132">
+          <mxGeometry y="26" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMdeqj-k6j3ySzZ1tK9_-134" value="+ Find(id): User" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ZMdeqj-k6j3ySzZ1tK9_-132">
+          <mxGeometry y="52" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMdeqj-k6j3ySzZ1tK9_-135" value="+ FindByUsrPass(...): User" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ZMdeqj-k6j3ySzZ1tK9_-132">
+          <mxGeometry y="78" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMdeqj-k6j3ySzZ1tK9_-140" value="+ FindByRole(role): Users" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ZMdeqj-k6j3ySzZ1tK9_-132">
+          <mxGeometry y="104" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMdeqj-k6j3ySzZ1tK9_-141" value="+ FindAll(): Users" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ZMdeqj-k6j3ySzZ1tK9_-132">
+          <mxGeometry y="130" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMdeqj-k6j3ySzZ1tK9_-142" value="+ Update(user): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ZMdeqj-k6j3ySzZ1tK9_-132">
+          <mxGeometry y="156" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMdeqj-k6j3ySzZ1tK9_-136" value="+ Delete(user): void&#xa;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ZMdeqj-k6j3ySzZ1tK9_-132">
+          <mxGeometry y="182" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ZMdeqj-k6j3ySzZ1tK9_-139" value="- ParseFromQuery(query): User" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ZMdeqj-k6j3ySzZ1tK9_-132">
+          <mxGeometry y="208" width="180" height="26" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
