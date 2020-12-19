@@ -53,6 +53,6 @@ namespace BusinessLayer
         }
 
         private List<Command> commands;
-        int currentCommand;
+        private int currentCommand;
     }
 }

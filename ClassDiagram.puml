@@ -246,4 +246,50 @@ class BusinessLayer.Team {
     + GetDTO(): DataTypes.Team
 }
 
+' More stuff
+
+class BusinessLayer.Command {
+    ' Variables
+    - run: CommandDelegate
+    - undo: CommandDelegate
+
+    + {static} Blank: CommandDelegate
+
+    ' Methods
+    + Do(): void
+    + Undo(): void
+}
+
+BusinessLayer.CommandQueue "0..*" - "0..*" BusinessLayer.Command
+
+class BusinessLayer.CommandQueue {
+    ' Variables
+    - commands: List<Command>
+    - currentCommand: int
+
+    ' Methods
+    + Add(command): CommandQueue
+    + Remove(command): CommandQueue
+    + Do(numCommands): void
+    + Undo(numCommands): void
+}
+
+BusinessLayer.PreviewList "1" - "1" BusinessLayer.CommandQueue
+
+class BusinessLayer.PreviewList<T> {
+    ' Variables
+    - commands: CommandQueue
+    - addCmd: Func<T, Command>
+    - removeCmd: Func<T, Command>
+    - lazyData: Lazy<List<T>>
+    - immediate: bool
+
+    ' Methods
+    + Add(value): void
+    + Remove(value): void
+    + Do(): void
+    + Undo(): void
+    + ToList(): List<T>
+}
+
 @enduml

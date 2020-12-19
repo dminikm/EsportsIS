@@ -54,8 +54,8 @@ namespace BusinessLayer
 
         private CommandQueue commands;
 
-        Func<T, Command> addCmd;
-        Func<T, Command> removeCmd;
+        private Func<T, Command> addCmd;
+        private Func<T, Command> removeCmd;
 
         private Lazy<List<T>> lazyData;
         private List<T> Data { get => lazyData.Value; }
