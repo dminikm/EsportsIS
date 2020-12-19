@@ -167,10 +167,17 @@ namespace DesktopApp
             var requiredConflicts = participants
                 .Map((x) =>
                 {
-                    var evts = x.GetEventsOverlappingWith(fromDateTimePicker.Value, toDateTimePicker.Value)
+                    var evts = x.GetEventsOverlappingWithNotOfType(
+                        fromDateTimePicker.Value,
+                        toDateTimePicker.Value,
+                        Evt.Map((x) => x.EventID.IfNone(-1)),
+                        "custom"
+                    );
+                    
+                    /*(fromDateTimePicker.Value, toDateTimePicker.Value)
                         .Filter((y) => y.Type != "custom")
                         .Filter((y) => !this.Evt.Map((z) => (Event)z).Equals(y))
-                        .ToList();
+                        .ToList();*/
 
                     return new KeyValuePair<User, List<Event>>(
                         x, evts
@@ -187,10 +194,17 @@ namespace DesktopApp
             var optionalConflicts = participants.
                 Map((x) =>
                 {
-                    var evts = x.GetEventsOverlappingWith(fromDateTimePicker.Value, toDateTimePicker.Value)
+                    /*var evts = x.GetEventsOverlappingWith(fromDateTimePicker.Value, toDateTimePicker.Value)
                             .Filter((y) => y.Type == "custom")
                             .Filter((y) => !this.Evt.Map((z) => (Event)z).Equals(y))
-                            .ToList();
+                            .ToList();*/
+
+                    var evts = x.GetEventsOverlappingWithOfType(
+                        fromDateTimePicker.Value,
+                        toDateTimePicker.Value,
+                        Evt.Map((x) => x.EventID.IfNone(-1)),
+                        "custom"
+                    );
 
                     return new KeyValuePair<User, List<Event>>(
                         x, evts

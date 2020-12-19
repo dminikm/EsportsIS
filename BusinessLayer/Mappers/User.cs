@@ -76,6 +76,22 @@ namespace BusinessLayer
                 .ToList();
         }
 
+        public List<Event> GetEventsOverlappingWithOfType(DateTime start, DateTime end, Option<int> filterID, string type)
+        {
+            return this.GetEventsOverlappingWith(start, end)
+                .Filter((x) => x.Type == type)
+                .Filter((x) => !x.EventID.Equals(filterID))
+                .ToList();
+        }
+
+        public List<Event> GetEventsOverlappingWithNotOfType(DateTime start, DateTime end, Option<int> filterID, string type)
+        {
+            return this.GetEventsOverlappingWith(start, end)
+                .Filter((x) => x.Type != type)
+                .Filter((x) => !x.EventID.Equals(filterID))
+                .ToList();
+        }
+
         public List<Event> GetEventsOverlappingWithNotOfType(Event evt, string type)
         {
             return EventGateway
