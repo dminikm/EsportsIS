@@ -1,0 +1,249 @@
+@startuml
+title Class Diagram
+
+class DatabaseLayer.Database <<(S,#FF7700)singleton>> {
+    ' Variables
+    + {static} Instance: Database
+    - connection: SqlConnection
+    - transaction: SqlTransaction
+    - transactionCount: int
+    
+    ' Methods
+    + ExecuteQuery(query): SqlDataReader
+    + ExecuteScalar<T>(command): T
+    + ExecuteCommand(command): int
+    + BeginTransaction(): bool
+    + EndTransaction(): bool
+    + RollBack(): void
+}
+
+class DatabaseLayer.JSONDatabase <<(S,#FF7700)singleton>> {
+    ' Variables
+    + {static} Instance: JSONDatabase
+    - dbPath: string
+    - dbCache: JObject
+    - transactionCount: int
+
+    ' Methods
+    - GetBiggestIDInTable(table): int
+    + CreateInTable(table, value): int
+    + GetInTable(table, id): Dictionary
+    + GetAllInTable(table): List<Dictionary>
+    + SetInTable(table, id, value): void
+    + RemoveFromTable(table, id): void
+    - LoadCache(): void
+    - SaveCache(): void
+    + BeginTransaction(): bool
+    + EndTransaction(): bool
+    + AbortTransaction(): void
+}
+
+class DatabaseLayer.TeamGateway <<static>> {
+    ' Variables
+    - {static} *Statement: string
+    - {static} *Command: SqlCommand
+
+    ' Methods
+    + {static} Create(...): Team
+    + {static} Find(id) : Team
+    + {static} FindByCoach(coach): Team
+    + {static} FindAll(): List<Team>
+    + {static} Update(team): void
+    + {static} Delete(team): void
+    - {static} ParseFromQuery(query): Team
+}
+
+class DatabaseLayer.TeamToPlayerGateway <<static>> {
+    ' Variables
+    - {static} *Statement: string
+    - {static} *Command: SqlCommand
+
+    ' Methods
+    + {static} Create(...): TeamToPlayer
+    + {static} FindByPlayer(player) : TeamToPlayer
+    + {static} FindByTeam(team): TeamToPlayer
+    + {static} Delete(teamToPlayer): void
+    + {static} DeleteAllForPlayer(player): void
+    + {static} DeleteAllForTeam(team): void
+    - {static} ParseFromQuery(query): TeamToPlayer
+}
+
+class DatabaseLayer.UserGateway <<static>> {
+    ' Variables
+    - {static} *Statement: string
+    - {static} *Command: SqlCommand
+
+    ' Methods
+    + {static} Create(...): User
+    + {static} Find(id) : User
+    + {static} FindByUsernamePassword(login, password): User
+    + {static} FindByRole(role): List<User>
+    + {static} FindAll(): List<User>
+    + {static} Update(user): void
+    + {static} Delete(user): void
+    - {static} ParseFromQuery(query): Team
+}
+
+class DatabaseLayer.TeamGateway <<static>> {
+    ' Variables
+    - {static} *Statement: string
+    - {static} *Command: SqlCommand
+
+    ' Methods
+    + {static} CreateTrainingEvent(...): TrainingEvent
+    + {static} CreateMatchEvent(...): MatchEvent
+    + {static} CreateTournamentEvent(...): TournamentEvent
+    + {static} CreateCustomEvent(...): CustomEvent
+    + {static} Find(id): Event
+    + {static} FindEventsForUser(): List<Event>
+    + {static} All(): List<Event>
+    + {static} AllTrainings(): List<TrainingEvent>
+    + {static} AllMatchs(): List<MatchEvent>
+    + {static} AllTournaments(): List<TournamentEvent>
+    + {static} AllCustom(): List<CustomEvent>
+    + {static} Update(event): void
+    + {static} Delete(event): void
+    - {static} ParseEvent(query): Event
+}
+
+class DataTypes.Event {
+    ' Variables
+    + EventID: int
+    + Name: string
+    + Type: string
+    + Description: string 
+    + From: long
+    + To: long
+    + Color: string
+    + ParticipantIDs: List<int>
+}
+
+DataTypes.Event <|-- DataTypes.TrainingEvent
+DataTypes.Event <|-- DataTypes.MatchEvent
+DataTypes.Event <|-- DataTypes.TournamentEvent
+DataTypes.Event <|-- DataTypes.CustomEvent
+
+class DataTypes.MatchEvent {
+    ' Variables
+    + Server: string
+}
+
+class DataTypes.TournamentEvent {
+    ' Variables
+    + Location: string
+}
+
+class DataTypes.CustomEvent {
+    ' Variables
+    + MaxParticipants: int
+}
+
+BusinessLayer.Event "1" - "1" DataTypes.Event
+BusinessLayer.Event <|-- BusinessLayer.TrainingEvent
+BusinessLayer.Event <|-- BusinessLayer.MatchEvent
+BusinessLayer.Event <|-- BusinessLayer.TournamentEvent
+BusinessLayer.Event <|-- BusinessLayer.CustomEvent
+
+class BusinessLayer.Event {
+    ' Variables
+    # event: DataTypes.Event
+
+    ' Methods
+    + {static} Find(id): Event
+    + {static} FromType(event): Event
+    + {static} All(): List<Event>
+
+    + Save(): void
+    + Delete(): void
+    + GetDTO(): DataTypes.Event
+}
+
+class BusinessLayer.TrainingEvent {
+    'Methods
+    + {static} Create(...): CustomEvent
+}
+
+class BusinessLayer.MatchEvent {
+    'Methods
+    + {static} Create(...): CustomEvent
+}
+
+class BusinessLayer.TournamentEvent {
+    'Methods
+    + {static} Create(...): CustomEvent
+}
+
+class BusinessLayer.CustomEvent {
+    'Methods
+    + {static} Create(...): CustomEvent
+    + {static} GetUpcoming(from): List<CustomEvent>
+}
+
+
+class DataTypes.User {
+    ' Variables
+    + UserID: int
+    + FirstName: string
+    + LastName: string
+    + Login: string
+    + Password: string
+    + Role: string
+}
+
+BusinessLayer.User "1" - "1" DataTypes.User
+
+class BusinessLayer.User {
+    ' Variables
+    - user: DataTypes.User
+
+    ' Methods
+    + {static} Create(...): User
+    + {static} Find(id): User
+    + {static} FindByUsernamePassword(login, pass): User
+    + {static} FindByRole(role): List<User>
+    + {static} All(): List<User>
+
+    + Save(): void
+    + Delete(): void
+    + GetTeams(): List<Team>
+    + GetUpcomingEvents(): List<Event>
+    + GetEventsAvailableFromTo(from, to): List<Event>
+    + GetEventsOverlappingWith(from, to): List<Event>
+    + GetEventsOverlappingWithOfType(event, type): List<Event>
+    + GetEventsOverlappingWithNotOfType(event, type): List<Event>
+    + GetDTO(): DataTypes.User
+}
+
+class DataTypes.Team {
+    ' Variables
+    + TeamID: int
+    + CoachID: int
+    + Name: string
+    + Game: string
+}
+
+class DataTypes.TeamToPlayer {
+    + PlayerID: int
+    + TeamID: int
+}
+
+BusinessLayer.Team "1" - "1" DataTypes.Team
+BusinessLayer.Team "0..*" - "0..*" BusinessLayer.User
+
+class BusinessLayer.Team {
+    ' Variables
+    - team: DataTypes.Team
+    - players: BusinessLayer.User
+
+    ' Methods
+    + {static} Create(...): Team
+    + {static} Find(id): Team
+    + {static} FindByCoach(coach): Team
+    + {static} All(): Team
+
+    + Save(): void
+    + Delete(): void
+    + GetDTO(): DataTypes.Team
+}
+
+@enduml

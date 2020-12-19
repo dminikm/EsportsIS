@@ -1,0 +1,91 @@
+@startuml
+
+hide footbox
+title UC 3 - Vytvoření týmu
+
+actor "Manager" as U
+participant "RemoveUserFromConflictingTeamsForm" as RUF
+participant "AddEditTeamForm" as AEF
+participant "New Team (BusinessLayer)" as NT
+participant "User (BusinessLayer)" as UBL
+participant "Team (BusinessLayer)" as TBL
+participant "TeamGateway" as TG
+participant "TeamToPlayerGateway" as TTPG
+participant "Database" as DB
+
+activate U
+autoactivate on
+
+U -> AEF : okButton_click
+
+' Check coach
+
+AEF -> TBL : FindByCoach(coach)
+TBL -> TG : FindByCoach(coach)
+TG -> DB : SELECT ...
+TG <-- DB : Všechny týmy, které mají daného trenéra
+TBL <-- TG : ...
+AEF <-- TBL : ...
+
+' Check players
+
+loop players
+	AEF -> UBL : (player).GetTeams()
+	UBL -> TTPG : FindByPlayer(player)
+    TTPG -> DB : SELECT ...
+    TTPG <-- DB : Týmy pro hráče 
+    UBL <-- TTPG : ...
+    AEF <-- UBL : ...
+end
+
+alt Trenér už je v jiném týmu
+	note over U,AEF : Systém zobrazí zprávu,\n že trenér už je v jiném týmu
+else Někteří z hráčů už jsou v jiném týmu
+	note over U,AEF : Systém zobrazí formulář,\n ve kterém manažer může přeřadit hráče z jiných týmů
+    AEF -> RUF ** : Create
+    activate RUF
+    U <-- RUF : RemoveUserFromConflictingTeamsForm
+    
+    U -> RUF : okButton_click
+    loop vymazání hráčů z týmu
+    	RUF -> TBL : Players.Remove(player)
+        TBL -> TTPG : Delete(team, player)
+        TTPG -> DB : DELETE ...
+        TTPG <-- DB :
+        TBL <-- TTPG :
+        RUF <-- TBL :
+    end
+    
+    RUF -> NT ** : Create
+    activate NT
+    NT -> TG : Create
+    TG -> DB : Insert
+    TG <-- DB :
+    NT <-- TG :
+    
+    loop hráči v týmu
+    	NT -> TTPG : Create
+        TTPG -> DB : Insert
+        TTPG <-- DB :
+        NT <-- TTPG :
+    end
+    deactivate NT
+    
+else Bez problému
+	RUF -> NT ** : Create
+    activate NT
+    NT -> TG : Create
+    TG -> DB : Insert
+    TG <-- DB :
+    NT <-- TG :
+    
+    loop hráči v týmu
+    	NT -> TTPG : Create
+        TTPG -> DB : Insert
+        TTPG <-- DB :
+        NT <-- TTPG :
+    end
+    deactivate NT
+end
+
+@enduml

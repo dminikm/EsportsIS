@@ -62,6 +62,11 @@ namespace BusinessLayer {
             return EventGateway.Find(eventID).Map((x) => Event.FromType(x));
         }
 
+        public static List<Event> All()
+        {
+            return EventGateway.All().Map((x) => Event.FromType(x)).ToList();
+        }
+
         protected DataTypes.Event evt;
 
         public string Type { get => evt.Type; set => evt.Type = value; }

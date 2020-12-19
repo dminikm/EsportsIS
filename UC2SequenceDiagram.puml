@@ -1,0 +1,87 @@
+@startuml
+
+title UC 2 - Vytvoření nové události
+hide footbox
+
+actor "User" as U
+participant "AddEdit*EventForm" as AEF
+participant "EventListForm" as ELF
+participant "New Event (Business Layer)" as NE
+participant "User (Business Layer)" as UBL
+participant "Event (Business Layer)" as EV
+participant "EventGateway" as EG
+participant "JSONDatabase" as DB
+
+autoactivate on
+
+' Base form handling
+
+activate U
+U -> ELF : addEventButton_click
+
+ELF -> AEF ** : Create
+activate AEF
+ELF <-- AEF : AddEdit*EventForm
+U <-- ELF : AddEdit*EventForm
+
+' Click OK
+U -> AEF : okButtonClick
+
+' Required Events
+AEF -> UBL : GetEventsOverlappingWith(!custom)
+UBL -> EG : FindEventsForUser
+EG -> DB : All
+EG <-- DB : Události
+UBL <-- EG : Události pro uživatele
+AEF <-- UBL : Kryjící se povinné události
+
+' Optional events
+AEF -> UBL : GetEventsOverlappingWith(custom)
+UBL -> EG : FindEventsForUser
+EG -> DB : All
+EG <-- DB : Události
+UBL <-- EG : Události pro uživatele
+AEF <-- UBL : Kryjící se nepovinné události
+
+alt Událost se kryje s povinnou událostí
+	note over U,AEF : Systém oznámí, že událost se kryje s \njinou povinnou událostí
+else Událost se kryje s nepovinnou událostí
+	note over U,AEF : Systém oznámí, že událost se kryje s \njinou nepovinnou událostí
+    
+    U -> AEF : Odhlásit/Cancel
+    alt Odhlásit
+    	loop Kryjící se události
+        	loop Kryjící se účastníci
+            	AEF -> EV : participants.Remove(účastník)
+            end
+            
+            AEF -> EV : Save
+            EV -> EG : Update
+            EG -> DB : SetInTable
+            EG <-- DB :
+            EV <-- EG : 
+            AEF <-- EV :
+            
+        end
+        
+        AEF -> NE ** : Create
+        activate NE
+        NE -> EG : Create
+        EG -> DB : CreateInTable
+        EG <-- DB :
+        NE <-- EG :
+        AEF <-- NE :
+        deactivate NE
+    end 
+else Bez problému
+	AEF -> NE ** : Create
+    activate NE
+    NE -> EG : Create
+    EG -> DB : CreateInTable
+    EG <-- DB :
+    NE <-- EG :
+    AEF <-- NE :
+    deactivate NE
+end
+
+@enduml

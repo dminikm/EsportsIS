@@ -1,0 +1,89 @@
+@startuml
+
+hide footbox
+title UC 1 - Přihlášení k události
+
+actor "User" as U
+participant "DetailView" as DV
+participant "EventController" as EC
+participant "Event" as EV
+participant "User (BusinessLayer)" as UBL
+participant "EventGateway" as EG
+participant "JSONDatabase" as DB
+
+activate U
+autoactivate on
+
+U -> EC : GET /event/{id}
+
+' Model Data
+EC -> EV ** : Find
+EC <-- EV : Event
+
+' Required conflicts
+
+EC -> UBL : GetEventsOverlappingWithNotOfType(custom)
+
+UBL -> EG : FindEventsForUser
+
+EG -> DB : GetAllInTable
+EG <-- DB : Události
+
+UBL <-- EG : Události pro uživatele
+
+EC <-- UBL : Konfliktující povinné události
+
+' Optional conclicts
+EC -> UBL : GetEventsOverlappingWithOfType(custom)
+
+UBL -> EG : FindEventsForUser
+
+EG -> DB : GetAllInTable
+EG <-- DB : Události
+
+UBL <-- EG : Události pro uživatele
+
+EC <-- UBL : Konfliktující nepovinné události
+
+' Returns DetailView
+EC --> DV ** : Create
+activate DV
+U <-- EC : DetailView
+
+deactivate DV
+U -> DV : Click
+
+alt Plno
+  	note over U,DV : Systém oznámí, že událost je obsazená
+else Konflikt s povinnou událostí
+  	note over U, DV : Systém oznámí, že událost se kryje s jinou \n povinnou událostí
+else Konflikt s nepovinnou událostí
+  	note over U, DV : Systém ukáže seznam kryjících se \n nepovinných událostí
+    deactivate DV
+	U -> DV : Přesto pokračovat / Zrušit
+	alt Přesto pokračovat
+    	DV -> EC : POST /event/{id}/join
+        EC -> EV : participants.add (user)
+        EC <-- EV :
+        EC -> EV : Save
+        EV -> EG : Update
+        EG -> DB : SetInTable
+        EG <-- DB :
+        EV <-- EG :
+        EC <-- EV :
+        U <-- EC : REDIRECT /event/{id}
+    end
+else Bez problému
+    DV -> EC : POST /event/{id}/join
+    EC -> EV : participants.add (user)
+    EC <-- EV :
+    EC -> EV : Save
+    EV -> EG : Update
+    EG -> DB : SetInTable
+    EG <-- DB :
+    EV <-- EG :
+    EC <-- EV :
+    U <-- EC : REDIRECT /event/{id}
+end
+
+@enduml

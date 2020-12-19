@@ -19,6 +19,11 @@ namespace BusinessLayer
             TeamGateway.Delete(this.team);
         }
 
+        public DataTypes.Team GetDTO()
+        {
+            return this.team;
+        }
+
         public Team(DataTypes.Team team)
         {
             this.team = team;
