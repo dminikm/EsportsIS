@@ -1,0 +1,40 @@
+@startuml
+title Component Diagram
+
+component "PresentationLayer" as PL {
+    component WebApp
+    component DesktopApp
+}
+
+component "BusinessLayer" as BL {
+    component "Správa uživatelů"
+    component "Správa událostí"
+    component "Správatýmů"
+}
+
+component "DatabaseLayer" as DL {
+    together {
+        component "TeamGateway" as TG
+        component "TeamToPlayerGateway" as TTPG
+        component "UserGateway" as UG
+        database MSSQL as DB
+    }
+    
+    together {
+    component "EventGateway" as EG
+        folder data {
+            file DB.json as JSONDB
+        }
+    }
+
+    TG --> DB
+    TTPG --> DB
+    UG --> DB
+
+    EG --> JSONDB
+}
+
+BL --> DL
+PL --> BL
+
+@enduml

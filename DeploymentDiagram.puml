@@ -1,0 +1,44 @@
+@startuml
+title Deployment diagram
+
+package "EsportIS" {
+    node "Lokální PC" <<processor>> as PC {
+
+    }
+
+    WA --> PC : <<deploy>>
+    DA --> PC : <<deploy>>
+    BL --> PC : <<deploy>>
+    DBS --> PC : <<deploy>>
+
+    DB - PC
+    JSONDB - PC
+
+    artifact "WebApp" as WA {
+
+    }
+
+    artifact "DesktopApp" as DA {
+
+    }
+
+    artifact "BusinessLayer" as BL {
+
+    }
+   
+    artifact "DatabaseService" as DBS {
+
+    }
+
+    database "MSSQL" as DB {
+
+    }
+
+    folder "data" {
+        file "DB.json" as JSONDB {
+
+        }
+    }
+}
+
+@enduml
