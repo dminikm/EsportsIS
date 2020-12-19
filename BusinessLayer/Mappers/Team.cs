@@ -80,5 +80,20 @@ namespace BusinessLayer
         public PreviewList<User> Players { get => players; }
 
         private DataTypes.Team team;
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+            
+            return team.Equals(((Team)obj).team);
+        }
+        
+        public override int GetHashCode()
+        {
+            return team.GetHashCode();
+        }
     }
 }

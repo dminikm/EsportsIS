@@ -378,6 +378,13 @@ namespace DatabaseService
                 }
                 else if (type == "custom")
                 {
+                    if (!row.ContainsKey("maxParticipants"))
+                    {
+                        return Option<Event>.None;
+                    }
+
+                    var maxParticipants = Helpers.ConvertType<int>(row["maxParticipants"]);
+
                     return new CustomEvent()
                     {
                         EventID = id,
@@ -388,6 +395,7 @@ namespace DatabaseService
                         To = to,
                         Color = color,
                         ParticipantIDs = participants,
+                        MaxParticipants = maxParticipants,
                     };
                 }
                 else

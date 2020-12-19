@@ -52,6 +52,7 @@ namespace DesktopApp
                 this.from = x.From;
                 this.to = x.To;
                 this.participants = x.Participants.ToList();
+                this.maxParticipants = x.MaxParticipants;
                 this.color = x.Color;
             });
         }

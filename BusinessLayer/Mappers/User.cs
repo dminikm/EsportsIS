@@ -154,5 +154,20 @@ namespace BusinessLayer
         public UserRole Role { get => this.user.Role; set => this.user.Role = value; }
 
         private DataTypes.User user;
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+            
+            return user.Equals(((User)obj).user);
+        }
+        
+        public override int GetHashCode()
+        {
+            return user.GetHashCode();
+        }
     }
 }

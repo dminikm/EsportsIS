@@ -57,6 +57,8 @@ class DetailView : View<Event>
         var from = model.From.ToLocalTime().ToShortDateString() + " " + model.From.ToLocalTime().ToLongTimeString();
         var to = model.To.ToLocalTime().ToShortDateString() + " " + model.To.ToLocalTime().ToLongTimeString();
 
+        var isFull = model.Type == "custom" && ((CustomEvent)model).MaxParticipants >= 0 && ((CustomEvent)model).MaxParticipants <= model.ParticipantIDs.Count;
+
         return new Layout(ViewBag).Render($@"
             <div class=""content-section"">
                 <div class=""content-section-header"">
@@ -82,23 +84,41 @@ class DetailView : View<Event>
                 </div>
             </div>
 
+            <!-- Full -->
+            <div class=""dialog-backdrop"" id=""full-dialog"">
+                <div class=""content-section dialog"">
+                    <div class=""content-section-header"">Scheduling conflict!</div>
+                    <div class=""content-section-body"">
+                        This event is full!
+
+                        <br><br>
+
+                        <div>
+                            <button id=""button-full-ok"">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Required scheduling conflict -->
             <div class=""dialog-backdrop"" id=""required-dialog"">
-                <div class=""content-section dialog""open>
+                <div class=""content-section dialog"">
                     <div class=""content-section-header"">Scheduling conflict!</div>
                     <div class=""content-section-body"">
                         You have a scheduling conflict with these events: <br><br>
 
                         { RenderMiniEvents(ViewBag.RequiredConflicts) }
 
-                        <button id=""button-required-ok"">Ok</button>
+                        <div>
+                            <button id=""button-required-ok"">Ok</button>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Optional scheduling conflict -->
             <div class=""dialog-backdrop"" id=""optional-dialog"">
-                <div class=""content-section dialog""open>
+                <div class=""content-section dialog"">
                     <div class=""content-section-header"">Scheduling conflict!</div>
                     <div class=""content-section-body"">
                         You have a scheduling conflict with these optional events: <br><br>
@@ -118,6 +138,7 @@ class DetailView : View<Event>
 
             <script>
                 window.addEventListener('load', () => {"{"}
+                    let fullDialog = document.querySelector('#full-dialog');
                     let requiredDialog = document.querySelector('#required-dialog');
                     let optionalDialog = document.querySelector('#optional-dialog');
 
@@ -132,7 +153,9 @@ class DetailView : View<Event>
                     requiredOkButton.addEventListener('click', () => document.querySelectorAll('.dialog-backdrop').forEach((x) => x.click()));
                     optionalCancelButton.addEventListener('click', () => document.querySelectorAll('.dialog-backdrop').forEach((x) => x.click()));
 
-                    if ({( ViewBag.RequiredConflicts.Count > 0 ? "true" : "false" )}) {"{"}
+                    if ({ (isFull ? "true" : "false") }) {"{"}
+                        joinButton.addEventListener('click', () => fullDialog.classList.add('open'));
+                    {"}"} else if ({( ViewBag.RequiredConflicts.Count > 0 ? "true" : "false" )}) {"{"}
                         joinButton.addEventListener('click', () => requiredDialog.classList.add('open'));
                     {"}"} else if ({( ViewBag.OptionalConflicts.Count > 0 ? "true" : "false" )}) {"{"}
                         joinButton.addEventListener('click', () => optionalDialog.classList.add('open'));
