@@ -30,6 +30,15 @@
 
     width: 100%;
     flex-grow: 1;
+
+    text-indent: 5px;
+}
+
+.dialog.content-section > .content-section-body > div:last-child {
+    margin-left: auto;
+    margin-top: auto;
+    margin-right: 5px;
+    margin-bottom: 5px;
 }
 
 .dialog.content-section {
