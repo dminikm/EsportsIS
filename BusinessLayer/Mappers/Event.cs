@@ -185,6 +185,15 @@ namespace BusinessLayer {
                 .ToList();
         }
 
+        public static List<CustomEvent> GetUpcomingNotJoinedBy(DateTime from, User user)
+        {
+            return EventGateway
+                .AllUpcomingCustom(from)
+                .Filter((x) => !x.ParticipantIDs.Contains(user.UserID.IfNone(-1)))
+                .Map((x) => new CustomEvent(x))
+                .ToList();
+        }
+
         public int MaxParticipants { get => ((DataTypes.CustomEvent)evt).MaxParticipants; set => ((DataTypes.CustomEvent)evt).MaxParticipants = value; }
     }
 }

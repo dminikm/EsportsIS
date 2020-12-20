@@ -20,7 +20,7 @@ class Layout : View<string>
         return $@"<a href=""/login"">LogIn</a>";
     }
 
-    public string Render(string inner)
+    public override string Render(string inner)
     {
         return $@"
 <!DOCTYPE html>

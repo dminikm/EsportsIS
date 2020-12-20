@@ -239,6 +239,13 @@ namespace DatabaseService
                     .ToList();
             }
 
+            public static List<CustomEvent> AllUpcomingCustom(DateTime from)
+            {
+                return AllCustom()
+                    .Filter((x) => x.From >= ((DateTimeOffset)from).ToUnixTimeMilliseconds())
+                    .ToList();
+            }
+
             public static List<CustomEvent> AllCustom()
             {
                 var db = JSONDatabase.Instance;

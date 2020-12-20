@@ -21,10 +21,7 @@ class EventController : BaseController
             .Take(5)
             .ToList();
 
-        var upcomingNotJoined = CustomEvent
-            .GetUpcoming(DateTime.UtcNow)
-            .Filter((x) => !x.ParticipantIDs.Contains(LoggedUser.UserID.IfNone(-1)))
-            .ToList();
+        var upcomingNotJoined = CustomEvent.GetUpcomingNotJoinedBy(DateTime.UtcNow, LoggedUser);
 
         var from = StartOfWeek(DateTime.Today, DayOfWeek.Monday);
         var to = StartOfWeek(DateTime.Today, DayOfWeek.Monday).AddDays(7).AddMilliseconds(-1);

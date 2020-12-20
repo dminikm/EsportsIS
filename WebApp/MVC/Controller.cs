@@ -11,12 +11,12 @@ using System.Dynamic;
 
 class ControllerAction
 {
-    public async void Run(HttpContext context)
+    public void Run(HttpContext context)
     {
         this.Do(context);
     }
 
-    protected virtual async void Do(HttpContext context)
+    protected virtual void Do(HttpContext context)
     {
         throw new InvalidOperationException("Attempted to call base ControllerAction Do!");
     }
@@ -61,7 +61,7 @@ class ControllerRedirectAction : ControllerAction
         this.redirectURL = url;
     }
 
-    protected override async void Do(HttpContext context)
+    protected override void Do(HttpContext context)
     {
         context.Response.Redirect(redirectURL);
     }
