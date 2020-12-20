@@ -3,7 +3,7 @@
 title UC 2 - Vytvoření nové události
 hide footbox
 
-actor "User" as U
+actor "Trenér" as U
 participant "AddEdit*EventForm" as AEF
 participant "EventListForm" as ELF
 participant "New Event (Business Layer)" as NE
@@ -73,7 +73,7 @@ else Událost se kryje s nepovinnou událostí
         AEF <-- NE :
         deactivate NE
     end 
-else Bez problému
+else Bez konfliktu
 	AEF -> NE ** : Create
     activate NE
     NE -> EG : Create

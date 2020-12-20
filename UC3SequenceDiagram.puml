@@ -3,7 +3,7 @@
 hide footbox
 title UC 3 - Vytvoření týmu
 
-actor "Manager" as U
+actor "Manažer" as U
 participant "RemoveUserFromConflictingTeamsForm" as RUF
 participant "AddEditTeamForm" as AEF
 participant "New Team (BusinessLayer)" as NT
@@ -56,7 +56,9 @@ else Někteří z hráčů už jsou v jiném týmu
         RUF <-- TBL :
     end
     
-    RUF -> NT ** : Create
+    AEF <-- RUF
+
+    AEF -> NT ** : Create
     activate NT
     NT -> TG : Create
     TG -> DB : Insert
@@ -69,10 +71,12 @@ else Někteří z hráčů už jsou v jiném týmu
         TTPG <-- DB :
         NT <-- TTPG :
     end
+
+    AEF <-- NT :
     deactivate NT
     
-else Bez problému
-	RUF -> NT ** : Create
+else Bez konfliktu
+	AEF -> NT ** : Create
     activate NT
     NT -> TG : Create
     TG -> DB : Insert
@@ -85,7 +89,10 @@ else Bez problému
         TTPG <-- DB :
         NT <-- TTPG :
     end
+    AEF <-- NT :
     deactivate NT
 end
+
+U <-- RUF :
 
 @enduml

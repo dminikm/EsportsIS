@@ -3,7 +3,7 @@
 hide footbox
 title UC 1 - Přihlášení k události
 
-actor "User" as U
+actor "Hráč" as U
 participant "DetailView" as DV
 participant "EventController" as EC
 participant "Event" as EV
@@ -18,11 +18,12 @@ U -> EC : GET /event/{id}
 
 ' Model Data
 EC -> EV ** : Find
+activate EV
 EC <-- EV : Event
 
 ' Required conflicts
 
-EC -> UBL : GetEventsOverlappingWithNotOfType(custom)
+EC -> UBL : GetEventsOverlappingWithNotOfType(Event, "custom")
 
 UBL -> EG : FindEventsForUser
 
@@ -34,7 +35,7 @@ UBL <-- EG : Události pro uživatele
 EC <-- UBL : Konfliktující povinné události
 
 ' Optional conclicts
-EC -> UBL : GetEventsOverlappingWithOfType(custom)
+EC -> UBL : GetEventsOverlappingWithOfType(Event, "custom")
 
 UBL -> EG : FindEventsForUser
 
@@ -51,7 +52,7 @@ activate DV
 U <-- EC : DetailView
 
 deactivate DV
-U -> DV : Click
+U -> DV : Join
 
 alt Plno
   	note over U,DV : Systém oznámí, že událost je obsazená
@@ -73,7 +74,7 @@ else Konflikt s nepovinnou událostí
         EC <-- EV :
         U <-- EC : REDIRECT /event/{id}
     end
-else Bez problému
+else Bez konfliktu
     DV -> EC : POST /event/{id}/join
     EC -> EV : participants.add (user)
     EC <-- EV :

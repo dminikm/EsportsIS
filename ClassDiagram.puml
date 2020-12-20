@@ -84,7 +84,7 @@ class DatabaseLayer.UserGateway <<static>> {
     - {static} ParseFromQuery(query): Team
 }
 
-class DatabaseLayer.TeamGateway <<static>> {
+class DatabaseLayer.EventGateway <<static>> {
     ' Variables
     - {static} *Statement: string
     - {static} *Command: SqlCommand
@@ -177,6 +177,7 @@ class BusinessLayer.CustomEvent {
     'Methods
     + {static} Create(...): CustomEvent
     + {static} GetUpcoming(from): List<CustomEvent>
+    + {static} GetUpcomingNotJoinedBy(from, user): List<CustomEvent>
 }
 
 
