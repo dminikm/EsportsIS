@@ -2,8 +2,8 @@
 title Component Diagram
 
 component "PresentationLayer" as PL {
-    component WebApp
-    component DesktopApp
+    component "WebApp" as WA
+    component "DesktopApp" as DA
 }
 
 component "BusinessLayer" as BL {
@@ -26,15 +26,29 @@ component "DatabaseLayer" as DL {
             file DB.json as JSONDB
         }
     }
-
-    TG --> DB
-    TTPG --> DB
-    UG --> DB
-
-    EG --> JSONDB
 }
 
-BL --> DL
-PL --> BL
+' Presentation to BusinessLayer
+DA -(0- UM
+DA -(0- EM
+DA -(0- TM
+
+WA -(0- EM
+
+' BusinessLayer to DatabaseLayer
+
+TM -(0- TG
+TM -(0- TTPG
+
+UM -(0- UG
+
+EM -(0- EG
+
+' DatabaseLayer
+EG -(0- JSONDB
+
+TG -(0- DB
+TTPG -(0- DB
+UG -(0- DB
 
 @enduml

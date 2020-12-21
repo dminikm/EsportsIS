@@ -1,44 +1,31 @@
 @startuml
 title Deployment diagram
 
-package "EsportIS" {
-    node "Lokální PC" <<processor>> as PC {
+node "Lokální PC" <<device>> as PC {
+    node ".NET core 3.1" <<.NET>> as DN
 
+    node "Microsoft SQL Server 2019" <<Database SErver>> {
+        database "Database" as DB
     }
 
-    WA --> PC : <<deploy>>
-    DA --> PC : <<deploy>>
-    BL --> PC : <<deploy>>
-    DBS --> PC : <<deploy>>
-
-    DB - PC
-    JSONDB - PC
-
-    artifact "WebApp" as WA {
-
+    folder "data/" {
+        file "DB.json" as JSONDB
     }
 
-    artifact "DesktopApp" as DA {
-
+    folder "SQL/" {
+        file "create.sql" as CRSQL
     }
 
-    artifact "BusinessLayer" as BL {
+    artifact "WebApp" as WA
+    artifact "DesktopApp" as DA
+    artifact "BusinessLayer" as BL
+    artifact "DatabaseService" as DBS
 
-    }
-   
-    artifact "DatabaseService" as DBS {
+    WA --> DN : <<deploy>>
+    DA --> DN : <<deploy>>
+    BL --> DN : <<deploy>>
+    DBS --> DN : <<deploy>>
 
-    }
-
-    database "MSSQL" as DB {
-
-    }
-
-    folder "data" {
-        file "DB.json" as JSONDB {
-
-        }
-    }
+    CRSQL --> DB : <<deploy>>
 }
-
 @enduml
