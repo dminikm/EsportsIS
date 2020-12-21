@@ -44,6 +44,8 @@ namespace DesktopApp
                     listView1.Items.Add(item);
                 }
             }
+
+            Common.ResizeColumns(listView1);
         }
 
         private List<KeyValuePair<User, List<Team>>> conflictingPlayers;
@@ -91,6 +93,11 @@ namespace DesktopApp
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
             SetupButtons();
+        }
+
+        private void RemoveUserFromConfligtingTeamsForm_ResizeEnd(object sender, EventArgs e)
+        {
+            Common.ResizeColumns(listView1);
         }
     }
 }

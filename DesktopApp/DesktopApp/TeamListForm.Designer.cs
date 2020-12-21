@@ -150,6 +150,7 @@ namespace DesktopApp
             this.ShowIcon = false;
             this.Text = "👥 Teams";
             this.Load += new System.EventHandler(this.TeamListForm_Load);
+            this.ResizeEnd += new System.EventHandler(this.TeamListForm_ResizeEnd);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);

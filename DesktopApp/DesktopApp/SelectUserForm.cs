@@ -53,6 +53,8 @@ namespace DesktopApp
 
                 userListView.Items.Add(item);
             }
+
+            Common.ResizeColumns(userListView);
         }
 
         private void SetupButtons()
@@ -97,6 +99,11 @@ namespace DesktopApp
 
             this.SelectedUser = (User)this.userListView.SelectedItems[0].Tag;
             this.DialogResult = DialogResult.OK;
+        }
+
+        private void SelectUserForm_ResizeEnd(object sender, EventArgs e)
+        {
+            Common.ResizeColumns(userListView);
         }
     }
 }

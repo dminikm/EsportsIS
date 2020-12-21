@@ -131,6 +131,7 @@ namespace DesktopApp
             this.Name = "SelectUserForm";
             this.Text = "👤 Select User";
             this.Load += new System.EventHandler(this.SelectUserForm_Load);
+            this.ResizeEnd += new System.EventHandler(this.SelectUserForm_ResizeEnd);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);

@@ -155,6 +155,7 @@ namespace DesktopApp
             this.Name = "RemoveUserFromConfligtingTeamsForm";
             this.Text = "Remove user from team";
             this.Load += new System.EventHandler(this.RemoveUserFromConfligtingTeamsForm_Load);
+            this.ResizeEnd += new System.EventHandler(this.RemoveUserFromConfligtingTeamsForm_ResizeEnd);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);

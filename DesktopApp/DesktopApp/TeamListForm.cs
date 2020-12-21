@@ -67,6 +67,8 @@ namespace DesktopApp
             // Select items
             teamListView.SelectedItems.Clear();
             selectedItem.IfSome((item) => item.Selected = item.Focused = true);
+
+            Common.ResizeColumns(teamListView);
         }
 
         private List<Team> teams;
@@ -129,6 +131,11 @@ namespace DesktopApp
             this.LoadData();
             this.PopulateList();
             this.SetupButtons();
+        }
+
+        private void TeamListForm_ResizeEnd(object sender, EventArgs e)
+        {
+            Common.ResizeColumns(teamListView);
         }
     }
 }

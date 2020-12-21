@@ -118,6 +118,8 @@ namespace DesktopApp
 
             PopulateList();
             SetupButtons();
+
+            titleLabel.Text = $"Events for: {user.Login}";
         }
 
         private void addEventButton_Click(object sender, EventArgs e)
@@ -178,6 +180,11 @@ namespace DesktopApp
         private void eventListView_SelectedIndexChanged(object sender, EventArgs e)
         {
             SetupButtons();
+        }
+
+        private void EventListForm_ResizeEnd(object sender, EventArgs e)
+        {
+            Common.ResizeColumns(eventListView);
         }
     }
 }

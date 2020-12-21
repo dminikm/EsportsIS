@@ -49,7 +49,7 @@ namespace DesktopApp
             this.addCustomEventMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.titleLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -231,22 +231,22 @@ namespace DesktopApp
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.label1);
+            this.panel3.Controls.Add(this.titleLabel);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(3, 3);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(794, 44);
             this.panel3.TabIndex = 1;
             // 
-            // label1
+            // titleLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(9, 6);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(255, 37);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Events for: mec0037";
+            this.titleLabel.AutoSize = true;
+            this.titleLabel.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.titleLabel.Location = new System.Drawing.Point(9, 6);
+            this.titleLabel.Name = "titleLabel";
+            this.titleLabel.Size = new System.Drawing.Size(255, 37);
+            this.titleLabel.TabIndex = 0;
+            this.titleLabel.Text = "Events for: mec0037";
             // 
             // EventListForm
             // 
@@ -258,6 +258,7 @@ namespace DesktopApp
             this.ShowIcon = false;
             this.Text = "📅 Events";
             this.Load += new System.EventHandler(this.EventListForm_Load);
+            this.ResizeEnd += new System.EventHandler(this.EventListForm_ResizeEnd);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
@@ -282,7 +283,7 @@ namespace DesktopApp
         private System.Windows.Forms.Button editEventButton;
         private System.Windows.Forms.Button addEventButton;
         private System.Windows.Forms.ListView eventListView;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label titleLabel;
         private System.Windows.Forms.ColumnHeader nameColumnHeader;
         private System.Windows.Forms.ColumnHeader fromColumnHeader;
         private System.Windows.Forms.ColumnHeader typeColumnHeader;
