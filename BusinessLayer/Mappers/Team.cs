@@ -38,10 +38,10 @@ namespace BusinessLayer
             }, (value) => new Command(() =>
             {
                 TeamToPlayerGateway.Create(this.team, value.GetDTO());
-            }, Command.Blank), (value) => new Command(() =>
+            }), (value) => new Command(() =>
             {
                 TeamToPlayerGateway.Delete(this.team, value.GetDTO());
-            }, Command.Blank));
+            }));
         }
 
         public static Team Create(string name, string game)

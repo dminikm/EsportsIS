@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace DesktopApp
 {
@@ -29,7 +30,7 @@ namespace DesktopApp
 
         public void PopulateList()
         {
-            listView1.Clear();
+            listView1.Items.Clear();
 
             foreach (var pair in conflictingPlayers)
             {
@@ -69,6 +70,13 @@ namespace DesktopApp
                 pair.Value.Players.Remove(pair.Key);
                 pair.Value.Players.Do();                // Dont save the whole team
             }));
+
+            conflictingPlayers = conflictingPlayers
+                .Map(
+                    (x) => x.Key == pair.Key ?
+                        new KeyValuePair<User, List<Team>>(x.Key, x.Value.Filter((y) => y != pair.Value).ToList()):
+                        x
+                ).ToList();
 
             PopulateList();
             SetupButtons();

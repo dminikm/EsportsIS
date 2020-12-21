@@ -15,7 +15,7 @@ namespace DatabaseService
             {
                 var db = Database.Instance;
 
-                insertCommand.Parameters["@coach_id"].Value = coach.Map((x) => x.UserID as object).IfNone(() => DBNull.Value);
+                insertCommand.Parameters["@coach_id"].Value = coach.Map((x) => x.UserID.IfNone(-1) as object).IfNone(() => DBNull.Value);
                 insertCommand.Parameters["@name"].Value = name;
                 insertCommand.Parameters["@game"].Value = game;
 

@@ -7,9 +7,9 @@ component "PresentationLayer" as PL {
 }
 
 component "BusinessLayer" as BL {
-    component "Správa uživatelů"
-    component "Správa událostí"
-    component "Správatýmů"
+    component "Správa uživatelů" as UM
+    component "Správa událostí" as EM
+    component "Správa týmů" as TM
 }
 
 component "DatabaseLayer" as DL {
