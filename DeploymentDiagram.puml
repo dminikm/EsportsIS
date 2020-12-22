@@ -4,7 +4,7 @@ title Deployment diagram
 node "Lokální PC" <<device>> as PC {
     node ".NET core 3.1" <<.NET>> as DN
 
-    node "Microsoft SQL Server 2019" <<Database SErver>> {
+    node "Microsoft SQL Server 2017" <<Database SErver>> {
         database "Database" as DB
     }
 
