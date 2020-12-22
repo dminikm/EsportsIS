@@ -68,4 +68,24 @@ class EventController : BaseController
 
         return Redirect($"/event/{eventID}");
     }
+
+    public ControllerAction JoinAndLeaveConflicting(int eventID)
+    {
+        var evt = Event
+            .Find(eventID)
+            .IfSome(
+                (x) =>
+                {
+                    // Leave conflicting events
+                    var conflicting = LoggedUser.GetEventsOverlappingWithOfType(x, "custom");
+                    conflicting.ForEach((y) => { y.Participants.Remove(LoggedUser); y.Save(); });
+
+                    // Join this event
+                    x.Participants.Add(LoggedUser);
+                    x.Save();
+                }
+            );
+
+        return Redirect($"/event/{eventID}");
+    }
 }

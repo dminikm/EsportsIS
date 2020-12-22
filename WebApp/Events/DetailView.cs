@@ -127,6 +127,7 @@ class DetailView : View<Event>
 
                         <div>
                             <button id=""optional-join"">Join anyways</button>
+                            <button id=""optional-join-leave"">Join and leave conflicting</button>
                             <button id=""button-optional-cancel"">Cancel</button>
                         </div>
                     </div>
@@ -136,6 +137,9 @@ class DetailView : View<Event>
             <form action=""/event/{model.EventID.IfNone(-1)}/join"" method=""POST"" style=""display: none;"" id=""join-form"">
             </form>
 
+            <form action=""/event/{model.EventID.IfNone(-1)}/joinalc"" method=""POST"" style=""display: none;"" id=""join-leave-form"">
+            </form>
+
             <script>
                 window.addEventListener('load', () => {"{"}
                     let fullDialog = document.querySelector('#full-dialog');
@@ -143,11 +147,13 @@ class DetailView : View<Event>
                     let optionalDialog = document.querySelector('#optional-dialog');
 
                     let form = document.querySelector('#join-form');
+                    let form2 = document.querySelector('#join-leave-form');
 
                     let joinButton = document.querySelector('#button-join');
                     let requiredOkButton = document.querySelector('#button-required-ok');
                     let optionalJoinButton = document.querySelector('#optional-join');
                     let optionalCancelButton = document.querySelector('#button-optional-cancel');
+                    let optionalJoinLeaveButton = document.querySelector('#optional-join-leave');
 
                     document.querySelectorAll('.dialog-backdrop').forEach((x) => x.addEventListener('click', () => x.classList.remove('open')));
                     requiredOkButton.addEventListener('click', () => document.querySelectorAll('.dialog-backdrop').forEach((x) => x.click()));
@@ -160,6 +166,7 @@ class DetailView : View<Event>
                     {"}"} else if ({( ViewBag.OptionalConflicts.Count > 0 ? "true" : "false" )}) {"{"}
                         joinButton.addEventListener('click', () => optionalDialog.classList.add('open'));
                         optionalJoinButton.addEventListener('click', () => form.submit());
+                        optionalJoinLeaveButton.addEventListener('click', () => form2.submit());
                     {"}"} else {"{"}
                         joinButton.addEventListener('click', () => form.submit());
                     {"}"}
