@@ -218,7 +218,7 @@ namespace DesktopApp
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(53, 15);
             this.label6.TabIndex = 35;
-            this.label6.Text = "Location";
+            this.label6.Text = "Color";
             // 
             // colorSelectButton
             // 

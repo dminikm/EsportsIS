@@ -23,7 +23,7 @@ namespace DatabaseService
                     { "description", description },
                     { "from", from },
                     { "to", to },
-                    { "color", "#00FF00" },
+                    { "color", "#1E90FF" },
                     { "participants", participants }
                 });
                 db.EndTransaction();
@@ -36,7 +36,7 @@ namespace DatabaseService
                     Description = description,
                     From = from,
                     To = to,
-                    Color = "#00FF00",
+                    Color = "#1E90FF",
                     ParticipantIDs = participants
                 };
             }
@@ -48,12 +48,12 @@ namespace DatabaseService
                 db.BeginTransaction();
                 var newId = db.CreateInTable("events", new Dictionary<string, object>() {
                     { "type", "match" },
-                    { "name", "Name" },
+                    { "name", name },
                     { "server", server },
                     { "description", description },
                     { "from", from },
                     { "to", to },
-                    { "color", "#00FF00" },
+                    { "color", "#ADFF2F0" },
                     { "participants", participants }
                 });
                 db.EndTransaction();
@@ -66,7 +66,7 @@ namespace DatabaseService
                     Description = description,
                     From = from,
                     To = to,
-                    Color = "#FF0000",
+                    Color = "#ADFF2F",
                     ParticipantIDs = participants,
                     Server = server
                 };
@@ -84,7 +84,7 @@ namespace DatabaseService
                     { "description", description },
                     { "from", from },
                     { "to", to },
-                    { "color", "#00FF00" },
+                    { "color", "#EE82EE" },
                     { "participants", participants }
                 });
                 db.EndTransaction();
@@ -97,7 +97,7 @@ namespace DatabaseService
                     Description = description,
                     From = from,
                     To = to,
-                    Color = "#FF0000",
+                    Color = "#EE82EE",
                     ParticipantIDs = participants,
                     Location = location
                 };

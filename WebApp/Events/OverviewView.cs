@@ -70,7 +70,7 @@ class OverviewView : View<EventOverviewModel>
     private string RenderDaySchedule(List<Event> events, DateTime weekStart, int day)
     {
         var todayEvents = events
-            .Filter((x) => IsInDay(weekStart, day, x.From, x.To))
+            .Filter((x) => IsInDay(weekStart, day, x.From.ToLocalTime(), x.To.ToLocalTime()))
             .ToList();
 
         var eventColumns = new List<List<Event>>();
@@ -78,14 +78,25 @@ class OverviewView : View<EventOverviewModel>
 
         todayEvents.ForEach((x) =>
         {
-            foreach (var column in eventColumns) {
+            foreach (var column in eventColumns)
+            {
                 if (column.Count == 0) {
                     column.Add(x);
 
                     return;
                 }
 
-                if (column[column.Count -1].To >= x.From) {
+                bool canPlaceHere = true;
+                foreach (var evt in column)
+                {
+                    if (evt.From <= x.To && evt.To >= x.From)
+                    {
+                        canPlaceHere = false;
+                        break;
+                    }
+                }
+
+                if (!canPlaceHere) {
                     continue;
                 }
 
