@@ -134,7 +134,6 @@ namespace DatabaseLayer
                 };
             }
 
-            // TODO: Add updates
             public static void Update(Event evt)
             {
                 var db = JSONDatabase.Instance;

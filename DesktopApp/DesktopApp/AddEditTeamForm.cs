@@ -90,7 +90,6 @@ namespace DesktopApp
             var form = new SelectUserForm(DataTypes.UserRole.Coach);
             var result = form.ShowDialog();
 
-            // TODO: Do stuff with result
             if (result == DialogResult.OK)
             {
                 this.coach = form.SelectedUser;
@@ -101,9 +100,6 @@ namespace DesktopApp
 
         private void addPlayerButton_Click(object sender, EventArgs e)
         {
-            // FIXME: This way, not yet newly added and removed users will
-            // be added and removed for a brief moment
-
             var form = new SelectUserForm(DataTypes.UserRole.Player, players);
             var result = form.ShowDialog();
 
@@ -205,8 +201,6 @@ namespace DesktopApp
 
         private void okButton_Click(object sender, EventArgs e)
         {
-            // TODO: Do verification, alternate usecase paths
-
             var state = DoVerification();
 
             if (state.State == VerificationState.NoCoach)
