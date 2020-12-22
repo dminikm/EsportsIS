@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BusinessLayer;
-using DatabaseService.Gateway;
+using DatabaseLayer.Gateway;
 
 namespace DatabaseTester
 {
