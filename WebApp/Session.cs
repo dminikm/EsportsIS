@@ -26,14 +26,14 @@ class SessionManager
 
             sessions.Add(str, new Session() {
                 ID = str,
-                EndTime = ((DateTimeOffset)DateTime.UtcNow).ToUnixTimeMilliseconds(),
+                EndTime = (DateTimeOffset.UtcNow).AddDays(1).ToUnixTimeMilliseconds(),
                 Obj = obj,
             });
             return str;
         }
     }
 
-    public bool HasSession(string sessionID)
+    public static bool HasSession(string sessionID)
     {
         RemoveInvalidSessions();
         return sessions.ContainsKey(sessionID);
@@ -41,6 +41,8 @@ class SessionManager
 
     public static ExpandoObject GetSession(string sessionID)
     {
+        // Refresh the session expire time
+        sessions[sessionID].EndTime = (DateTimeOffset.UtcNow).AddDays(1).ToUnixTimeMilliseconds();
         return sessions[sessionID].Obj;
     }
 
@@ -49,10 +51,9 @@ class SessionManager
         sessions.Remove(sessionID);
     }
 
-    private void RemoveInvalidSessions()
+    private static void RemoveInvalidSessions()
     {
-        // TODO: This
-        sessions = new Dictionary<string, Session>(sessions.Filter((x) => true));
+        sessions = new Dictionary<string, Session>(sessions.Filter((x) => x.Value.EndTime > DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()));
     }
 
     private static Dictionary<string, Session> sessions = new Dictionary<string, Session>();

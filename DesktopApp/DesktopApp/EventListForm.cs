@@ -92,6 +92,8 @@ namespace DesktopApp
 
             eventListView.SelectedItems.Clear();
             selectedItem.IfSome((item) => item.Selected = item.Focused = true);
+
+            Common.ResizeColumns(eventListView);
         }
 
         private void SetupButtons()

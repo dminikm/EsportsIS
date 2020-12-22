@@ -11,7 +11,7 @@ class BaseController : Controller
         var session = context.Session;
         var sessionID = session.GetString("SESSION_ID");
 
-        if (sessionID != null)
+        if (sessionID != null && SessionManager.HasSession(sessionID))
         {
             dynamic s = SessionManager.GetSession(sessionID);
 
