@@ -5,7 +5,7 @@ using System.Configuration;
 using Newtonsoft.Json.Linq;
 using LanguageExt;
 
-namespace DatabaseService {
+namespace DatabaseLayer {
     public class JSONDatabase {
         private JSONDatabase() {
             dbPath = ConfigurationManager.ConnectionStrings["ConnectionStringJSON"].ConnectionString;

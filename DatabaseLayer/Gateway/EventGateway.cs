@@ -6,7 +6,7 @@ using Newtonsoft.Json.Linq;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace DatabaseService
+namespace DatabaseLayer
 {
     namespace Gateway
     {

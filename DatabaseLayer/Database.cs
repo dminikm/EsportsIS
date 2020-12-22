@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Configuration;
 using Microsoft.Data.SqlClient;
 
-namespace DatabaseService {
+namespace DatabaseLayer {
     public class Database
     {
         private Database()

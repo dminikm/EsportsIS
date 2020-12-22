@@ -5,7 +5,7 @@ using LanguageExt;
 using System.Data;
 using System.Collections.Generic;
 
-namespace DatabaseService
+namespace DatabaseLayer
 {
     namespace Gateway
     {

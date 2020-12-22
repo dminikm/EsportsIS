@@ -1,6 +1,6 @@
 using System;
 
-namespace DatabaseService
+namespace DatabaseLayer
 {
     /// <summary>
     ///     Miscelaneous functions
